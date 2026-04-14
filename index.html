@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surcagua — Apps & Support</title>
+    <meta name="description" content="Surcagua - Innovative mobile applications. Support, contact and app portfolio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           CSS CUSTOM PROPERTIES
+        ═══════════════════════════════════════════ */        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #222240;
+            --bg-glass: rgba(26, 26, 46, 0.7);
+            --bg-modal: rgba(0, 0, 0, 0.85);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --text-muted: #6b6b80;
+            --accent-primary: #6c63ff;
+            --accent-secondary: #00d4aa;
+            --accent-tertiary: #ff6b9d;
+            --accent-warning: #ffa726;
+            --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #00d4aa 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff6b9d 0%, #ffa726 100%);
+            --gradient-dark: linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(108, 99, 255, 0.3);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 40px rgba(108, 99, 255, 0.15);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* ═══════════════════════════════════════════
+           LIGHT MODE
+        ═══════════════════════════════════════════ */
+        body.light-mode {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8f9fb;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-modal: rgba(0, 0, 0, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-glow: rgba(108, 99, 255, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.16);
+            --shadow-glow: 0 0 40px rgba(108, 99, 255, 0.1);
+        }
+
+        body.light-mode .bg-effects .orb {
+            opacity: 0.06;
+        }
+
+        body.light-mode .noise-overlay {
+            opacity: 0.008;
+        }
+
+        /* ═══════════════════════════════════════════
+           RESET & BASE
+        ═══════════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+        }
+
+        /* ═══════════════════════════════════════════
+           ANIMATED BACKGROUND
+        ═══════════════════════════════════════════ */
+        .bg-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-effects .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-effects .orb:nth-child(1) {
+            width: 600px; height: 600px;
+            background: var(--accent-primary);
+            top: -200px; left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-effects .orb:nth-child(2) {
+            width: 500px; height: 500px;
+            background: var(--accent-secondary);
+            bottom: -150px; right: -100px;
+            animation-delay: -7s;
+        }
+
+        .bg-effects .orb:nth-child(3) {
+            width: 400px; height: 400px;
+            background: var(--accent-tertiary);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.05); }
+            50% { transform: translate(-30px, 50px) scale(0.95); }
+            75% { transform: translate(30px, 30px) scale(1.02); }
+        }
+
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        /* ═══════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px) saturate(1.8);
+            -webkit-backdrop-filter: blur(20px) saturate(1.8);
+        }
+
+        body.light-mode .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .navbar-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 100px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .nav-links a.nav-support {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 22px;
+            font-weight: 600;
+        }
+
+        .nav-links a.nav-support:hover {
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+            transform: translateY(-1px);
+        }        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .theme-icon {
+            font-size: 20px;
+            transition: transform var(--transition-spring);
+        }
+
+        .theme-toggle:active .theme-icon {
+            transform: rotate(360deg) scale(0.9);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ═══════════════════════════════════════════
+           PAGE SECTIONS
+        ═══════════════════════════════════════════ */
+        .page-section {
+            display: none;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeInPage 0.5s ease;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════════════════════════════════════════
+           HERO SECTION
+        ═══════════════════════════════════════════ */
+        .hero {
+            padding: 160px 24px 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+            background: rgba(108, 99, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent-primary);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: var(--accent-secondary);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════════════════════════════════════════
+           BUTTONS
+        ═══════════════════════════════════════════ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition-smooth);
+            font-family: var(--font-family);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 14px 20px;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════
+           STATS BAR
+        ═══════════════════════════════════════════ */
+        .stats-bar {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════
+           APPS GRID
+        ═══════════════════════════════════════════ */
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px 120px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .app-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 28px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(108,99,255,0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .app-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-glow);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-icon {
+            width: 64px; height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .app-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app-card-info h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .app-card-info .app-category {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-card-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-card-body p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .app-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--accent-warning);
+            font-weight: 600;
+        }
+
+        .app-platform {
+            display: flex;
+            gap: 6px;
+        }
+
+        .platform-badge {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid rgba(108, 99, 255, 0.15);
+        }
+
+        .platform-badge.android {
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--accent-secondary);
+            border-color: rgba(0, 212, 170, 0.15);
+        }
+
+        /* ═══════════════════════════════════════════
+           MODAL
+        ═══════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-modal);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.92) translateY(30px);
+            transition: var(--transition-spring);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .modal-hero {
+            position: relative;
+            padding: 48px 40px 32px;
+            background: linear-gradient(135deg, rgba(108,99,255,0.08) 0%, rgba(0,212,170,0.05) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.15);
+            color: var(--text-primary);
+        }
+
+        .modal-app-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .modal-app-icon {
+            width: 80px; height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-app-title h2 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .modal-app-title .modal-category {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 32px 40px 40px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .modal-stat {
+            text-align: center;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-stat .val {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-stat .lbl {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .modal-section {
+            margin-bottom: 28px;
+        }
+
+        .modal-section h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-section p,
+        .modal-section li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .modal-section ul li::before {
+            content: '→';
+            margin-right: 10px;
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .modal-screenshots {
+            position: relative;
+            margin: 0 -20px;
+        }
+
+        .screenshots-container {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 20px 20px 24px;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .screenshots-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .screenshots-container::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 3px;
+        }
+
+        .screenshots-container::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 3px;
+        }
+
+        .screenshots-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        .screenshot-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            opacity: 0;
+        }
+
+        .modal-screenshots:hover .screenshot-nav {
+            opacity: 1;
+        }
+
+        .screenshot-nav:hover {
+            background: rgba(108, 99, 255, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .screenshot-nav.prev {
+            left: 10px;
+        }
+
+        .screenshot-nav.next {
+            right: 10px;
+        }
+
+        .screenshot-counter {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .screenshot-placeholder {
+            width: 180px;
+            height: 320px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            border: 2px dashed var(--border-color);
+            background: var(--bg-card);
+        }
+
+        .screenshot-wrapper {
+            position: relative;
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
+
+        .screenshot-image {
+            width: 180px;
+            height: 390px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .screenshot-image:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 48px rgba(108, 99, 255, 0.3),
+                        0 8px 16px rgba(0, 0, 0, 0.4);
+            border-color: rgba(108, 99, 255, 0.3);
+        }
+
+        .screenshot-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 20px;
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .screenshot-wrapper:hover::before {
+            opacity: 0.4;
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 24px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .lightbox-nav:hover {
+            background: var(--accent-primary);
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .lightbox-nav.prev {
+            left: -70px;
+        }
+
+        .lightbox-nav.next {
+            right: -70px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        /* ═══════════════════════════════════════════
+           SUPPORT PAGE
+        ═══════════════════════════════════════════ */
+        .support-hero {
+            padding: 140px 24px 60px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .support-hero h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+        }
+
+        .support-hero p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .support-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .support-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 36px;
+            transition: var(--transition-smooth);
+        }
+
+        .support-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .support-card-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .support-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .support-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .support-card a.support-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-primary);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .support-card a.support-link:hover {
+            gap: 10px;
+        }
+
+        /* Contact form */
+        .support-form-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px 120px;
+        }
+
+        .support-form-wrapper {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            padding: 48px;
+        }
+
+        .support-form-wrapper h2 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .support-form-wrapper > p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-family);
+            transition: var(--transition-fast);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .form-group select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-submit {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-submit .privacy-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            max-width: 300px;
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .form-success .success-icon {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            background: rgba(0, 212, 170, 0.1);
+            border: 2px solid var(--accent-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+
+        .form-success h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-success p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* ═══════════════════════════════════════════
+           FAQ SECTION
+        ═══════════════════════════════════════════ */
+        .faq-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .faq-section h2 {
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-glow);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: var(--font-family);
+            text-align: left;
+        }
+
+        .faq-question .faq-chevron {
+            transition: var(--transition-fast);
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        .faq-item.open .faq-question .faq-chevron {
+            transform: rotate(180deg);
+            color: var(--accent-primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════ */
+        .footer {
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid var(--border-color);
+            padding: 48px 24px;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-left {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════ */        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 72px;
+                left: 0; right: 0;
+                background: rgba(10, 10, 15, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 24px;
+                gap: 4px;
+                border-bottom: 1px solid var(--border-color);
+                transform: translateY(-120%);
+                transition: var(--transition-smooth);
+                z-index: 999;
+            }
+
+            body.light-mode .nav-links {
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            .nav-links.open {
+                transform: translateY(0);
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 14px;
+                border-radius: var(--radius-sm);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-actions {
+                gap: 4px;
+            }
+
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .support-form-wrapper {
+                padding: 28px;
+            }
+
+            .modal-hero,
+            .modal-body {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .modal-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .form-submit {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            /* Screenshots responsive */
+            .screenshot-image {
+                width: 160px;
+                height: 346px;
+            }
+
+            .screenshot-wrapper::before {
+                filter: blur(15px);
+            }
+
+            .screenshot-nav {
+                display: none !important;
+            }
+
+            .screenshots-container {
+                padding: 16px 16px 20px;
+            }
+
+            .lightbox-nav.prev {
+                left: 10px;
+            }
+
+            .lightbox-nav.next {
+                right: 10px;
+            }
+
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+            }
+
+            .lightbox-image {
+                max-height: 80vh;
+            }
+
+            .lightbox-counter {
+                position: static;
+                margin-top: 16px;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         BACKGROUND EFFECTS
+    ═══════════════════════════════════════════ -->
+    <div class="bg-effects">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════ -->    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <div class="logo-icon">S</div>
+                <div class="logo-text"><span>Surcagua</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active" data-page="home" onclick="showPage('home')">Inicio</a></li>
+                <li><a href="#" data-page="apps" onclick="showPage('apps')">Apps</a></li>
+                <li><a href="#" data-page="support" onclick="showPage('support')" class="nav-support">⚡ Soporte</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema" title="Cambiar tema">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                </button>
+                <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Menu">
+                    <span id="menuIcon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         HOME PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section active" id="page-home">
+        <div class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Innovación móvil desde Honduras
+            </div>
+            <h1>Creamos apps que<br><span class="gradient-text">transforman ideas</span></h1>
+            <p>En Surcagua diseñamos y desarrollamos aplicaciones móviles de alto rendimiento. Explora nuestro portafolio y descubre soluciones que impactan.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary" onclick="showPage('apps')">
+                    <span>🚀</span> Ver aplicaciones
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="showPage('support')">
+                    <span>💬</span> Contactar soporte
+                </a>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Apps publicadas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">29.5K+</div>
+                <div class="stat-label">Descargas totales</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.7★</div>
+                <div class="stat-label">Calificación promedio</div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="section-header">
+                <h2>Aplicaciones destacadas</h2>
+                <p>Nuestras apps más populares disponibles en App Store y Google Play</p>
+            </div>
+            <div class="apps-grid" id="homeAppsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         APPS PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section" id="page-apps">
+        <div class="hero" style="padding-bottom: 40px;">
+            <h1>Nuestras <span class="gradient-text">Aplicaciones</span></h1>
+            <p>Catálogo completo de aplicaciones desarrolladas por Surcagua. Toca cualquier app para ver más detalles.</p>
+        </div>
+        <div class="section-container">
+            <div class="apps-grid" id="allAppsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SUPPORT PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section" id="page-support">
+        <div class="support-hero">
+            <h1>Centro de <span class="gradient-text">Soporte</span></h1>
+            <p>¿Necesitas ayuda con alguna de nuestras aplicaciones? Estamos aquí para asistirte. Encuentra respuestas rápidas o contáctanos directamente.</p>
+        </div>
+
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-card-icon" style="background: rgba(108,99,255,0.1);">📧</div>
+                <h3>Correo electrónico</h3>
+                <p>Envíanos un correo con tu consulta, reporte de error o sugerencia. Respondemos en un máximo de 24-48 horas hábiles.</p>
+                <a href="mailto:support@surcaguastudio.com" class="support-link">support@surcaguastudio.com →</a>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background: rgba(0,212,170,0.1);">⏱️</div>
+                <h3>Horario de atención</h3>
+                <p>Nuestro equipo de soporte está disponible para atender tus solicitudes durante horario laboral.</p>
+                <a href="#" class="support-link" style="pointer-events:none; color: var(--text-secondary);">Lun - Vie: 9:00 AM – 6:00 PM (PET)</a>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background: rgba(255,107,157,0.1);">🔄</div>
+                <h3>Actualizaciones</h3>
+                <p>Trabajamos continuamente en mejorar nuestras apps. Las actualizaciones se publican periódicamente en las tiendas oficiales.</p>
+                <a href="#" class="support-link" style="pointer-events:none; color: var(--text-secondary);">Versiones siempre actualizadas</a>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background: rgba(255,167,38,0.1);">🔒</div>
+                <h3>Privacidad y seguridad</h3>
+                <p>Tu privacidad es nuestra prioridad. Consulta nuestras políticas de datos y manejo de información personal.</p>
+                <a href="mailto:support@surcaguastudio.com?subject=Consulta%20sobre%20privacidad" class="support-link">Consultar política →</a>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2>Preguntas frecuentes</h2>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Cómo puedo reportar un error en la aplicación?
+                    <span class="faq-chevron">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Puedes reportar errores enviándonos un correo a <strong>support@surcaguastudio.com</strong> con los siguientes datos: nombre de la app, versión, dispositivo utilizado, sistema operativo y una descripción detallada del problema. Si es posible, adjunta capturas de pantalla.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Las aplicaciones son gratuitas?
+                    <span class="faq-chevron">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        La mayoría de nuestras aplicaciones son gratuitas. Algunas pueden incluir compras dentro de la app o versiones premium con funciones adicionales. Consulta los detalles en la tienda de aplicaciones correspondiente.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Cómo solicito la eliminación de mis datos?
+                    <span class="faq-chevron">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Envía un correo a <strong>support@surcaguastudio.com</strong> con el asunto "Solicitud de eliminación de datos", indicando tu nombre de usuario y la app asociada. Procesaremos tu solicitud en un plazo máximo de 30 días.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿En qué plataformas están disponibles las apps?
+                    <span class="faq-chevron">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Nuestras aplicaciones están disponibles para iOS (App Store) y Android (Google Play). Algunas apps pueden estar disponibles en una sola plataforma. Revisa la ficha de cada app para más información.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Cuánto tardan en responder al soporte?
+                    <span class="faq-chevron">▾</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Nuestro equipo se compromete a responder todas las consultas en un plazo de 24 a 48 horas hábiles. Para casos urgentes, indica "URGENTE" en el asunto del correo.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="support-form-section">
+            <div class="support-form-wrapper">
+                <div id="contactForm">
+                    <h2>Envíanos un mensaje</h2>
+                    <p>Completa el formulario y nuestro equipo se pondrá en contacto contigo lo antes posible.</p>
+                    <form onsubmit="handleFormSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Nombre completo</label>
+                                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="app">Aplicación</label>
+                                <select id="app" name="app" required>
+                                    <option value="">Seleccionar app...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="topic">Tema</label>
+                                <select id="topic" name="topic" required>
+                                    <option value="">Seleccionar tema...</option>
+                                    <option value="bug">Reporte de error</option>
+                                    <option value="feature">Solicitud de función</option>
+                                    <option value="account">Problema con cuenta</option>
+                                    <option value="billing">Facturación / Compras</option>
+                                    <option value="privacy">Privacidad de datos</option>
+                                    <option value="delete">Eliminación de datos</option>
+                                    <option value="other">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="subject">Asunto</label>
+                                <input type="text" id="subject" name="subject" placeholder="Describe brevemente tu consulta" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="message">Mensaje</label>
+                                <textarea id="message" name="message" placeholder="Cuéntanos los detalles de tu consulta. Incluye versión de la app, dispositivo y sistema operativo si aplica." required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <span class="privacy-note">🔒 Tu información será tratada de forma confidencial conforme a nuestra política de privacidad.</span>
+                            <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon">✓</div>
+                    <h3>¡Mensaje enviado!</h3>
+                    <p>Hemos recibido tu consulta. Nuestro equipo te responderá a la brevedad en el correo proporcionado.</p>
+                    <br>
+                    <button class="btn btn-secondary" onclick="resetForm()">Enviar otro mensaje</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         APP DETAIL MODAL
+    ═══════════════════════════════════════════ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+        <div class="modal" id="appModal">
+            <div class="modal-hero">
+                <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+                <div class="modal-app-header">
+                    <div class="modal-app-icon" id="modalIcon"></div>
+                    <div class="modal-app-title">
+                        <h2 id="modalTitle"></h2>
+                        <span class="modal-category" id="modalCategory"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats" id="modalStats"></div>
+
+                <div class="modal-section">
+                    <h3>📖 Descripción</h3>
+                    <p id="modalDescription"></p>
+                </div>
+
+                <div class="modal-section" id="screenshotsSection">
+                    <h3>🖼️ Vista previa</h3>
+                    <div class="modal-screenshots" id="modalScreenshots"></div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>✨ Características principales</h3>
+                    <ul id="modalFeatures"></ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>📋 Información técnica</h3>
+                    <p id="modalTechInfo"></p>
+                </div>
+
+                <div class="modal-actions" id="modalActions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         LIGHTBOX
+    ═══════════════════════════════════════════ -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">✕</button>
+            <button class="lightbox-nav prev" onclick="navigateLightbox(-1)" aria-label="Anterior">‹</button>
+            <button class="lightbox-nav next" onclick="navigateLightbox(1)" aria-label="Siguiente">›</button>
+            <img id="lightboxImage" class="lightbox-image" src="" alt="">
+            <div class="lightbox-counter">
+                <span id="lightboxCounter">1 / 1</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                © 2026 Surcagua. Todos los derechos reservados.
+            </div>
+            <ul class="footer-links">
+                <li><a href="#" onclick="showPage('home')">Inicio</a></li>
+                <li><a href="#" onclick="showPage('apps')">Aplicaciones</a></li>
+                <li><a href="#" onclick="showPage('support')">Soporte</a></li>
+                <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         JAVASCRIPT
+    ═══════════════════════════════════════════ -->
+    <script>
+        // ─── APP DATA ───────────────────────────────
+        const apps = [
+            {
+                id: 'budgely',
+                name: 'Budgely',
+                category: 'Finanzas Personales',
+                logo: 'assets/budgely/budgely.png',
+                iconBg: 'linear-gradient(135deg, #14b8a6, #0d9488)',
+                screenshots: [
+                    'assets/budgely/capturas/0x0ss.png',
+                    'assets/budgely/capturas/1x0ss.png',
+                    'assets/budgely/capturas/2x0ss.png',
+                    'assets/budgely/capturas/3x0ss.png'
+                ],
+                rating: 4.8,
+                downloads: '4.2K+',
+                version: '2.1.0',
+                size: '38 MB',
+                platforms: ['iOS'],
+                shortDesc: 'Control de presupuesto personal con análisis diario, mensual y anual mediante gráficos intuitivos.',
+                description: 'Budgely es tu asistente financiero personal que te ayuda a tomar control de tus gastos e ingresos. Registra transacciones de forma rápida, establece presupuestos personalizados por categoría, y visualiza tu salud financiera con gráficos de barras y circulares. Analiza tus patrones de gasto diarios, mensuales o anuales para tomar mejores decisiones financieras.',
+                features: [
+                    'Registro rápido de ingresos y gastos',
+                    'Presupuestos personalizados por categoría',
+                    'Gráficos circulares y de barras interactivos',
+                    'Análisis diario, mensual y anual',
+                    'Categorías personalizables y etiquetas',
+                    'Exportación de reportes en PDF',
+                    'Recordatorios de pagos recurrentes',
+                    'Dashboard con resumen financiero'
+                ],
+                techInfo: 'Desarrollada con Flutter y SQLite local. Compatible con iOS 14+. Todos los datos se almacenan localmente en tu dispositivo para máxima privacidad.'
+            },
+            {
+                id: 'silentvault',
+                name: 'SilentVault',
+                category: 'Privacidad y Seguridad',
+                logo: 'assets/silentvault/silentvault.png',
+                iconBg: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+                screenshots: [],
+                rating: 4.9,
+                downloads: '7.8K+',
+                version: '3.0.2',
+                size: '42 MB',
+                platforms: ['iOS'],
+                shortDesc: 'Bóveda privada para ocultar y proteger fotos y videos con encriptación de nivel militar.',
+                description: 'SilentVault es la solución definitiva para mantener tus fotos y videos privados completamente seguros. Con encriptación AES-256 de nivel militar y almacenamiento 100% local, tus archivos multimedia nunca salen de tu dispositivo. Protege tu privacidad con PIN, patrón, huella dactilar o Face ID. Incluye navegador privado integrado y despiste con cámara falsa.',
+                features: [
+                    'Encriptación AES-256 de nivel militar',
+                    'Almacenamiento 100% local sin nube',
+                    'Protección con PIN, patrón, huella o Face ID',
+                    'Importación masiva de fotos y videos',
+                    'Navegador web privado integrado',
+                    'Modo despiste con cámara falsa',
+                    'Álbumes organizados por carpetas',
+                    'Reproductor de video integrado',
+                    'Papelera de reciclaje con recuperación'
+                ],
+                techInfo: 'Desarrollada con Swift nativo para iOS. Compatible con iOS 15+. Sin acceso a internet requerido, funcionamiento 100% offline.'
+            },
+            {
+                id: 'soundforia',
+                name: 'Soundforia',
+                category: 'Música y Creatividad',
+                logo: 'assets/soundforia/soundforia.png',
+                iconBg: 'linear-gradient(135deg, #ec4899, #db2777)',
+                screenshots: [
+                    'assets/soundforia/capturas/0x0ss.png',
+                    'assets/soundforia/capturas/1x0ss.png',
+                    'assets/soundforia/capturas/2x0ss.png',
+                    'assets/soundforia/capturas/3x0ss.png'
+                ],
+                rating: 4.7,
+                downloads: '5.5K+',
+                version: '1.9.4',
+                size: '55 MB',
+                platforms: ['iOS'],
+                shortDesc: 'Suite completa para compositores y bandas: crea canciones con acordes, letras y metrónomo profesional.',
+                description: 'Soundforia es la aplicación perfecta para músicos, compositores y bandas que quieren organizar sus canciones de forma profesional. Crea y edita letras con acordes integrados, utiliza el metrónomo avanzado con subdivisiones personalizables, transpone canciones a diferentes tonalidades automáticamente, y comparte tu repertorio con tu banda. Ideal para ensayos, composición y presentaciones en vivo.',
+                features: [
+                    'Editor de letras con posicionamiento de acordes',
+                    'Biblioteca de acordes de guitarra y piano',
+                    'Metrónomo profesional con subdivisiones',
+                    'Transposición automática de tonalidades',
+                    'Organización por setlists y categorías',
+                    'Compartir canciones con la banda',
+                    'Modo presentación pantalla completa',
+                    'Exportación a PDF con formato profesional',
+                    'Afinador cromático integrado'
+                ],
+                techInfo: 'Desarrollada con React Native y Web Audio API. Compatible con iOS 14+. Sincronización opcional en la nube para trabajo colaborativo.'
+            },
+            {
+                id: 'tuyyo',
+                name: 'Tuyyo',
+                category: 'Relaciones y Parejas',
+                logo: 'assets/tuyyo/tuyyo.png',
+                iconBg: 'linear-gradient(135deg, #f43f5e, #e11d48)',
+                screenshots: [
+                    'assets/tuyyo/capturas/0x0ss.png',
+                    'assets/tuyyo/capturas/1x0ss.png',
+                    'assets/tuyyo/capturas/2x0ss.png',
+                    'assets/tuyyo/capturas/3x0ss.png',
+                    'assets/tuyyo/capturas/4x0ss.png',
+                    'assets/tuyyo/capturas/5x0ss.png',
+                    'assets/tuyyo/capturas/6x0ss.png',
+                    'assets/tuyyo/capturas/7x0ss.png',
+                    'assets/tuyyo/capturas/8x0ss.png',
+                    'assets/tuyyo/capturas/9x0ss.png'
+                ],
+                rating: 4.6,
+                downloads: '12K+',
+                version: '2.5.1',
+                size: '48 MB',
+                platforms: ['iOS'],
+                shortDesc: 'La app definitiva para parejas: chat privado, álbum compartido, aniversario, mapas, juegos y más.',
+                description: 'Tuyyo es el espacio digital perfecto para fortalecer tu relación. Comparte momentos especiales en tu álbum privado, mantén conversaciones íntimas en el chat cifrado, recuerda fechas importantes con el contador de aniversario, marca lugares especiales en el mapa de recuerdos, juega juntos con mini-juegos para parejas, y organiza planes en el calendario compartido. Todo lo que necesitan en una sola app.',
+                features: [
+                    'Chat privado con encriptación end-to-end',
+                    'Álbum de fotos compartido ilimitado',
+                    'Contador de aniversario y días juntos',
+                    'Mapa de recuerdos con lugares especiales',
+                    'Calendario compartido de eventos',
+                    'Notas y listas compartidas',
+                    'Mini-juegos para parejas',
+                    'Línea de tiempo de la relación',
+                    'Recordatorios de fechas especiales',
+                    'Tema personalizable con fotos de pareja'
+                ],
+                techInfo: 'Desarrollada con Flutter y Firebase. Compatible con iOS 15+. Sincronización en tiempo real entre dispositivos con encriptación de datos.'
+            }
+        ];
+
+        // ─── RENDER APPS ────────────────────────────
+        function renderAppCard(app) {
+            const platformBadges = app.platforms.map(p =>
+                `<span class="platform-badge ${p === 'Android' ? 'android' : ''}">${p}</span>`
+            ).join('');
+
+            return `
+                <div class="app-card" onclick="openModal('${app.id}')">
+                    <div class="app-card-header">
+                        <div class="app-icon" style="background: ${app.iconBg};"><img src="${app.logo}" alt="${app.name}" style="width: 100%; height: 100%; border-radius: 16px; object-fit: cover;"></div>
+                        <div class="app-card-info">
+                            <h3>${app.name}</h3>
+                            <span class="app-category">${app.category}</span>
+                        </div>
+                    </div>
+                    <div class="app-card-body">
+                        <p>${app.shortDesc}</p>
+                    </div>
+                    <div class="app-card-footer">
+                        <div class="app-rating">★ ${app.rating}</div>
+                        <div class="app-platform">${platformBadges}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initApps() {
+            const homeGrid = document.getElementById('homeAppsGrid');
+            const allGrid = document.getElementById('allAppsGrid');
+
+            // Home: show all apps
+            homeGrid.innerHTML = apps.map(renderAppCard).join('');
+            // Apps page: show all
+            allGrid.innerHTML = apps.map(renderAppCard).join('');
+
+            // Populate support form app select
+            const appSelect = document.getElementById('app');
+            apps.forEach(app => {
+                const opt = document.createElement('option');
+                opt.value = app.id;
+                opt.textContent = app.name;
+                appSelect.appendChild(opt);
+            });
+            const otherOpt = document.createElement('option');
+            otherOpt.value = 'other';
+            otherOpt.textContent = 'Otra / General';
+            appSelect.appendChild(otherOpt);
+        }
+
+        // ─── MODAL ──────────────────────────────────
+        function openModal(appId) {
+            const app = apps.find(a => a.id === appId);
+            if (!app) return;
+
+            document.getElementById('modalIcon').style.background = app.iconBg;
+            document.getElementById('modalIcon').innerHTML = `<img src="${app.logo}" alt="${app.name}" style="width: 100%; height: 100%; border-radius: 20px; object-fit: cover;">`;
+            document.getElementById('modalTitle').textContent = app.name;
+            document.getElementById('modalCategory').textContent = app.category;
+            document.getElementById('modalDescription').textContent = app.description;
+
+            // Stats
+            document.getElementById('modalStats').innerHTML = `
+                <div class="modal-stat">
+                    <div class="val">★ ${app.rating}</div>
+                    <div class="lbl">Calificación</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="val">${app.downloads}</div>
+                    <div class="lbl">Descargas</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="val">v${app.version}</div>
+                    <div class="lbl">Versión actual</div>
+                </div>
+            `;
+
+            // Screenshots
+            const screenshotsSection = document.getElementById('screenshotsSection');
+            if (app.screenshots && app.screenshots.length > 0) {
+                const screenshotsHTML = `
+                    <button class="screenshot-nav prev" onclick="scrollScreenshots('prev')" aria-label="Anterior">‹</button>
+                    <button class="screenshot-nav next" onclick="scrollScreenshots('next')" aria-label="Siguiente">›</button>
+                    <div class="screenshots-container" id="screenshotsContainer">
+                        ${app.screenshots.map((screenshot, i) =>
+                            `<div class="screenshot-wrapper">
+                                <img src="${screenshot}" 
+                                     alt="${app.name} - Imagen ${i + 1}" 
+                                     class="screenshot-image"
+                                     onclick="openLightbox(${i}, '${app.id}')">
+                            </div>`
+                        ).join('')}
+                    </div>
+                    <div class="screenshot-counter">
+                        <span id="screenshotCounter">1</span> / ${app.screenshots.length}
+                    </div>
+                `;
+                screenshotsSection.innerHTML = `<h3>🖼️ Vista previa</h3><div class="modal-screenshots" id="modalScreenshots">${screenshotsHTML}</div>`;
+                
+                // Store screenshots for lightbox
+                window.currentAppScreenshots = app.screenshots;
+                window.currentAppName = app.name;
+                
+                // Add scroll listener for counter
+                setTimeout(() => {
+                    const container = document.getElementById('screenshotsContainer');
+                    if (container) {
+                        container.addEventListener('scroll', updateScreenshotCounter);
+                    }
+                }, 100);
+            } else {
+                screenshotsSection.innerHTML = `
+                    <h3>🖼️ Vista previa</h3>
+                    <div class="modal-screenshots">
+                        <div class="screenshots-container">
+                            <div class="screenshot-placeholder">📸 Próximamente</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Features
+            document.getElementById('modalFeatures').innerHTML = app.features.map(f =>
+                `<li>${f}</li>`
+            ).join('');
+
+            // Tech info
+            document.getElementById('modalTechInfo').textContent = app.techInfo;
+
+            // Actions
+            const platformLinks = app.platforms.map(p => {
+                if (p === 'iOS') {
+                    return `<a href="#" class="btn btn-primary" onclick="event.preventDefault()">
+                        <span>🍎</span> App Store
+                    </a>`;
+                }
+                return `<a href="#" class="btn btn-secondary" onclick="event.preventDefault()">
+                    <span>🤖</span> Google Play
+                </a>`;
+            }).join('');
+            document.getElementById('modalActions').innerHTML = platformLinks +
+                `<a href="#" class="btn btn-ghost" onclick="event.preventDefault(); closeModal(); showPage('support');">
+                    💬 Soporte
+                </a>`;
+
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOutside(e) {
+            if (e.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        }
+
+        // ─── SCREENSHOTS & LIGHTBOX ─────────────────
+        let currentLightboxIndex = 0;
+
+        function scrollScreenshots(direction) {
+            const container = document.getElementById('screenshotsContainer');
+            if (!container) return;
+            
+            const scrollAmount = 196; // 180px width + 16px gap
+            if (direction === 'prev') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function updateScreenshotCounter() {
+            const container = document.getElementById('screenshotsContainer');
+            const counter = document.getElementById('screenshotCounter');
+            if (!container || !counter) return;
+
+            const scrollLeft = container.scrollLeft;
+            const itemWidth = 196; // 180px + 16px gap
+            const currentIndex = Math.round(scrollLeft / itemWidth) + 1;
+            counter.textContent = currentIndex;
+        }
+
+        function openLightbox(index, appId) {
+            currentLightboxIndex = index;
+            const screenshots = window.currentAppScreenshots;
+            const appName = window.currentAppName;
+            
+            if (!screenshots || screenshots.length === 0) return;
+            
+            const lightbox = document.getElementById('lightboxOverlay');
+            const img = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            
+            img.src = screenshots[index];
+            img.alt = `${appName} - Imagen ${index + 1}`;
+            counter.textContent = `${index + 1} / ${screenshots.length}`;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (e && e.target !== document.getElementById('lightboxOverlay') && e.type === 'click') {
+                return;
+            }
+            document.getElementById('lightboxOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            const screenshots = window.currentAppScreenshots;
+            if (!screenshots) return;
+            
+            currentLightboxIndex += direction;
+            
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = screenshots.length - 1;
+            } else if (currentLightboxIndex >= screenshots.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const img = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            const appName = window.currentAppName;
+            
+            img.src = screenshots[currentLightboxIndex];
+            img.alt = `${appName} - Imagen ${currentLightboxIndex + 1}`;
+            counter.textContent = `${currentLightboxIndex + 1} / ${screenshots.length}`;
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightboxOverlay');
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+
+        // ─── NAVIGATION ─────────────────────────────
+        function showPage(page) {
+            // Hide all
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`page-${page}`).classList.add('active');
+
+            // Update nav active state
+            document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+                a.classList.toggle('active', a.dataset.page === page);
+            });
+
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('menuIcon').textContent = '☰';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update URL hash
+            history.pushState(null, '', `#${page}`);
+        }
+
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            const icon = document.getElementById('menuIcon');
+            nav.classList.toggle('open');
+            icon.textContent = nav.classList.contains('open') ? '✕' : '☰';
+        }        // ─── NAVBAR SCROLL ──────────────────────────
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // ─── THEME TOGGLE ───────────────────────────
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            body.classList.toggle('light-mode');
+            
+            // Update icon
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeIcon.textContent = '☀️';
+            } else {
+                themeIcon.textContent = '🌙';
+            }
+        }
+
+        // ─── FAQ ─────────────────────────────────────
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = item.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(fi => {
+                fi.classList.remove('open');
+                fi.querySelector('.faq-answer').style.maxHeight = '0';
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        }
+
+        // ─── FORM ───────────────────────────────────
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const name = form.querySelector('#name').value;
+            const email = form.querySelector('#email').value;
+            const appVal = form.querySelector('#app').value;
+            const topic = form.querySelector('#topic').value;
+            const subject = form.querySelector('#subject').value;
+            const message = form.querySelector('#message').value;
+
+            const appName = appVal === 'other' ? 'General' : (apps.find(a => a.id === appVal)?.name || appVal);
+            const topicLabel = form.querySelector('#topic option:checked')?.textContent || topic;
+
+            // Build mailto
+            const mailSubject = encodeURIComponent(`[${appName}] ${topicLabel}: ${subject}`);
+            const mailBody = encodeURIComponent(
+                `Nombre: ${name}\n` +
+                `Email: ${email}\n` +
+                `Aplicación: ${appName}\n` +
+                `Tema: ${topicLabel}\n` +
+                `Asunto: ${subject}\n\n` +
+                `Mensaje:\n${message}\n\n` +
+                `---\nEnviado desde surcagua.com/soporte`
+            );
+
+            window.location.href = `mailto:support@surcaguastudio.com?subject=${mailSubject}&body=${mailBody}`;
+
+            // Show success
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('formSuccess').classList.add('show');
+        }
+
+        function resetForm() {
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('formSuccess').classList.remove('show');
+            document.querySelector('#contactForm form').reset();
+        }
+
+        // ─── KEYBOARD ───────────────────────────────
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightboxOverlay');
+            const modal = document.getElementById('modalOverlay');
+            
+            if (e.key === 'Escape') {
+                if (lightbox && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                } else if (modal && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            }
+        });
+
+        // ─── HASH ROUTING ───────────────────────────
+        function handleHash() {
+            const hash = window.location.hash.replace('#', '');
+            if (['home', 'apps', 'support'].includes(hash)) {
+                showPage(hash);
+            }
+        }
+
+        window.addEventListener('hashchange', handleHash);        // ─── INIT ───────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            initApps();
+            handleHash();
+        });
+    </script>
+</body>
+</html>
