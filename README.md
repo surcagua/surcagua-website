@@ -28,8 +28,10 @@ La app definitiva para parejas: chat privado, álbum compartido, aniversario, ma
 - **HTML5** - Estructura semántica
 - **CSS3** - Diseño moderno con variables CSS y animaciones
 - **JavaScript Vanilla** - Sin dependencias, código limpio
-- **Cloudflare Pages** - Hosting y despliegue
-- **Cloudflare Email Routing** - Email profesional
+- **Cloudflare Workers** - Hosting con Static Assets (2026)
+- **Cloudflare Email Routing** - Email profesional gratuito
+- **FormSubmit** - Envío de formularios sin backend
+- **Git Integration** - Deploy automático desde GitHub
 
 ---
 
@@ -39,10 +41,13 @@ La app definitiva para parejas: chat privado, álbum compartido, aniversario, ma
 - ✅ Modo oscuro/claro
 - ✅ Galería de capturas con lightbox profesional
 - ✅ Navegación fluida SPA-style
+- ✅ Formulario de contacto funcional (envío directo)
+- ✅ Email profesional con forwarding a Gmail
 - ✅ Optimizado para SEO
 - ✅ Rendimiento ultrarrápido
 - ✅ SSL/HTTPS incluido
-- ✅ CDN global
+- ✅ CDN global (200+ ubicaciones)
+- ✅ Deploy automático con Git
 
 ---
 
@@ -50,7 +55,7 @@ La app definitiva para parejas: chat privado, álbum compartido, aniversario, ma
 
 ```
 surcagua/
-├── index.html              # Página principal
+├── index.html              # Página principal (SPA)
 ├── assets/                 # Recursos estáticos
 │   ├── budgely/
 │   │   ├── budgely.png
@@ -63,19 +68,35 @@ surcagua/
 │   └── tuyyo/
 │       ├── tuyyo.png
 │       └── capturas/
-├── DEPLOYMENT.md           # Guía de despliegue
-└── README.md              # Este archivo
+├── DEPLOYMENT.md           # Guía completa de despliegue
+├── FORM-SETUP.md           # Configuración del formulario
+├── EMAIL-SETUP.md          # Setup de email forwarding
+├── GIT-GUIDE.md            # Comandos de Git
+├── CHECKLIST.md            # Lista de verificación
+├── NEXT-STEPS.md           # Próximos pasos después del deploy
+├── HOSTING-COMPARISON.md   # Comparativa de opciones
+└── README.md               # Este archivo
 ```
 
 ---
 
 ## 🚀 Despliegue
 
-Este sitio está desplegado automáticamente en **Cloudflare Pages**.
+Este sitio está desplegado en **Cloudflare Workers con Static Assets** (2026).
 
-Cada push a la rama `main` despliega automáticamente a producción.
+**Deploy automático:** Cada push a la rama `main` despliega automáticamente a producción en 1-2 minutos.
 
-📖 **Guía completa:** Ver [DEPLOYMENT.md](DEPLOYMENT.md)
+**Servicios configurados:**
+- ✅ Hosting: Cloudflare Workers (gratis)
+- ✅ Email: Cloudflare Email Routing (gratis)
+- ✅ Formulario: FormSubmit (gratis e ilimitado)
+- ✅ SSL/TLS: Automático (gratis)
+- ✅ CDN: Global (gratis)
+
+📖 **Guías completas:**
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Setup completo paso a paso
+- [FORM-SETUP.md](FORM-SETUP.md) - Activar formulario de contacto
+- [NEXT-STEPS.md](NEXT-STEPS.md) - Qué hacer después del deploy
 
 ---
 

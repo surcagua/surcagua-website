@@ -422,6 +422,20 @@
             transform: translateY(-2px);
         }
 
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-primary .btn-loading {
+            display: none;
+        }
+
+        .btn-primary:disabled .btn-loading {
+            display: inline;
+        }
+
         .btn-secondary {
             background: var(--bg-card);
             color: var(--text-primary);
@@ -1728,7 +1742,12 @@
                 <div id="contactForm">
                     <h2>Envíanos un mensaje</h2>
                     <p>Completa el formulario y nuestro equipo se pondrá en contacto contigo lo antes posible.</p>
-                    <form onsubmit="handleFormSubmit(event)">
+                    <form id="supportForm" onsubmit="handleFormSubmit(event)">
+                        <!-- Campos ocultos para FormSubmit -->
+                        <input type="hidden" name="_subject" id="_subject" value="Nueva consulta de soporte">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="name">Nombre completo</label>
@@ -1740,35 +1759,38 @@
                             </div>
                             <div class="form-group">
                                 <label for="app">Aplicación</label>
-                                <select id="app" name="app" required>
+                                <select id="app" name="Aplicación" required>
                                     <option value="">Seleccionar app...</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="topic">Tema</label>
-                                <select id="topic" name="topic" required>
+                                <select id="topic" name="Tema" required>
                                     <option value="">Seleccionar tema...</option>
-                                    <option value="bug">Reporte de error</option>
-                                    <option value="feature">Solicitud de función</option>
-                                    <option value="account">Problema con cuenta</option>
-                                    <option value="billing">Facturación / Compras</option>
-                                    <option value="privacy">Privacidad de datos</option>
-                                    <option value="delete">Eliminación de datos</option>
-                                    <option value="other">Otro</option>
+                                    <option value="Reporte de error">Reporte de error</option>
+                                    <option value="Solicitud de función">Solicitud de función</option>
+                                    <option value="Problema con cuenta">Problema con cuenta</option>
+                                    <option value="Facturación / Compras">Facturación / Compras</option>
+                                    <option value="Privacidad de datos">Privacidad de datos</option>
+                                    <option value="Eliminación de datos">Eliminación de datos</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                             </div>
                             <div class="form-group full-width">
                                 <label for="subject">Asunto</label>
-                                <input type="text" id="subject" name="subject" placeholder="Describe brevemente tu consulta" required>
+                                <input type="text" id="subject" name="Asunto" placeholder="Describe brevemente tu consulta" required>
                             </div>
                             <div class="form-group full-width">
                                 <label for="message">Mensaje</label>
-                                <textarea id="message" name="message" placeholder="Cuéntanos los detalles de tu consulta. Incluye versión de la app, dispositivo y sistema operativo si aplica." required></textarea>
+                                <textarea id="message" name="Mensaje" placeholder="Cuéntanos los detalles de tu consulta. Incluye versión de la app, dispositivo y sistema operativo si aplica." required></textarea>
                             </div>
                         </div>
                         <div class="form-submit">
                             <span class="privacy-note">🔒 Tu información será tratada de forma confidencial conforme a nuestra política de privacidad.</span>
-                            <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span class="btn-text">Enviar mensaje →</span>
+                                <span class="btn-loading" style="display: none;">Enviando...</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -2323,43 +2345,70 @@
         }
 
         // ─── FORM ───────────────────────────────────
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
 
             const form = e.target;
-            const name = form.querySelector('#name').value;
-            const email = form.querySelector('#email').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+
+            // Get form values
             const appVal = form.querySelector('#app').value;
+            const appName = appVal === 'other' ? 'General' : (apps.find(a => a.id === appVal)?.name || appVal);
+            
+            // Update subject with app info
             const topic = form.querySelector('#topic').value;
             const subject = form.querySelector('#subject').value;
-            const message = form.querySelector('#message').value;
+            document.getElementById('_subject').value = `[${appName}] ${topic}: ${subject}`;
 
-            const appName = appVal === 'other' ? 'General' : (apps.find(a => a.id === appVal)?.name || appVal);
-            const topicLabel = form.querySelector('#topic option:checked')?.textContent || topic;
+            // Show loading
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
 
-            // Build mailto
-            const mailSubject = encodeURIComponent(`[${appName}] ${topicLabel}: ${subject}`);
-            const mailBody = encodeURIComponent(
-                `Nombre: ${name}\n` +
-                `Email: ${email}\n` +
-                `Aplicación: ${appName}\n` +
-                `Tema: ${topicLabel}\n` +
-                `Asunto: ${subject}\n\n` +
-                `Mensaje:\n${message}\n\n` +
-                `---\nEnviado desde surcagua.com/soporte`
-            );
+            try {
+                // Send via FormSubmit
+                const formData = new FormData(form);
+                const response = await fetch('https://formsubmit.co/support@surcaguastudio.com', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
 
-            window.location.href = `mailto:support@surcaguastudio.com?subject=${mailSubject}&body=${mailBody}`;
-
-            // Show success
-            document.getElementById('contactForm').style.display = 'none';
-            document.getElementById('formSuccess').classList.add('show');
+                if (response.ok) {
+                    // Show success
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('formSuccess').classList.add('show');
+                } else {
+                    throw new Error('Error al enviar el formulario');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Hubo un error al enviar el mensaje. Por favor, intenta nuevamente o envía un correo directamente a support@surcaguastudio.com');
+                
+                // Reset button
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
         }
 
         function resetForm() {
             document.getElementById('contactForm').style.display = 'block';
             document.getElementById('formSuccess').classList.remove('show');
-            document.querySelector('#contactForm form').reset();
+            const form = document.querySelector('#supportForm');
+            form.reset();
+            
+            // Reset button state
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
         }
 
         // ─── KEYBOARD ───────────────────────────────
