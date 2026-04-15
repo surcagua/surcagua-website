@@ -1430,13 +1430,313 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.35s ease;
-        }
-
-        .faq-answer-inner {
+        }        .faq-answer-inner {
             padding: 0 24px 20px;
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════
+           LEGAL PAGES (TERMS & PRIVACY)
+        ═══════════════════════════════════════════ */
+        .legal-content {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 48px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .legal-intro {
+            padding: 24px;
+            background: rgba(108, 99, 255, 0.05);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: var(--radius-sm);
+            margin-bottom: 40px;
+        }
+
+        .legal-intro p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .legal-section {
+            margin-bottom: 40px;
+        }
+
+        .legal-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .legal-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .legal-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .legal-section ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .legal-section li {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .legal-section li strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .legal-footer {
+            margin-top: 48px;
+            padding: 24px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }        .legal-footer p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* ═══════════════════════════════════════════
+           ABOUT PAGE
+        ═══════════════════════════════════════════ */
+        .about-hero {
+            text-align: center;
+            padding: 120px 24px 60px;
+        }
+
+        .about-hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .about-hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .about-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .about-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-section h2 .icon {
+            font-size: 32px;
+        }
+
+        .about-section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .about-stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .about-stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .about-stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+            margin-top: 24px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--bg-card);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .value-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .value-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .value-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .value-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .team-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .team-role {
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
         /* ═══════════════════════════════════════════
@@ -1891,9 +2191,7 @@
             .faq-answer {
                 font-size: 14px;
                 padding: 0 16px 16px;
-            }
-
-            /* Footer */
+            }            /* Footer */
             .footer-inner {
                 flex-direction: column;
                 text-align: center;
@@ -1903,6 +2201,56 @@
             .footer-links {
                 flex-direction: column;
                 gap: 12px;
+            }            /* Legal pages */
+            .legal-content {
+                padding: 24px;
+            }
+
+            .legal-section h2 {
+                font-size: 20px;
+            }
+
+            .legal-section h3 {
+                font-size: 16px;
+            }
+
+            .legal-section p,
+            .legal-section li {
+                font-size: 13px;
+            }
+
+            /* About page */
+            .about-hero {
+                padding: 90px 20px 40px;
+            }
+
+            .about-hero h1 {
+                font-size: 36px;
+            }
+
+            .about-hero p {
+                font-size: 15px;
+            }
+
+            .about-section {
+                padding: 28px 24px;
+            }
+
+            .about-section h2 {
+                font-size: 22px;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 24px;
+            }
+
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
             }
 
             /* Orbs - Reduce on mobile for performance */
@@ -1999,15 +2347,57 @@
                 width: 70px;
                 height: 70px;
                 font-size: 32px;
-            }
-
-            .support-form-wrapper {
+            }            .support-form-wrapper {
                 padding: 20px;
             }
 
             .btn {
                 padding: 12px 24px;
                 font-size: 14px;
+            }            /* Legal pages - smaller screens */
+            .legal-content {
+                padding: 20px;
+            }
+
+            .legal-intro {
+                padding: 16px;
+            }
+
+            .legal-section {
+                margin-bottom: 28px;
+            }
+
+            .legal-section h2 {
+                font-size: 18px;
+            }
+
+            .legal-section h3 {
+                font-size: 15px;
+            }
+
+            .legal-footer {
+                padding: 20px;
+            }
+
+            /* About page - smaller screens */
+            .about-hero {
+                padding: 80px 16px 32px;
+            }
+
+            .about-hero h1 {
+                font-size: 32px;
+            }
+
+            .about-section {
+                padding: 24px 20px;
+            }
+
+            .about-section h2 {
+                font-size: 20px;
+            }
+
+            .about-stat-number {
+                font-size: 30px;
             }
 
             /* Reduce orb effects for better performance */
@@ -2115,13 +2505,14 @@
         <div class="navbar-inner">
             <a href="#" class="logo" onclick="showPage('home')">
                 <div class="logo-icon">S</div>
-                <span class="logo-text">Surcagua</span>
-            </a>
-
-            <div class="nav-center" id="navLinks">
+                <span class="logo-text">Surcagua Studio</span>
+            </a>            <div class="nav-center" id="navLinks">
                 <a href="#" class="nav-link active" data-page="home" onclick="showPage('home')">Inicio</a>
                 <a href="#" class="nav-link" data-page="apps" onclick="showPage('apps')">Apps</a>
+                <a href="#" class="nav-link" data-page="about" onclick="showPage('about')">Acerca de</a>
                 <a href="#" class="nav-link" data-page="support" onclick="showPage('support')">Soporte</a>
+                <a href="#" class="nav-link" data-page="terms" onclick="showPage('terms')">Términos</a>
+                <a href="#" class="nav-link" data-page="privacy" onclick="showPage('privacy')">Privacidad</a>
             </div>
 
             <div class="nav-actions">
@@ -2142,20 +2533,19 @@
     <!-- ═══════════════════════════════════════════
          HOME PAGE
     ═══════════════════════════════════════════ -->
-    <section class="page-section active" id="page-home">
-        <div class="hero">
+    <section class="page-section active" id="page-home">        <div class="hero">
             <div class="hero-badge">
                 <span class="dot"></span>
-                Innovación móvil desde Honduras
+                Innovación móvil desde Honduras 🇭🇳
             </div>
             <h1>Creamos apps que<br><span class="gradient-text">transforman ideas</span></h1>
-            <p>En Surcagua diseñamos y desarrollamos aplicaciones móviles de alto rendimiento. Explora nuestro portafolio y descubre soluciones que impactan.</p>
+            <p>Somos Surcagua Studios, un estudio indie hondureño fundado en 2025. Diseñamos y desarrollamos aplicaciones móviles de alto rendimiento para iOS (y próximamente Android) que mejoran la vida de miles de personas.</p>
             <div class="hero-actions">
                 <a href="#" class="btn btn-primary" onclick="showPage('apps')">
                     <span>🚀</span> Ver aplicaciones
                 </a>
-                <a href="#" class="btn btn-secondary" onclick="showPage('support')">
-                    <span>💬</span> Contactar soporte
+                <a href="#" class="btn btn-secondary" onclick="showPage('about')">
+                    <span>✨</span> Conocer más
                 </a>
             </div>
         </div>
@@ -2166,11 +2556,11 @@
                 <div class="stat-label">Apps publicadas</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">29.5K+</div>
+                <div class="stat-number">∞+</div>
                 <div class="stat-label">Descargas totales</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">4.7★</div>
+                <div class="stat-number">∞★</div>
                 <div class="stat-label">Calificación promedio</div>
             </div>
         </div>
@@ -2197,6 +2587,185 @@
         <div class="section-container">
             <div class="apps-grid" id="allAppsGrid">
                 <!-- Populated by JS -->
+            </div>
+        </div>    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ABOUT PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section" id="page-about">
+        <div class="about-hero">
+            <h1>Acerca de <span class="gradient-text">Surcagua Studios</span></h1>
+            <p>Un estudio indie hondureño dedicado a crear aplicaciones móviles innovadoras que mejoran la vida de las personas.</p>
+        </div>
+
+        <div class="about-content">
+            <!-- Nuestra Historia -->
+            <div class="about-section">
+                <h2><span class="icon">🚀</span> Nuestra Historia</h2>
+                <p>
+                    <strong>Surcagua Studios</strong> fue fundado el <strong>2 de abril de 2025</strong> en Honduras con una visión clara: democratizar el acceso a aplicaciones móviles de calidad que resuelvan problemas reales. Nacimos como un estudio independiente (indie) impulsado por la pasión por la tecnología y el diseño.
+                </p>
+                <p>
+                    Desde nuestros inicios, nos hemos enfocado en el ecosistema <strong>iOS</strong>, desarrollando aplicaciones nativas de alto rendimiento para iPhone y iPad. Actualmente, estamos expandiendo nuestras capacidades hacia <strong>Android</strong>, con el objetivo de llevar nuestras soluciones a una audiencia global más amplia.
+                </p>
+                <p>
+                    Cada app refleja nuestro compromiso con la calidad, la privacidad del usuario y la experiencia de usuario excepcional.
+                </p>
+            </div>
+
+            <!-- Misión y Visión -->
+            <div class="about-section">
+                <h2><span class="icon">🎯</span> Misión y Visión</h2>
+                <p><strong>Misión:</strong></p>
+                <p>
+                    Desarrollar aplicaciones móviles innovadoras, intuitivas y accesibles que empoderen a las personas para gestionar mejor sus finanzas, proteger su privacidad, expresar su creatividad y fortalecer sus relaciones personales.
+                </p>
+                <p><strong>Visión:</strong></p>
+                <p>
+                    Convertirnos en el estudio indie de referencia en América Latina, reconocido por crear soluciones móviles de calidad mundial que combinan diseño excepcional, tecnología de vanguardia y un profundo respeto por la privacidad del usuario.
+                </p>
+            </div>
+
+            <!-- Valores -->
+            <div class="about-section">
+                <h2><span class="icon">💎</span> Nuestros Valores</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">🔒</div>
+                        <div class="value-title">Privacidad Primero</div>
+                        <div class="value-desc">Los datos de nuestros usuarios son sagrados. Priorizamos el almacenamiento local y la encriptación robusta.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">✨</div>
+                        <div class="value-title">Diseño Excepcional</div>
+                        <div class="value-desc">Cada pixel importa. Creamos interfaces hermosas, intuitivas y accesibles para todos.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">⚡</div>
+                        <div class="value-title">Alto Rendimiento</div>
+                        <div class="value-desc">Aplicaciones rápidas, fluidas y optimizadas que funcionan perfectamente en cualquier dispositivo.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🌱</div>
+                        <div class="value-title">Innovación Constante</div>
+                        <div class="value-desc">Escuchamos a nuestra comunidad y mejoramos continuamente basados en feedback real.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <div class="value-title">Transparencia</div>
+                        <div class="value-desc">Comunicación clara y honesta con nuestros usuarios sobre funcionalidades y datos.</div>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🇭🇳</div>
+                        <div class="value-title">Orgullo Hondureño</div>
+                        <div class="value-desc">Representamos a Honduras en el mundo tech con productos de clase mundial.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Línea de Tiempo -->
+            <div class="about-section">
+                <h2><span class="icon">📅</span> Nuestra Trayectoria</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Abril 2025</div>
+                        <div class="timeline-title">🎉 Fundación de Surcagua Studios</div>
+                        <div class="timeline-desc">Nace el sueño de crear apps que impacten. Establecemos nuestra base en Honduras y definimos nuestra visión.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Abril 2026</div>
+                        <div class="timeline-title">🎂 Primer Aniversario</div>
+                        <div class="timeline-desc">Celebramos un año de innovación: 4 apps publicadas, 29.5K+ descargas totales y una comunidad creciente.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 - 2027</div>
+                        <div class="timeline-title">🚀 Expansión a Android</div>
+                        <div class="timeline-desc">En desarrollo: Versiones Android de nuestras apps y nuevas funcionalidades cross-platform.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="about-section">
+                <h2><span class="icon">📊</span> Impacto y Números</h2>
+                <p>Estos son los números que reflejan nuestro crecimiento y el impacto de nuestras aplicaciones:</p>
+                <div class="about-stats">
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">∞+</div>
+                        <div class="about-stat-label">Año en el mercado</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">4</div>
+                        <div class="about-stat-label">Apps publicadas</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">∞+</div>
+                        <div class="about-stat-label">Descargas totales</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">∞★</div>
+                        <div class="about-stat-label">Calificación promedio</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">2</div>
+                        <div class="about-stat-label">Plataformas (iOS, Android próximamente)</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-number">100%</div>
+                        <div class="about-stat-label">Indie & Hondureño</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tecnología -->
+            <div class="about-section">
+                <h2><span class="icon">⚙️</span> Tecnología y Stack</h2>
+                <p>
+                    Utilizamos las tecnologías más modernas y confiables para garantizar aplicaciones de alto rendimiento, seguras y escalables:
+                </p>
+                <p>
+                    <strong>Desarrollo iOS:</strong> Swift nativo, SwiftUI, UIKit<br>
+                    <strong>Desarrollo Cross-platform:</strong> Flutter, Firebase<br>
+                    <strong>Backend & Cloud:</strong> Firebase, Cloudflare<br>
+                    <strong>Seguridad:</strong> Encriptación AES-256, biometría, almacenamiento seguro<br>
+                    <strong>Análisis:</strong> Firebase Analytics, App Store Connect Analytics
+                </p>
+            </div>
+
+            <!-- Por qué elegirnos -->
+            <div class="about-section">
+                <h2><span class="icon">🌟</span> ¿Por qué Surcagua Studios?</h2>
+                <p>Como estudio indie, tenemos la agilidad y libertad creativa que los grandes estudios no pueden ofrecer:</p>
+                <p>
+                    ✓ <strong>Desarrollo ágil:</strong> Lanzamos actualizaciones frecuentes basadas en feedback real<br>
+                    ✓ <strong>Soporte personalizado:</strong> Respondemos personalmente a cada consulta<br>
+                    ✓ <strong>Sin publicidad invasiva:</strong> Nuestro modelo no depende de anuncios molestos<br>
+                    ✓ <strong>Privacidad garantizada:</strong> No vendemos ni compartimos datos de usuarios<br>
+                    ✓ <strong>Diseño diferenciado:</strong> Cada app tiene personalidad y atención al detalle<br>
+                    ✓ <strong>Comunidad activa:</strong> Escuchamos y valoramos cada sugerencia
+                </p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="about-section">
+                <h2><span class="icon">📧</span> Conecta con Nosotros</h2>
+                <p>
+                    Nos encantaría escuchar de ti. Ya sea que tengas preguntas, sugerencias, reportes de errores o simplemente quieras saludar, estamos aquí para ti.
+                </p>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a><br>
+                    <strong>Ubicación:</strong> Honduras, Centroamérica 🇭🇳<br>
+                    <strong>Horario:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM (PET)
+                </p>
+                <p style="margin-top: 24px;">
+                    <a href="#" class="btn btn-primary" onclick="showPage('support'); return false;">
+                        <span>💬</span> Ir a Soporte
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="showPage('apps'); return false;" style="margin-left: 12px;">
+                        <span>📱</span> Ver Aplicaciones
+                    </a>
+                </p>
             </div>
         </div>
     </section>
@@ -2367,6 +2936,293 @@
                     <br>
                     <button class="btn btn-secondary" onclick="resetForm()">Enviar otro mensaje</button>
                 </div>
+            </div>        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         TERMS & CONDITIONS PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section" id="page-terms">
+        <div class="hero" style="padding-bottom: 40px;">
+            <h1>Términos y <span class="gradient-text">Condiciones</span></h1>
+            <p>Última actualización: Diciembre 2024</p>
+        </div>
+
+        <div class="section-container" style="max-width: 900px;">
+            <div class="legal-content">
+                <div class="legal-intro">
+                    <p>Bienvenido a Surcagua. Al utilizar nuestras aplicaciones y servicios, aceptas cumplir con los siguientes términos y condiciones. Te recomendamos leer este documento detenidamente.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>1. Aceptación de los Términos</h2>
+                    <p>Al descargar, instalar o utilizar cualquiera de nuestras aplicaciones, aceptas estar legalmente vinculado por estos Términos y Condiciones. Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestras aplicaciones.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>2. Uso de las Aplicaciones</h2>
+                    <p>Nuestras aplicaciones están diseñadas para uso personal y profesional. Te otorgamos una licencia limitada, no exclusiva y no transferible para usar las aplicaciones de acuerdo con estos términos.</p>
+                    <p><strong>Comprometes a:</strong></p>
+                    <ul>
+                        <li>Utilizar las aplicaciones solo para fines legales y autorizados</li>
+                        <li>No realizar ingeniería inversa, descompilar o intentar extraer el código fuente</li>
+                        <li>No utilizar las aplicaciones de manera que pueda dañar, deshabilitar o sobrecargar nuestros servicios</li>
+                        <li>No vender, sublicenciar, alquilar o distribuir las aplicaciones sin autorización</li>
+                        <li>Proporcionar información veraz y actualizada al crear cuentas o perfiles</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>3. Propiedad Intelectual</h2>
+                    <p>Todas las aplicaciones, contenido, marcas, logotipos, gráficos y código son propiedad de Surcagua y están protegidos por leyes de derechos de autor y propiedad intelectual internacionales.</p>
+                    <p>No está permitido copiar, modificar, distribuir, vender o alquilar ninguna parte de nuestras aplicaciones sin el consentimiento previo por escrito de Surcagua.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>4. Privacidad y Protección de Datos</h2>
+                    <p>Tu privacidad es importante para nosotros. El uso de nuestras aplicaciones también está sujeto a nuestra <a href="#" onclick="showPage('privacy'); return false;" style="color: var(--accent-primary); text-decoration: underline;">Política de Privacidad</a>, que describe cómo recopilamos, usamos y protegemos tu información personal.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>5. Compras y Suscripciones</h2>
+                    <p>Algunas de nuestras aplicaciones pueden ofrecer funciones premium, compras dentro de la app o suscripciones. Los pagos se procesan a través de Apple App Store o Google Play Store según la plataforma utilizada.</p>
+                    <p><strong>Políticas de pago:</strong></p>
+                    <ul>
+                        <li>Los precios están sujetos a cambios sin previo aviso</li>
+                        <li>Las suscripciones se renuevan automáticamente a menos que se cancelen antes del período de renovación</li>
+                        <li>Los reembolsos están sujetos a las políticas de la tienda de aplicaciones correspondiente</li>
+                        <li>Eres responsable de cualquier cargo aplicado por tu proveedor de servicios móviles</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>6. Disponibilidad y Mantenimiento</h2>
+                    <p>Nos esforzamos por mantener nuestras aplicaciones disponibles, pero no garantizamos que estarán libres de errores o que funcionarán sin interrupciones. Podemos realizar mantenimientos, actualizaciones o suspender temporalmente el servicio cuando sea necesario.</p>
+                    <p>No seremos responsables por pérdidas o daños derivados de la indisponibilidad temporal de nuestras aplicaciones.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>7. Limitación de Responsabilidad</h2>
+                    <p>En la máxima medida permitida por la ley, Surcagua no será responsable de daños directos, indirectos, incidentales, especiales, consecuentes o punitivos que resulten del uso o la imposibilidad de usar nuestras aplicaciones, incluyendo pero no limitado a:</p>
+                    <ul>
+                        <li>Pérdida de datos o contenido</li>
+                        <li>Errores, interrupciones o fallos en el servicio</li>
+                        <li>Uso no autorizado de tu cuenta o información personal</li>
+                        <li>Problemas de compatibilidad con tu dispositivo o sistema operativo</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>8. Modificaciones de las Aplicaciones</h2>
+                    <p>Nos reservamos el derecho de modificar, actualizar o descontinuar cualquier aspecto de nuestras aplicaciones en cualquier momento, sin previo aviso. Esto incluye funciones, contenido, interfaz de usuario y términos de uso.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>9. Terminación de Cuenta</h2>
+                    <p>Podemos suspender o terminar tu acceso a nuestras aplicaciones si:</p>
+                    <ul>
+                        <li>Violas estos Términos y Condiciones</li>
+                        <li>Proporcionas información falsa o fraudulenta</li>
+                        <li>Tu uso pone en riesgo la seguridad o integridad de nuestros sistemas</li>
+                        <li>Lo requerimos por ley o por solicitud de autoridades</li>
+                    </ul>
+                    <p>También puedes solicitar la eliminación de tu cuenta contactando a <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a>.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>10. Enlaces a Terceros</h2>
+                    <p>Nuestras aplicaciones pueden contener enlaces a sitios web o servicios de terceros. No somos responsables del contenido, políticas de privacidad o prácticas de estos sitios externos. El acceso a enlaces de terceros es bajo tu propio riesgo.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>11. Jurisdicción y Ley Aplicable</h2>
+                    <p>Estos Términos y Condiciones se rigen por las leyes de la República de Honduras. Cualquier disputa relacionada con estos términos se resolverá en los tribunales competentes de Honduras.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>12. Cambios en los Términos</h2>
+                    <p>Nos reservamos el derecho de actualizar estos Términos y Condiciones en cualquier momento. Te notificaremos de cambios significativos a través de nuestras aplicaciones o por correo electrónico. El uso continuado de nuestras aplicaciones después de cualquier modificación constituye tu aceptación de los nuevos términos.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>13. Contacto</h2>
+                    <p>Si tienes preguntas, comentarios o inquietudes sobre estos Términos y Condiciones, puedes contactarnos en:</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li><strong>Email:</strong> <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a></li>
+                        <li><strong>Sitio web:</strong> <a href="#" onclick="showPage('home'); return false;" style="color: var(--accent-primary);">Surcagua.com</a></li>
+                    </ul>
+                </div>
+
+                <div class="legal-footer">
+                    <p><strong>Al utilizar nuestras aplicaciones, confirmas que has leído, entendido y aceptado estos Términos y Condiciones.</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PRIVACY POLICY PAGE
+    ═══════════════════════════════════════════ -->
+    <section class="page-section" id="page-privacy">
+        <div class="hero" style="padding-bottom: 40px;">
+            <h1>Política de <span class="gradient-text">Privacidad</span></h1>
+            <p>Última actualización: Diciembre 2024</p>
+        </div>
+
+        <div class="section-container" style="max-width: 900px;">
+            <div class="legal-content">
+                <div class="legal-intro">
+                    <p>En Surcagua valoramos y respetamos tu privacidad. Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos tu información personal cuando utilizas nuestras aplicaciones.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>1. Información que Recopilamos</h2>
+                    <p>Dependiendo de la aplicación que utilices, podemos recopilar los siguientes tipos de información:</p>
+                    
+                    <h3>1.1. Información Personal</h3>
+                    <ul>
+                        <li><strong>Datos de cuenta:</strong> Nombre, dirección de correo electrónico, contraseña (encriptada)</li>
+                        <li><strong>Información de perfil:</strong> Foto de perfil, preferencias de usuario, configuraciones</li>
+                        <li><strong>Datos de contacto:</strong> Número de teléfono (si lo proporcionas voluntariamente)</li>
+                    </ul>
+
+                    <h3>1.2. Información de Uso</h3>
+                    <ul>
+                        <li><strong>Datos de actividad:</strong> Funciones utilizadas, tiempo de uso, interacciones dentro de la app</li>
+                        <li><strong>Información del dispositivo:</strong> Modelo, sistema operativo, versión de la app, idioma, identificador único del dispositivo</li>
+                        <li><strong>Datos de ubicación:</strong> Ubicación aproximada o precisa (solo si otorgas permiso)</li>
+                    </ul>
+
+                    <h3>1.3. Información Técnica y Analítica</h3>
+                    <ul>
+                        <li>Registros de errores y fallos (crash reports)</li>
+                        <li>Datos de rendimiento de la aplicación</li>
+                        <li>Información de red y conexión</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>2. Cómo Usamos tu Información</h2>
+                    <p>Utilizamos la información recopilada para los siguientes propósitos:</p>
+                    <ul>
+                        <li><strong>Proveer servicios:</strong> Permitir el funcionamiento de nuestras aplicaciones y sus funciones</li>
+                        <li><strong>Mejorar experiencia:</strong> Personalizar contenido, recomendaciones y configuraciones</li>
+                        <li><strong>Soporte técnico:</strong> Responder consultas, resolver problemas y ofrecer asistencia</li>
+                        <li><strong>Desarrollo y mejora:</strong> Analizar patrones de uso para optimizar funcionalidad y rendimiento</li>
+                        <li><strong>Seguridad:</strong> Detectar, prevenir y responder a fraudes, abuso o actividades ilegales</li>
+                        <li><strong>Comunicaciones:</strong> Enviar notificaciones, actualizaciones y mensajes relacionados con el servicio</li>
+                        <li><strong>Cumplimiento legal:</strong> Cumplir con obligaciones legales y regulatorias</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>3. Compartir Información con Terceros</h2>
+                    <p>No vendemos tu información personal a terceros. Podemos compartir información limitada en los siguientes casos:</p>
+                    
+                    <h3>3.1. Proveedores de Servicios</h3>
+                    <p>Trabajamos con proveedores externos que nos ayudan a operar nuestras aplicaciones, como servicios de alojamiento (hosting), analítica, procesamiento de pagos y notificaciones push. Estos proveedores están obligados contractualmente a proteger tu información.</p>
+
+                    <h3>3.2. Requisitos Legales</h3>
+                    <p>Podemos divulgar tu información si es requerido por ley, orden judicial, proceso legal o solicitud de autoridades gubernamentales.</p>
+
+                    <h3>3.3. Transferencia de Negocio</h3>
+                    <p>En caso de fusión, adquisición o venta de activos, tu información puede transferirse a la nueva entidad propietaria.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>4. Almacenamiento y Seguridad</h2>
+                    <p>Implementamos medidas de seguridad técnicas, administrativas y físicas para proteger tu información, incluyendo:</p>
+                    <ul>
+                        <li>Encriptación de datos en tránsito y en reposo</li>
+                        <li>Servidores seguros con acceso restringido</li>
+                        <li>Autenticación de dos factores cuando sea posible</li>
+                        <li>Auditorías de seguridad periódicas</li>
+                        <li>Protocolos de respuesta a incidentes</li>
+                    </ul>
+                    <p>Sin embargo, ningún método de transmisión por Internet o almacenamiento electrónico es 100% seguro. No podemos garantizar seguridad absoluta.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>5. Retención de Datos</h2>
+                    <p>Conservamos tu información personal mientras tu cuenta esté activa o mientras sea necesario para proporcionar nuestros servicios. Podemos retener ciertos datos por más tiempo si es requerido por ley o para resolver disputas.</p>
+                    <p>Cuando solicites la eliminación de tu cuenta, eliminaremos o anonimizaremos tu información personal dentro de 30 días, excepto cuando estemos obligados a retenerla por ley.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>6. Tus Derechos y Opciones</h2>
+                    <p>Dependiendo de tu ubicación, puedes tener los siguientes derechos respecto a tu información personal:</p>
+                    <ul>
+                        <li><strong>Acceso:</strong> Solicitar una copia de la información que tenemos sobre ti</li>
+                        <li><strong>Corrección:</strong> Actualizar o corregir información inexacta o incompleta</li>
+                        <li><strong>Eliminación:</strong> Solicitar la eliminación de tu cuenta y datos personales</li>
+                        <li><strong>Oposición:</strong> Oponerte al procesamiento de tus datos para ciertos propósitos</li>
+                        <li><strong>Portabilidad:</strong> Recibir tus datos en un formato estructurado y legible</li>
+                        <li><strong>Retirar consentimiento:</strong> Revocar permisos previamente otorgados</li>
+                    </ul>
+                    <p>Para ejercer estos derechos, contáctanos en <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a>.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>7. Privacidad de Menores</h2>
+                    <p>Nuestras aplicaciones no están dirigidas a menores de 13 años. No recopilamos intencionalmente información personal de niños menores de 13 años. Si descubrimos que hemos recopilado información de un menor sin el consentimiento parental verificable, eliminaremos esa información de inmediato.</p>
+                    <p>Si eres padre o tutor y crees que tu hijo nos ha proporcionado información personal, contáctanos para que podamos tomar las medidas apropiadas.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>8. Cookies y Tecnologías de Rastreo</h2>
+                    <p>Nuestras aplicaciones pueden utilizar tecnologías de rastreo como cookies, identificadores únicos y herramientas analíticas para:</p>
+                    <ul>
+                        <li>Recordar preferencias y configuraciones</li>
+                        <li>Analizar tendencias y uso de la aplicación</li>
+                        <li>Personalizar contenido y publicidad</li>
+                        <li>Mejorar la seguridad y prevenir fraudes</li>
+                    </ul>
+                    <p>Puedes controlar el uso de cookies a través de la configuración de tu dispositivo o navegador.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>9. Transferencias Internacionales</h2>
+                    <p>Tu información puede ser transferida y almacenada en servidores ubicados fuera de tu país de residencia, donde las leyes de protección de datos pueden ser diferentes. Al utilizar nuestras aplicaciones, consientes estas transferencias.</p>
+                    <p>Tomamos medidas para garantizar que tu información reciba un nivel adecuado de protección donde sea procesada.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>10. Cambios en esta Política</h2>
+                    <p>Podemos actualizar esta Política de Privacidad periódicamente para reflejar cambios en nuestras prácticas, tecnología o requisitos legales. Te notificaremos de cambios significativos a través de:</p>
+                    <ul>
+                        <li>Notificaciones dentro de la aplicación</li>
+                        <li>Correo electrónico (a la dirección registrada)</li>
+                        <li>Avisos en nuestro sitio web</li>
+                    </ul>
+                    <p>La versión actualizada entrará en vigor cuando se publique. Te recomendamos revisar esta política regularmente.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2>11. Servicios de Terceros</h2>
+                    <p>Nuestras aplicaciones pueden integrarse con servicios de terceros (como redes sociales, mapas, analítica). Estos servicios tienen sus propias políticas de privacidad que rigen el uso de tu información. No somos responsables de las prácticas de privacidad de terceros.</p>
+                    <p><strong>Servicios comúnmente integrados:</strong></p>
+                    <ul>
+                        <li>Google Analytics (analítica y métricas)</li>
+                        <li>Firebase (notificaciones push, autenticación)</li>
+                        <li>Apple Sign-In / Google Sign-In (inicio de sesión)</li>
+                        <li>Servicios de mapas y geolocalización</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2>12. Contacto</h2>
+                    <p>Si tienes preguntas, inquietudes o solicitudes relacionadas con esta Política de Privacidad o el manejo de tu información personal, puedes contactarnos:</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li><strong>Email:</strong> <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a></li>
+                        <li><strong>Asunto:</strong> "Consulta sobre privacidad"</li>
+                        <li><strong>Sitio web:</strong> <a href="#" onclick="showPage('home'); return false;" style="color: var(--accent-primary);">Surcagua.com</a></li>
+                    </ul>
+                    <p>Nos comprometemos a responder tus consultas en un plazo de 48 horas hábiles.</p>
+                </div>
+
+                <div class="legal-footer">
+                    <p><strong>Al utilizar nuestras aplicaciones, reconoces que has leído y comprendido esta Política de Privacidad y aceptas el procesamiento de tu información según lo descrito.</strong></p>
+                </div>
             </div>
         </div>
     </section>
@@ -2431,8 +3287,7 @@
 
     <!-- ═══════════════════════════════════════════
          FOOTER
-    ═══════════════════════════════════════════ -->
-    <footer class="footer">
+    ═══════════════════════════════════════════ -->    <footer class="footer">
         <div class="footer-inner">
             <div class="footer-left">
                 © 2026 Surcagua. Todos los derechos reservados.
@@ -2440,7 +3295,10 @@
             <ul class="footer-links">
                 <li><a href="#" onclick="showPage('home')">Inicio</a></li>
                 <li><a href="#" onclick="showPage('apps')">Aplicaciones</a></li>
+                <li><a href="#" onclick="showPage('about')">Acerca de</a></li>
                 <li><a href="#" onclick="showPage('support')">Soporte</a></li>
+                <li><a href="#" onclick="showPage('terms')">Términos</a></li>
+                <li><a href="#" onclick="showPage('privacy')">Privacidad</a></li>
                 <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
             </ul>
         </div>
@@ -2464,10 +3322,10 @@
                     'assets/budgely/capturas/2x0ss.png',
                     'assets/budgely/capturas/3x0ss.png'
                 ],
-                rating: 4.8,
-                downloads: '4.2K+',
-                version: '2.1.0',
-                size: '38 MB',
+                rating: 0.00,
+                downloads: '∞+',
+                version: '1.0.0',
+                size: '∞ MB',
                 platforms: ['iOS'],
                 shortDesc: 'Control de presupuesto personal con análisis diario, mensual y anual mediante gráficos intuitivos.',
                 description: 'Budgely es tu asistente financiero personal que te ayuda a tomar control de tus gastos e ingresos. Registra transacciones de forma rápida, establece presupuestos personalizados por categoría, y visualiza tu salud financiera con gráficos de barras y circulares. Analiza tus patrones de gasto diarios, mensuales o anuales para tomar mejores decisiones financieras.',
@@ -2477,11 +3335,9 @@
                     'Gráficos circulares y de barras interactivos',
                     'Análisis diario, mensual y anual',
                     'Categorías personalizables y etiquetas',
-                    'Exportación de reportes en PDF',
-                    'Recordatorios de pagos recurrentes',
                     'Dashboard con resumen financiero'
                 ],
-                techInfo: 'Desarrollada con Flutter y SQLite local. Compatible con iOS 14+. Todos los datos se almacenan localmente en tu dispositivo para máxima privacidad.'
+                techInfo: 'Desarrollada con Flutter. Compatible con iOS 13+. Todos los datos se almacenan localmente en tu dispositivo para máxima privacidad.'
             },
             {
                 id: 'silentvault',
@@ -2490,25 +3346,22 @@
                 logo: 'assets/silentvault/silentvault.png',
                 iconBg: 'linear-gradient(135deg, #6366f1, #4f46e5)',
                 screenshots: [],
-                rating: 4.9,
-                downloads: '7.8K+',
-                version: '3.0.2',
-                size: '42 MB',
+                rating: 0.00,
+                downloads: '∞',
+                version: '1.0.0',
+                size: '∞ MB',
                 platforms: ['iOS'],
-                shortDesc: 'Bóveda privada para ocultar y proteger fotos y videos con encriptación de nivel militar.',
-                description: 'SilentVault es la solución definitiva para mantener tus fotos y videos privados completamente seguros. Con encriptación AES-256 de nivel militar y almacenamiento 100% local, tus archivos multimedia nunca salen de tu dispositivo. Protege tu privacidad con PIN, patrón, huella dactilar o Face ID. Incluye navegador privado integrado y despiste con cámara falsa.',
+                shortDesc: 'Bóveda privada para ocultar y proteger fotos y videos almacenados localmente.',
+                description: 'SilentVault es la solución definitiva para mantener tus fotos y videos privados completamente seguros. Almacenamiento 100% local, tus archivos multimedia nunca salen de tu dispositivo. Protege tu privacidad con PIN, patrón, huella dactilar o Face ID.',
                 features: [
-                    'Encriptación AES-256 de nivel militar',
                     'Almacenamiento 100% local sin nube',
                     'Protección con PIN, patrón, huella o Face ID',
                     'Importación masiva de fotos y videos',
-                    'Navegador web privado integrado',
-                    'Modo despiste con cámara falsa',
                     'Álbumes organizados por carpetas',
                     'Reproductor de video integrado',
                     'Papelera de reciclaje con recuperación'
                 ],
-                techInfo: 'Desarrollada con Swift nativo para iOS. Compatible con iOS 15+. Sin acceso a internet requerido, funcionamiento 100% offline.'
+                techInfo: 'Desarrollada con Flutter nativo para iOS. Compatible con iOS 13+. Sin acceso a internet requerido, funcionamiento 100% offline.'
             },
             {
                 id: 'soundforia',
@@ -2522,10 +3375,10 @@
                     'assets/soundforia/capturas/2x0ss.png',
                     'assets/soundforia/capturas/3x0ss.png'
                 ],
-                rating: 4.7,
-                downloads: '5.5K+',
-                version: '1.9.4',
-                size: '55 MB',
+                rating: 0.00,
+                downloads: '∞+',
+                version: '1.0.0',
+                size: '∞ MB',
                 platforms: ['iOS'],
                 shortDesc: 'Suite completa para compositores y bandas: crea canciones con acordes, letras y metrónomo profesional.',
                 description: 'Soundforia es la aplicación perfecta para músicos, compositores y bandas que quieren organizar sus canciones de forma profesional. Crea y edita letras con acordes integrados, utiliza el metrónomo avanzado con subdivisiones personalizables, transpone canciones a diferentes tonalidades automáticamente, y comparte tu repertorio con tu banda. Ideal para ensayos, composición y presentaciones en vivo.',
@@ -2537,10 +3390,8 @@
                     'Organización por setlists y categorías',
                     'Compartir canciones con la banda',
                     'Modo presentación pantalla completa',
-                    'Exportación a PDF con formato profesional',
-                    'Afinador cromático integrado'
                 ],
-                techInfo: 'Desarrollada con React Native y Web Audio API. Compatible con iOS 14+. Sincronización opcional en la nube para trabajo colaborativo.'
+                techInfo: 'Desarrollada con Flutter. Compatible con iOS 13+. Sincronización opcional en la nube para trabajo colaborativo.'
             },
             {
                 id: 'tuyyo',
@@ -2560,16 +3411,16 @@
                     'assets/tuyyo/capturas/8x0ss.png',
                     'assets/tuyyo/capturas/9x0ss.png'
                 ],
-                rating: 4.6,
-                downloads: '12K+',
+                rating: 0.0,
+                downloads: '∞+',
                 version: '2.5.1',
-                size: '48 MB',
+                size: '∞ MB',
                 platforms: ['iOS'],
                 shortDesc: 'La app definitiva para parejas: chat privado, álbum compartido, aniversario, mapas, juegos y más.',
                 description: 'Tuyyo es el espacio digital perfecto para fortalecer tu relación. Comparte momentos especiales en tu álbum privado, mantén conversaciones íntimas en el chat cifrado, recuerda fechas importantes con el contador de aniversario, marca lugares especiales en el mapa de recuerdos, juega juntos con mini-juegos para parejas, y organiza planes en el calendario compartido. Todo lo que necesitan en una sola app.',
                 features: [
-                    'Chat privado con encriptación end-to-end',
-                    'Álbum de fotos compartido ilimitado',
+                    'Chat privado',
+                    'Álbum de fotos compartido',
                     'Contador de aniversario y días juntos',
                     'Mapa de recuerdos con lugares especiales',
                     'Calendario compartido de eventos',
@@ -2579,7 +3430,7 @@
                     'Recordatorios de fechas especiales',
                     'Tema personalizable con fotos de pareja'
                 ],
-                techInfo: 'Desarrollada con Flutter y Firebase. Compatible con iOS 15+. Sincronización en tiempo real entre dispositivos con encriptación de datos.'
+                techInfo: 'Desarrollada con Flutter y Firebase. Compatible con iOS 13+. Sincronización en tiempo real entre dispositivos con encriptación de datos.'
             }
         ];
 
