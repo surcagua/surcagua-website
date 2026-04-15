@@ -37,17 +37,21 @@ La app definitiva para parejas: chat privado, álbum compartido, aniversario, ma
 
 ## 🎨 Características
 
-- ✅ Diseño moderno y responsivo
-- ✅ Modo oscuro/claro
+- ✅ **Diseño 100% responsive** - Optimizado para móviles, tablets, iPads y desktop
+- ✅ **6 breakpoints** - Mobile small, Mobile, Tablet portrait/landscape, Desktop
+- ✅ **Touch-optimized** - Min 44x44px touch targets (Apple HIG)
+- ✅ Modo oscuro/claro con transiciones suaves
 - ✅ Galería de capturas con lightbox profesional
 - ✅ Navegación fluida SPA-style
 - ✅ Formulario de contacto funcional (envío directo)
 - ✅ Email profesional con forwarding a Gmail
-- ✅ Optimizado para SEO
-- ✅ Rendimiento ultrarrápido
+- ✅ Optimizado para SEO y accesibilidad
+- ✅ Rendimiento ultrarrápido (< 2s First Contentful Paint)
 - ✅ SSL/HTTPS incluido
 - ✅ CDN global (200+ ubicaciones)
 - ✅ Deploy automático con Git
+- ✅ Soporte para Reduced Motion (accessibility)
+- ✅ Retina/HiDPI displays optimizados
 
 ---
 
@@ -69,6 +73,7 @@ surcagua/
 │       ├── tuyyo.png
 │       └── capturas/
 ├── DEPLOYMENT.md           # Guía completa de despliegue
+├── RESPONSIVE-GUIDE.md     # Guía de diseño responsive
 ├── FORM-SETUP.md           # Configuración del formulario
 ├── EMAIL-SETUP.md          # Setup de email forwarding
 ├── GIT-GUIDE.md            # Comandos de Git
@@ -95,6 +100,7 @@ Este sitio está desplegado en **Cloudflare Workers con Static Assets** (2026).
 
 📖 **Guías completas:**
 - [DEPLOYMENT.md](DEPLOYMENT.md) - Setup completo paso a paso
+- [RESPONSIVE-GUIDE.md](RESPONSIVE-GUIDE.md) - Diseño responsive y testing
 - [FORM-SETUP.md](FORM-SETUP.md) - Activar formulario de contacto
 - [NEXT-STEPS.md](NEXT-STEPS.md) - Qué hacer después del deploy
 
