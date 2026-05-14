@@ -1,9 +1,13 @@
 {
   "redirects": [
-    { "source": "/privacy", "destination": "/privacidad", "permanent": true },
-    { "source": "/terms",   "destination": "/terminos",   "permanent": true }
+    { "source": "/privacy",  "destination": "/privacidad", "permanent": true },
+    { "source": "/terms",    "destination": "/terminos",   "permanent": true }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/apps",        "destination": "/apps.html" },
+    { "source": "/acerca-de",   "destination": "/acerca-de.html" },
+    { "source": "/soporte",     "destination": "/soporte.html" },
+    { "source": "/terminos",    "destination": "/terminos.html" },
+    { "source": "/privacidad",  "destination": "/privacidad.html" }
   ]
 }
