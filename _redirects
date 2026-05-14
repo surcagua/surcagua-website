@@ -1,0 +1,6 @@
+# English aliases
+/privacy    /privacidad    301
+/terms      /terminos      301
+
+# SPA fallback
+/*  /index.html  200
