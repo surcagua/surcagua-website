@@ -2487,7 +2487,7 @@
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
 
     <!-- ═══════════════════════════════════════════
          BACKGROUND EFFECTS
@@ -2503,21 +2503,21 @@
          NAVIGATION
     ═══════════════════════════════════════════ -->    <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="#" class="logo" onclick="showPage('home')">
+            <a href="/" class="logo" onclick="event.preventDefault(); showPage('home')">
                 <div class="logo-icon">S</div>
                 <span class="logo-text">Surcagua Studio</span>
             </a>            <div class="nav-center" id="navLinks">
-                <a href="#" class="nav-link active" data-page="home" onclick="showPage('home')">Inicio</a>
-                <a href="#" class="nav-link" data-page="apps" onclick="showPage('apps')">Apps</a>
-                <a href="#" class="nav-link" data-page="about" onclick="showPage('about')">Acerca de</a>
-                <a href="#" class="nav-link" data-page="support" onclick="showPage('support')">Soporte</a>
-                <a href="#" class="nav-link" data-page="terms" onclick="showPage('terms')">Términos</a>
-                <a href="#" class="nav-link" data-page="privacy" onclick="showPage('privacy')">Privacidad</a>
+                <a href="/" class="nav-link active" data-page="home" onclick="event.preventDefault(); showPage('home')">Inicio</a>
+                <a href="/apps" class="nav-link" data-page="apps" onclick="event.preventDefault(); showPage('apps')">Apps</a>
+                <a href="/acerca-de" class="nav-link" data-page="about" onclick="event.preventDefault(); showPage('about')">Acerca de</a>
+                <a href="/soporte" class="nav-link" data-page="support" onclick="event.preventDefault(); showPage('support')">Soporte</a>
+                <a href="/terminos" class="nav-link" data-page="terms" onclick="event.preventDefault(); showPage('terms')">Términos</a>
+                <a href="/privacidad" class="nav-link" data-page="privacy" onclick="event.preventDefault(); showPage('privacy')">Privacidad</a>
             </div>
 
             <div class="nav-actions">
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
-                    <span class="theme-icon" id="themeIcon">🌙</span>
+                    <span class="theme-icon" id="themeIcon">☀️</span>
                 </button>
                 <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu">
                     <span class="hamburger" id="menuIcon">
@@ -2541,10 +2541,10 @@
             <h1>Creamos apps que<br><span class="gradient-text">transforman ideas</span></h1>
             <p>Somos Surcagua Studios, un estudio indie hondureño fundado en 2025. Diseñamos y desarrollamos aplicaciones móviles de alto rendimiento para iOS (y próximamente Android) que mejoran la vida de miles de personas.</p>
             <div class="hero-actions">
-                <a href="#" class="btn btn-primary" onclick="showPage('apps')">
+                <a href="/apps" class="btn btn-primary" onclick="event.preventDefault(); showPage('apps')">
                     <span>🚀</span> Ver aplicaciones
                 </a>
-                <a href="#" class="btn btn-secondary" onclick="showPage('about')">
+                <a href="/acerca-de" class="btn btn-secondary" onclick="event.preventDefault(); showPage('about')">
                     <span>✨</span> Conocer más
                 </a>
             </div>
@@ -2759,10 +2759,10 @@
                     <strong>Horario:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM (PET)
                 </p>
                 <p style="margin-top: 24px;">
-                    <a href="#" class="btn btn-primary" onclick="showPage('support'); return false;">
+                    <a href="/soporte" class="btn btn-primary" onclick="event.preventDefault(); showPage('support');">
                         <span>💬</span> Ir a Soporte
                     </a>
-                    <a href="#" class="btn btn-secondary" onclick="showPage('apps'); return false;" style="margin-left: 12px;">
+                    <a href="/apps" class="btn btn-secondary" onclick="event.preventDefault(); showPage('apps');" style="margin-left: 12px;">
                         <span>📱</span> Ver Aplicaciones
                     </a>
                 </p>
@@ -2980,7 +2980,7 @@
 
                 <div class="legal-section">
                     <h2>4. Privacidad y Protección de Datos</h2>
-                    <p>Tu privacidad es importante para nosotros. El uso de nuestras aplicaciones también está sujeto a nuestra <a href="#" onclick="showPage('privacy'); return false;" style="color: var(--accent-primary); text-decoration: underline;">Política de Privacidad</a>, que describe cómo recopilamos, usamos y protegemos tu información personal.</p>
+                    <p>Tu privacidad es importante para nosotros. El uso de nuestras aplicaciones también está sujeto a nuestra <a href="/privacidad" onclick="event.preventDefault(); showPage('privacy');" style="color: var(--accent-primary); text-decoration: underline;">Política de Privacidad</a>, que describe cómo recopilamos, usamos y protegemos tu información personal.</p>
                 </div>
 
                 <div class="legal-section">
@@ -3049,7 +3049,7 @@
                     <p>Si tienes preguntas, comentarios o inquietudes sobre estos Términos y Condiciones, puedes contactarnos en:</p>
                     <ul style="list-style: none; padding-left: 0;">
                         <li><strong>Email:</strong> <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a></li>
-                        <li><strong>Sitio web:</strong> <a href="#" onclick="showPage('home'); return false;" style="color: var(--accent-primary);">Surcagua.com</a></li>
+                        <li><strong>Sitio web:</strong> <a href="/" onclick="event.preventDefault(); showPage('home');" style="color: var(--accent-primary);">Surcagua.com</a></li>
                     </ul>
                 </div>
 
@@ -3215,7 +3215,7 @@
                     <ul style="list-style: none; padding-left: 0;">
                         <li><strong>Email:</strong> <a href="mailto:support@surcaguastudio.com" style="color: var(--accent-primary);">support@surcaguastudio.com</a></li>
                         <li><strong>Asunto:</strong> "Consulta sobre privacidad"</li>
-                        <li><strong>Sitio web:</strong> <a href="#" onclick="showPage('home'); return false;" style="color: var(--accent-primary);">Surcagua.com</a></li>
+                        <li><strong>Sitio web:</strong> <a href="/" onclick="event.preventDefault(); showPage('home');" style="color: var(--accent-primary);">Surcagua.com</a></li>
                     </ul>
                     <p>Nos comprometemos a responder tus consultas en un plazo de 48 horas hábiles.</p>
                 </div>
@@ -3293,12 +3293,12 @@
                 © 2026 Surcagua. Todos los derechos reservados.
             </div>
             <ul class="footer-links">
-                <li><a href="#" onclick="showPage('home')">Inicio</a></li>
-                <li><a href="#" onclick="showPage('apps')">Aplicaciones</a></li>
-                <li><a href="#" onclick="showPage('about')">Acerca de</a></li>
-                <li><a href="#" onclick="showPage('support')">Soporte</a></li>
-                <li><a href="#" onclick="showPage('terms')">Términos</a></li>
-                <li><a href="#" onclick="showPage('privacy')">Privacidad</a></li>
+                <li><a href="/" onclick="event.preventDefault(); showPage('home')">Inicio</a></li>
+                <li><a href="/apps" onclick="event.preventDefault(); showPage('apps')">Aplicaciones</a></li>
+                <li><a href="/acerca-de" onclick="event.preventDefault(); showPage('about')">Acerca de</a></li>
+                <li><a href="/soporte" onclick="event.preventDefault(); showPage('support')">Soporte</a></li>
+                <li><a href="/terminos" onclick="event.preventDefault(); showPage('terms')">Términos</a></li>
+                <li><a href="/privacidad" onclick="event.preventDefault(); showPage('privacy')">Privacidad</a></li>
                 <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
             </ul>
         </div>
@@ -3682,6 +3682,24 @@
         });
 
         // ─── NAVIGATION ─────────────────────────────
+        const PAGE_PATHS = {
+            'home':    '/',
+            'apps':    '/apps',
+            'about':   '/acerca-de',
+            'support': '/soporte',
+            'terms':   '/terminos',
+            'privacy': '/privacidad'
+        };
+
+        const PATH_PAGES = {
+            '/':           'home',
+            '/apps':       'apps',
+            '/acerca-de':  'about',
+            '/soporte':    'support',
+            '/terminos':   'terms',
+            '/privacidad': 'privacy'
+        };
+
         function showPage(page) {
             // Hide all
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
@@ -3699,8 +3717,9 @@
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Update URL hash
-            history.pushState(null, '', `#${page}`);
+            // Update URL path
+            const path = PAGE_PATHS[page] || '/';
+            history.pushState({ page }, '', path);
         }
 
         function toggleMenu() {
@@ -3743,11 +3762,12 @@
             const savedTheme = localStorage.getItem('theme');
             const themeIcon = document.getElementById('themeIcon');
             
-            if (savedTheme === 'light') {
+            if (savedTheme === 'dark') {
+                document.body.classList.remove('light-mode');
+                themeIcon.textContent = '🌙';
+            } else {
                 document.body.classList.add('light-mode');
                 themeIcon.textContent = '☀️';
-            } else {
-                themeIcon.textContent = '🌙';
             }
         }
 
@@ -3850,19 +3870,27 @@
             }
         });
 
-        // ─── HASH ROUTING ───────────────────────────
-        function handleHash() {
-            const hash = window.location.hash.replace('#', '');
-            if (['home', 'apps', 'support'].includes(hash)) {
-                showPage(hash);
-            }
+        // ─── ROUTING ────────────────────────────────
+        function handleRoute() {
+            const pathname = window.location.pathname;
+            const normalized = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+            const page = PATH_PAGES[normalized] || 'home';
+
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const pageEl = document.getElementById(`page-${page}`);
+            if (pageEl) pageEl.classList.add('active');
+            document.querySelectorAll('.nav-link[data-page]').forEach(a => {
+                a.classList.toggle('active', a.dataset.page === page);
+            });
         }
 
-        window.addEventListener('hashchange', handleHash);        // ─── INIT ───────────────────────────────────
+        window.addEventListener('popstate', handleRoute);
+
+        // ─── INIT ───────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             initApps();
-            handleHash();
+            handleRoute();
         });
     </script>
 </body>
