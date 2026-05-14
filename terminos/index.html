@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones — Surcagua Studio</title>
+    <meta name="description" content="Términos y Condiciones de uso de las aplicaciones de Surcagua Studio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent-primary: #6c63ff;
+            --accent-secondary: #00d4aa;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #00d4aa 100%);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--font-family); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+
+        .navbar {
+            position: sticky; top: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color); z-index: 100;
+        }
+        .navbar-inner {
+            max-width: 900px; margin: 0 auto; padding: 0 24px;
+            height: 60px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, #6c63ff, #5a52d5);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 14px; color: white;
+        }
+        .logo-text {
+            font-size: 17px; font-weight: 700;
+            background: linear-gradient(135deg, #6c63ff, #5a52d5);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-back { font-size: 14px; color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+        .nav-back:hover { text-decoration: underline; }
+
+        .page-hero { text-align: center; padding: 60px 24px 40px; max-width: 900px; margin: 0 auto; }
+        .page-hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 12px; }
+        .gradient-text { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-hero p { font-size: 15px; color: var(--text-muted); }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+        .legal-content { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: 48px; box-shadow: var(--shadow-sm); }
+        .legal-intro { padding: 20px 24px; background: rgba(108,99,255,0.05); border-left: 4px solid var(--accent-primary); border-radius: var(--radius-sm); margin-bottom: 40px; }
+        .legal-intro p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin: 0; }
+        .legal-section { margin-bottom: 40px; }
+        .legal-section h2 { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
+        .legal-section p { font-size: 14px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 14px; }
+        .legal-section ul { margin: 12px 0; padding-left: 24px; }
+        .legal-section li { font-size: 14px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 8px; }
+        .legal-section li strong { color: var(--text-primary); font-weight: 600; }
+        .legal-section a { color: var(--accent-primary); }
+        .legal-section ul[style] { list-style: none; padding-left: 0; }
+        .legal-footer { margin-top: 48px; padding: 24px; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; }
+        .legal-footer p { font-size: 15px; line-height: 1.7; color: var(--text-primary); margin: 0; }
+
+        .footer { border-top: 1px solid var(--border-color); padding: 32px 24px; }
+        .footer-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .footer p { font-size: 13px; color: var(--text-muted); }
+        .footer-links { display: flex; gap: 20px; list-style: none; }
+        .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+        .footer-links a:hover { color: var(--text-primary); }
+
+        @media (max-width: 768px) {
+            .legal-content { padding: 28px 20px; }
+            .page-hero { padding: 40px 16px 24px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">S</div>
+                <span class="logo-text">Surcagua Studio</span>
+            </a>
+            <a href="/" class="nav-back">← Volver al inicio</a>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>Términos y <span class="gradient-text">Condiciones</span></h1>
+        <p>Última actualización: Diciembre 2024</p>
+    </div>
+
+    <div class="container">
+        <div class="legal-content">
+
+            <div class="legal-intro">
+                <p>Bienvenido a Surcagua. Al utilizar nuestras aplicaciones y servicios, aceptas cumplir con los siguientes términos y condiciones. Te recomendamos leer este documento detenidamente.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>1. Aceptación de los Términos</h2>
+                <p>Al descargar, instalar o utilizar cualquiera de nuestras aplicaciones, aceptas estar legalmente vinculado por estos Términos y Condiciones. Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestras aplicaciones.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>2. Uso de las Aplicaciones</h2>
+                <p>Nuestras aplicaciones están diseñadas para uso personal y profesional. Te otorgamos una licencia limitada, no exclusiva y no transferible para usar las aplicaciones de acuerdo con estos términos.</p>
+                <p><strong>Te comprometes a:</strong></p>
+                <ul>
+                    <li>Utilizar las aplicaciones solo para fines legales y autorizados</li>
+                    <li>No realizar ingeniería inversa, descompilar o intentar extraer el código fuente</li>
+                    <li>No utilizar las aplicaciones de manera que pueda dañar, deshabilitar o sobrecargar nuestros servicios</li>
+                    <li>No vender, sublicenciar, alquilar o distribuir las aplicaciones sin autorización</li>
+                    <li>Proporcionar información veraz y actualizada al crear cuentas o perfiles</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2>3. Propiedad Intelectual</h2>
+                <p>Todas las aplicaciones, contenido, marcas, logotipos, gráficos y código son propiedad de Surcagua y están protegidos por leyes de derechos de autor y propiedad intelectual internacionales.</p>
+                <p>No está permitido copiar, modificar, distribuir, vender o alquilar ninguna parte de nuestras aplicaciones sin el consentimiento previo por escrito de Surcagua.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>4. Privacidad y Protección de Datos</h2>
+                <p>Tu privacidad es importante para nosotros. El uso de nuestras aplicaciones también está sujeto a nuestra <a href="/privacidad">Política de Privacidad</a>, que describe cómo recopilamos, usamos y protegemos tu información personal.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>5. Compras y Suscripciones</h2>
+                <p>Algunas de nuestras aplicaciones pueden ofrecer funciones premium, compras dentro de la app o suscripciones. Los pagos se procesan a través de Apple App Store o Google Play Store según la plataforma utilizada.</p>
+                <p><strong>Políticas de pago:</strong></p>
+                <ul>
+                    <li>Los precios están sujetos a cambios sin previo aviso</li>
+                    <li>Las suscripciones se renuevan automáticamente a menos que se cancelen antes del período de renovación</li>
+                    <li>Los reembolsos están sujetos a las políticas de la tienda de aplicaciones correspondiente</li>
+                    <li>Eres responsable de cualquier cargo aplicado por tu proveedor de servicios móviles</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2>6. Disponibilidad y Mantenimiento</h2>
+                <p>Nos esforzamos por mantener nuestras aplicaciones disponibles, pero no garantizamos que estarán libres de errores o que funcionarán sin interrupciones. Podemos realizar mantenimientos, actualizaciones o suspender temporalmente el servicio cuando sea necesario.</p>
+                <p>No seremos responsables por pérdidas o daños derivados de la indisponibilidad temporal de nuestras aplicaciones.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>7. Limitación de Responsabilidad</h2>
+                <p>En la máxima medida permitida por la ley, Surcagua no será responsable de daños directos, indirectos, incidentales, especiales, consecuentes o punitivos que resulten del uso o la imposibilidad de usar nuestras aplicaciones, incluyendo pero no limitado a:</p>
+                <ul>
+                    <li>Pérdida de datos o contenido</li>
+                    <li>Errores, interrupciones o fallos en el servicio</li>
+                    <li>Uso no autorizado de tu cuenta o información personal</li>
+                    <li>Problemas de compatibilidad con tu dispositivo o sistema operativo</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2>8. Modificaciones de las Aplicaciones</h2>
+                <p>Nos reservamos el derecho de modificar, actualizar o descontinuar cualquier aspecto de nuestras aplicaciones en cualquier momento, sin previo aviso. Esto incluye funciones, contenido, interfaz de usuario y términos de uso.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>9. Terminación de Cuenta</h2>
+                <p>Podemos suspender o terminar tu acceso a nuestras aplicaciones si:</p>
+                <ul>
+                    <li>Violas estos Términos y Condiciones</li>
+                    <li>Proporcionas información falsa o fraudulenta</li>
+                    <li>Tu uso pone en riesgo la seguridad o integridad de nuestros sistemas</li>
+                    <li>Lo requerimos por ley o por solicitud de autoridades</li>
+                </ul>
+                <p>También puedes solicitar la eliminación de tu cuenta contactando a <a href="mailto:support@surcaguastudio.com">support@surcaguastudio.com</a>.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>10. Enlaces a Terceros</h2>
+                <p>Nuestras aplicaciones pueden contener enlaces a sitios web o servicios de terceros. No somos responsables del contenido, políticas de privacidad o prácticas de estos sitios externos. El acceso a enlaces de terceros es bajo tu propio riesgo.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>11. Jurisdicción y Ley Aplicable</h2>
+                <p>Estos Términos y Condiciones se rigen por las leyes de la República de Honduras. Cualquier disputa relacionada con estos términos se resolverá en los tribunales competentes de Honduras.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>12. Cambios en los Términos</h2>
+                <p>Nos reservamos el derecho de actualizar estos Términos y Condiciones en cualquier momento. Te notificaremos de cambios significativos a través de nuestras aplicaciones o por correo electrónico. El uso continuado de nuestras aplicaciones después de cualquier modificación constituye tu aceptación de los nuevos términos.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2>13. Contacto</h2>
+                <p>Si tienes preguntas, comentarios o inquietudes sobre estos Términos y Condiciones, puedes contactarnos en:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li><strong>Email:</strong> <a href="mailto:support@surcaguastudio.com">support@surcaguastudio.com</a></li>
+                    <li><strong>Sitio web:</strong> <a href="https://surcaguastudio.com">surcaguastudio.com</a></li>
+                </ul>
+            </div>
+
+            <div class="legal-footer">
+                <p><strong>Al utilizar nuestras aplicaciones, confirmas que has leído, entendido y aceptado estos Términos y Condiciones.</strong></p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>© 2025 Surcagua Studio. Todos los derechos reservados.</p>
+            <ul class="footer-links">
+                <li><a href="/terminos">Términos</a></li>
+                <li><a href="/privacidad">Privacidad</a></li>
+                <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+</html>
