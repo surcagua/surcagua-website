@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surcagua Studio — Creamos apps que transforman ideas</title>
+    <meta name="description" content="Surcagua Studio es un estudio indie de desarrollo móvil fundado en Honduras. Creamos aplicaciones iOS innovadoras para finanzas, privacidad, música y más.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="light-mode">
+
+    <div class="bg-effects">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">S</div>
+                <span class="logo-text">Surcagua Studio</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="index.html" class="nav-link active">Inicio</a>
+                <a href="apps/index.html" class="nav-link">Apps</a>
+                <a href="acerca-de/index.html" class="nav-link">Acerca de</a>
+                <a href="soporte/index.html" class="nav-link">Soporte</a>
+                <a href="terminos/index.html" class="nav-link">Términos</a>
+                <a href="privacidad/index.html" class="nav-link">Privacidad</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                    <span class="theme-icon" id="themeIcon">☀️</span>
+                </button>
+                <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
+                    <div class="hamburger"><span></span><span></span><span></span></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+
+        <section class="hero">
+            <h1>Creamos apps que<br><span class="gradient-text">transforman ideas</span></h1>
+            <p>Somos Surcagua Studios, un estudio indie hondureño fundado en 2025. Desarrollamos aplicaciones iOS que combinan diseño elegante con funcionalidad excepcional.</p>
+            <div class="hero-actions">
+                <a href="apps/index.html" class="btn btn-primary">Ver aplicaciones</a>
+                <a href="acerca-de/index.html" class="btn btn-secondary">Conocer más</a>
+            </div>
+        </section>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Apps publicadas</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞+</div>
+                <div class="stat-label">Descargas totales</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞★</div>
+                <div class="stat-label">Calificación promedio</div>
+            </div>
+        </div>
+
+        <section class="section-container">
+            <div class="section-header">
+                <h2>Nuestras <span class="gradient-text">Aplicaciones</span></h2>
+                <p>Cuatro apps diseñadas para mejorar tu vida diaria</p>
+            </div>
+            <div class="apps-grid" id="homeAppsGrid"></div>
+        </section>
+
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+        <div class="modal" id="appModal">
+            <div class="modal-hero">
+                <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+                <div class="modal-app-header">
+                    <div class="modal-app-icon" id="modalIcon"></div>
+                    <div class="modal-app-title">
+                        <h2 id="modalTitle"></h2>
+                        <span class="modal-category" id="modalCategory"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats" id="modalStats"></div>
+                <div class="modal-section" id="screenshotsSection"></div>
+                <div class="modal-section">
+                    <h3>✨ Características</h3>
+                    <ul id="modalFeatures"></ul>
+                </div>
+                <div class="modal-section">
+                    <h3>⚙️ Información técnica</h3>
+                    <p id="modalTechInfo"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>📝 Descripción</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-actions" id="modalActions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+            <button class="lightbox-nav prev" onclick="navigateLightbox(-1)" aria-label="Anterior">‹</button>
+            <img id="lightboxImage" class="lightbox-image" src="" alt="">
+            <button class="lightbox-nav next" onclick="navigateLightbox(1)" aria-label="Siguiente">›</button>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">© 2026 Surcagua. Todos los derechos reservados.</div>
+            <ul class="footer-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="apps/index.html">Aplicaciones</a></li>
+                <li><a href="acerca-de/index.html">Acerca de</a></li>
+                <li><a href="soporte/index.html">Soporte</a></li>
+                <li><a href="terminos/index.html">Términos</a></li>
+                <li><a href="privacidad/index.html">Privacidad</a></li>
+                <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script data-base="" src="assets/js/apps.js"></script>
+</body>
+</html>
