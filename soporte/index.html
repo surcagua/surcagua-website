@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte — Surcagua Studio</title>
+    <meta name="description" content="Centro de soporte de Surcagua Studio. Encuentra respuestas a preguntas frecuentes o contáctanos directamente para ayuda con nuestras apps.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..700;1,9..40,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="light-mode">
+
+    <div class="bg-effects">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"><img src="../assets/logo.png" alt="Surcagua Studio"></div>
+                <span class="logo-text">Surcagua Studio</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="../apps/index.html" class="nav-link">Apps</a>
+                <a href="https://soundforia.live/" class="nav-link" target="_blank" rel="noopener noreferrer">Soundforia Web</a>
+                <a href="../acerca-de/index.html" class="nav-link">Acerca de</a>
+                <a href="../soporte/index.html" class="nav-link active">Soporte</a>
+                <a href="../terminos/index.html" class="nav-link">Términos</a>
+                <a href="../privacidad/index.html" class="nav-link">Privacidad</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                    <span class="theme-icon" id="themeIcon"></span>
+                </button>
+                <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
+                    <div class="hamburger"><span></span><span></span><span></span></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+
+        <div class="support-hero">
+            <h1>Centro de <span class="gradient-text">Soporte</span></h1>
+            <p>¿Tienes alguna pregunta o problema con nuestras apps? Encuentra respuestas rápidas o escríbenos directamente.</p>
+        </div>
+
+        <!-- Support cards -->
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-card-icon" style="background:rgba(0,212,170,0.1);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-primary)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <h3>Email directo</h3>
+                <p>Escríbenos y te respondemos en menos de 24 horas en días hábiles.</p>
+                <a href="mailto:support@surcaguastudio.com" class="support-link">support@surcaguastudio.com →</a>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background:rgba(0,212,170,0.1);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-primary)"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+                <h3>Soporte en la App</h3>
+                <p>Todas nuestras apps tienen un botón de soporte dentro de la sección de ajustes.</p>
+                <span style="font-size:13px;color:var(--text-muted);">Ajustes → Soporte</span>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background:rgba(0,212,170,0.1);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-primary)"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg></div>
+                <h3>Actualizaciones</h3>
+                <p>Mantén tus apps actualizadas para recibir las últimas mejoras y correcciones.</p>
+                <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer" class="support-link">Ver en App Store →</a>
+            </div>
+            <div class="support-card">
+                <div class="support-card-icon" style="background:rgba(0,212,170,0.1);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-primary)"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                <h3>Reportar un bug</h3>
+                <p>Encontraste un problema? Cuéntanos los detalles usando el formulario de contacto.</p>
+                <a href="#contact-form" class="support-link">Ir al formulario →</a>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <section class="faq-section">
+            <h2>Preguntas <span class="gradient-text">frecuentes</span></h2>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿En qué plataformas están disponibles sus apps?</span>
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Actualmente todas nuestras aplicaciones están disponibles exclusivamente en la App Store de Apple para dispositivos iOS (iPhone y iPad). Requerimos iOS 13 o superior para la mejor experiencia.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Mis datos están seguros con sus apps?</span>
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">La privacidad es nuestra prioridad. La mayoría de nuestras apps (Budgely, SilentVault) almacenan todos los datos localmente en tu dispositivo. Para las apps con sincronización en la nube (Tuyyo), usamos encriptación de extremo a extremo.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Cómo cancelo una suscripción?</span>
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Las suscripciones se gestionan directamente a través de Apple. Ve a Configuración de iPhone → Tu nombre → Suscripciones. Desde ahí puedes cancelar o modificar cualquier suscripción activa.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Pierdo mis datos si desinstalo la app?</span>
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Para apps con almacenamiento local (Budgely, SilentVault), sí se eliminan los datos al desinstalar. Te recomendamos hacer un respaldo antes de desinstalar. Para Tuyyo, los datos se recuperan al iniciar sesión nuevamente.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Cuánto tiempo tardan en responder al soporte?</span>
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Respondemos todos los mensajes en un plazo máximo de 24 horas en días hábiles (lunes a viernes). Para urgencias, menciona "URGENTE" en el asunto de tu mensaje y lo atenderemos con prioridad.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact form -->
+        <section class="support-form-section" id="contact-form">
+            <div class="support-form-wrapper">
+                <h2>Envíanos un <span class="gradient-text">mensaje</span></h2>
+                <p>Completa el formulario y te responderemos lo antes posible.</p>
+
+                <form id="supportForm" onsubmit="handleFormSubmit(event)" action="https://formsubmit.co/support@surcaguastudio.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Soporte - Surcagua Studio">
+                    <input type="hidden" name="_template" value="box">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" placeholder="Tu nombre" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="app">Aplicación</label>
+                            <select id="app" name="app" required>
+                                <option value="" disabled selected>Seleccionar app...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Tipo de solicitud</label>
+                            <select id="type" name="type" required>
+                                <option value="" disabled selected>Seleccionar tipo...</option>
+                                <option value="bug">Reportar un bug</option>
+                                <option value="feature">Sugerencia</option>
+                                <option value="billing">Facturación / Suscripción</option>
+                                <option value="account">Cuenta / Acceso</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" placeholder="Describe tu problema o pregunta con el mayor detalle posible..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-submit">
+                        <p class="privacy-note">Tu información es confidencial y nunca se comparte con terceros.</p>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <span class="btn-text">Enviar mensaje</span>
+                            <span class="btn-loading" style="display:none;">Enviando...</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                    <h3>¡Mensaje enviado!</h3>
+                    <p>Gracias por contactarnos. Te responderemos en menos de 24 horas.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">© 2026 Surcagua. Todos los derechos reservados.</div>
+            <ul class="footer-links">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../apps/index.html">Aplicaciones</a></li>
+                <li><a href="../acerca-de/index.html">Acerca de</a></li>
+                <li><a href="../soporte/index.html">Soporte</a></li>
+                <li><a href="../terminos/index.html">Términos</a></li>
+                <li><a href="../privacidad/index.html">Privacidad</a></li>
+                <li><a href="mailto:support@surcaguastudio.com">Contacto</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script data-base="../" src="../assets/js/apps.js"></script>
+    <script>
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn  = document.getElementById('submitBtn');
+            const text = btn.querySelector('.btn-text');
+            const load = btn.querySelector('.btn-loading');
+
+            btn.disabled  = true;
+            text.style.display = 'none';
+            load.style.display = 'inline';
+
+            fetch(e.target.action, {
+                method: 'POST',
+                body: new FormData(e.target),
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(() => {
+                document.getElementById('supportForm').style.display  = 'none';
+                document.getElementById('formSuccess').classList.add('show');
+            })
+            .catch(() => {
+                e.target.submit();
+            });
+        }
+    </script>
+</body>
+</html>

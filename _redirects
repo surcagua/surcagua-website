@@ -1,0 +1,10 @@
+# English aliases
+/privacy    /privacidad    301
+/terms      /terminos      301
+
+# Clean URLs — serve .html files without extension
+/apps           /apps.html           200
+/acerca-de      /acerca-de.html      200
+/soporte        /soporte.html        200
+/terminos       /terminos.html       200
+/privacidad     /privacidad.html     200
