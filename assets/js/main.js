@@ -66,13 +66,30 @@ function initSpotlightCards() {
     });
 }
 
+// ─── SCROLL REVEALS ───────────────────────────────────
+function initScrollReveal() {
+    const obs = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    obs.unobserve(e.target);
+                }
+            });
+        },
+        { threshold: 0.08 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
 // ─── INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     loadTheme();
+    initScrollReveal();
 
     window.addEventListener('scroll', () => {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-    });
+    }, { passive: true });
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
