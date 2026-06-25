@@ -1,6 +1,16 @@
 // ─── BASE PATH (set via data-base attribute on <script> tag) ──
 const BASE = (document.currentScript && document.currentScript.getAttribute('data-base')) || '';
 
+// ─── DESKTOP CAROUSEL STATE (modal) ──────────────────────
+let _deskCurrent = 0;
+let _deskTotal   = 0;
+let _deskTimer   = null;
+
+// ─── HERO DESKTOP CAROUSEL STATE ─────────────────────────
+let _heroDeskCurrent = 0;
+const _heroDeskTotal = 7;
+let _heroDeskTimer   = null;
+
 // ─── ICON SVGs ────────────────────────────────────────
 const CHEVRON_LEFT  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`;
 const CHEVRON_RIGHT = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
@@ -83,6 +93,24 @@ const apps = [
         compatibility: 'iPhone · iPad · Mac (M1+) · Apple Vision',
         minOS: 'iOS 13.0+',
         platforms: ['iOS'],
+        desktopScreenshots: [
+            BASE + 'assets/soundforia/escritorio/1.png',
+            BASE + 'assets/soundforia/escritorio/2.png',
+            BASE + 'assets/soundforia/escritorio/3.png',
+            BASE + 'assets/soundforia/escritorio/4.png',
+            BASE + 'assets/soundforia/escritorio/5.png',
+            BASE + 'assets/soundforia/escritorio/6.png',
+            BASE + 'assets/soundforia/escritorio/7.png',
+        ],
+        desktopDescriptions: [
+            'Panel de canciones con proyección en vivo — muestra letras y versos con fondos artísticos en tu pantalla o proyector',
+            'Módulo de Biblia integrado — proyecta versículos del Antiguo y Nuevo Testamento con fondos visuales impactantes',
+            'Biblioteca de fondos en loop — elige entre paisajes cinematográficos y escenas para enriquecer cada momento del servicio',
+            'Panel de anuncios y predicación — proyecta avisos de la iglesia y el tema del sermón con un solo clic',
+            'Predicación en vivo — muestra el tema del sermón y el nombre del predicador en pantalla completa con fondo visual',
+            'Proyecta el logo de tu iglesia o una pantalla de inicio mientras el servicio se prepara para comenzar',
+            'Vista de salida en pantalla completa — así ve tu congregación los anuncios, letras y versículos en el proyector',
+        ],
         inAppPurchases: [
             'Plan Estándar — $4.99 / mes',
             'Plan Estándar Anual — $49.99 / año',
@@ -141,6 +169,238 @@ const apps = [
     }
 ];
 
+// ─── DESKTOP CAROUSEL ─────────────────────────────────
+function renderDesktopSection(app) {
+    const slides = app.desktopScreenshots.map((src, i) => `
+        <div class="desk-slide${i === 0 ? ' active' : ''}" data-desc="${(app.desktopDescriptions[i] || '').replace(/"/g, '&quot;')}">
+            <img src="${src}" alt="Soundforia escritorio ${i + 1}" loading="lazy" draggable="false">
+        </div>`).join('');
+
+    const dots = app.desktopScreenshots.map((_, i) =>
+        `<button class="desk-dot${i === 0 ? ' active' : ''}" onclick="goDesktopSlide(${i})" aria-label="Vista ${i + 1}"></button>`
+    ).join('');
+
+    return `
+    <div class="desktop-dl-block">
+        <div class="desktop-dl-eyebrow">Proyector para Escritorio</div>
+        <h3 class="desktop-dl-title">Descarga Proyector<br>para Windows</h3>
+
+        <div class="desk-carousel" id="deskCarousel">
+            ${slides}
+            <button class="desk-nav-btn desk-nav-prev" onclick="navDesktop(-1)" aria-label="Anterior">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="desk-nav-btn desk-nav-next" onclick="navDesktop(1)" aria-label="Siguiente">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <div class="desk-slide-counter" id="deskCounter">1 / ${app.desktopScreenshots.length}</div>
+        </div>
+
+        <p class="desk-carousel-desc" id="deskDesc">${app.desktopDescriptions[0] || ''}</p>
+        <div class="desk-dots" id="deskDots" role="tablist" aria-label="Capturas de pantalla">${dots}</div>
+
+        <a href="${BASE}assets/soundforia/app/Soundforia-Setup-1.0.0.exe"
+           download="Soundforia-Setup-1.0.0.exe"
+           class="btn-win-dl">
+            <span class="win-shimmer"></span>
+            <span class="win-icon">
+                <svg width="22" height="22" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1h9.5v9.5H1z" fill="#f35325"/>
+                    <path d="M11.5 1H22v9.5H11.5z" fill="#81bc06"/>
+                    <path d="M1 11.5h9.5V22H1z" fill="#05a6f0"/>
+                    <path d="M11.5 11.5H22V22H11.5z" fill="#ffba08"/>
+                </svg>
+            </span>
+            <span class="win-label">Descargar para Windows</span>
+            <span class="win-dl-arrow">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><polyline points="5 12 12 19 19 12"/></svg>
+            </span>
+        </a>
+        <p class="desk-dl-meta">Soundforia 1.0.0 &nbsp;·&nbsp; Windows 10 / 11 &nbsp;·&nbsp; 64-bit</p>
+    </div>`;
+}
+
+function initDesktopCarousel(total) {
+    _deskCurrent = 0;
+    _deskTotal   = total;
+    clearInterval(_deskTimer);
+    if (total > 1) {
+        _deskTimer = setInterval(() => goDesktopSlide((_deskCurrent + 1) % _deskTotal), 4400);
+    }
+    const carousel = document.getElementById('deskCarousel');
+    if (carousel) _setupDeskTouch(carousel);
+}
+
+function goDesktopSlide(index) {
+    const slides  = Array.from(document.querySelectorAll('.desk-slide'));
+    const dots    = Array.from(document.querySelectorAll('.desk-dot'));
+    const descEl  = document.getElementById('deskDesc');
+    const counter = document.getElementById('deskCounter');
+    if (!slides.length || index === _deskCurrent) return;
+
+    const cur = slides[_deskCurrent];
+    const nxt = slides[index];
+
+    // Exit current slide
+    cur.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+    cur.style.opacity    = '0';
+    cur.style.transform  = 'translateX(-22px) scale(0.98)';
+    cur.classList.remove('active');
+    setTimeout(() => { cur.style.transition = ''; cur.style.transform = ''; cur.style.opacity = ''; }, 460);
+
+    // Stage new slide off-screen right
+    nxt.style.transition = 'none';
+    nxt.style.transform  = 'translateX(22px) scale(0.98)';
+    nxt.style.opacity    = '0';
+
+    // Animate new slide in
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        nxt.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+        nxt.style.opacity    = '1';
+        nxt.style.transform  = 'translateX(0) scale(1)';
+        nxt.classList.add('active');
+        setTimeout(() => { nxt.style.transition = ''; nxt.style.transform = ''; nxt.style.opacity = ''; }, 460);
+    }));
+
+    _deskCurrent = index;
+
+    // Update dots
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+
+    // Update counter
+    if (counter) counter.textContent = `${index + 1} / ${_deskTotal}`;
+
+    // Fade description
+    if (descEl) {
+        descEl.style.opacity = '0';
+        setTimeout(() => {
+            const s = document.querySelector('.desk-slide.active');
+            descEl.textContent = s ? (s.dataset.desc || '') : '';
+            descEl.style.opacity = '1';
+        }, 190);
+    }
+
+    // Reset auto-advance
+    clearInterval(_deskTimer);
+    _deskTimer = setInterval(() => goDesktopSlide((_deskCurrent + 1) % _deskTotal), 4400);
+}
+
+function navDesktop(dir) {
+    goDesktopSlide((_deskCurrent + dir + _deskTotal) % _deskTotal);
+}
+
+function _setupDeskTouch(el) {
+    let sx = 0, sy = 0;
+    el.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    el.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) navDesktop(dx < 0 ? 1 : -1);
+    }, { passive: true });
+    // Mouse drag
+    let mx = 0, dragging = false;
+    el.addEventListener('mousedown', e => { mx = e.clientX; dragging = true; });
+    el.addEventListener('mouseup',   e => {
+        if (!dragging) return; dragging = false;
+        const dx = e.clientX - mx;
+        if (Math.abs(dx) > 36) navDesktop(dx < 0 ? 1 : -1);
+    });
+    el.addEventListener('mouseleave', () => { dragging = false; });
+}
+
+// ─── HERO DESKTOP CAROUSEL ────────────────────────────
+function initHeroDesktop() {
+    const heroImgs = [
+        BASE + 'assets/soundforia/escritorio/1.png',
+        BASE + 'assets/soundforia/escritorio/2.png',
+        BASE + 'assets/soundforia/escritorio/3.png',
+        BASE + 'assets/soundforia/escritorio/4.png',
+        BASE + 'assets/soundforia/escritorio/5.png',
+        BASE + 'assets/soundforia/escritorio/6.png',
+        BASE + 'assets/soundforia/escritorio/7.png',
+    ];
+
+    _heroDeskCurrent = 0;
+    clearInterval(_heroDeskTimer);
+    _heroDeskTimer = setInterval(() => goHeroDesktopSlide((_heroDeskCurrent + 1) % _heroDeskTotal), 4400);
+
+    const c = document.getElementById('heroDesktopCarousel');
+    if (!c) return;
+
+    let sx = 0, sy = 0, mx = 0, dragging = false, _dragged = false;
+
+    c.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    c.addEventListener('touchend',   e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) navHeroDesk(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    c.addEventListener('mousedown',  e => { mx = e.clientX; dragging = true; _dragged = false; });
+    c.addEventListener('mousemove',  e => { if (dragging && Math.abs(e.clientX - mx) > 6) _dragged = true; });
+    c.addEventListener('mouseup',    e => {
+        if (!dragging) return; dragging = false;
+        const dx = e.clientX - mx;
+        if (Math.abs(dx) > 36) { navHeroDesk(dx < 0 ? 1 : -1); _dragged = true; }
+    });
+    c.addEventListener('mouseleave', () => { dragging = false; });
+
+    c.addEventListener('click', e => {
+        if (_dragged || e.target.closest('.desk-nav-btn')) { _dragged = false; return; }
+        _dragged = false;
+        window.currentAppScreenshots = heroImgs;
+        window.currentAppName        = 'Soundforia Proyector';
+        openLightbox(_heroDeskCurrent);
+    });
+}
+
+function goHeroDesktopSlide(index) {
+    const slides  = Array.from(document.querySelectorAll('#heroDesktopCarousel .desk-slide'));
+    const dots    = Array.from(document.querySelectorAll('#heroDesktopDots .desk-dot'));
+    const descEl  = document.getElementById('heroDesktopDesc');
+    const counter = document.getElementById('heroDesktopCounter');
+    if (!slides.length || index === _heroDeskCurrent) return;
+
+    const cur = slides[_heroDeskCurrent];
+    const nxt = slides[index];
+
+    cur.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+    cur.style.opacity    = '0';
+    cur.style.transform  = 'translateX(-22px) scale(0.98)';
+    cur.classList.remove('active');
+    setTimeout(() => { cur.style.transition = ''; cur.style.transform = ''; cur.style.opacity = ''; }, 460);
+
+    nxt.style.transition = 'none';
+    nxt.style.transform  = 'translateX(22px) scale(0.98)';
+    nxt.style.opacity    = '0';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        nxt.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+        nxt.style.opacity    = '1';
+        nxt.style.transform  = 'translateX(0) scale(1)';
+        nxt.classList.add('active');
+        setTimeout(() => { nxt.style.transition = ''; nxt.style.transform = ''; nxt.style.opacity = ''; }, 460);
+    }));
+
+    _heroDeskCurrent = index;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    if (counter) counter.textContent = `${index + 1} / ${_heroDeskTotal}`;
+
+    if (descEl) {
+        descEl.style.opacity = '0';
+        setTimeout(() => {
+            descEl.textContent = nxt.dataset.desc || '';
+            descEl.style.opacity = '1';
+        }, 190);
+    }
+
+    clearInterval(_heroDeskTimer);
+    _heroDeskTimer = setInterval(() => goHeroDesktopSlide((_heroDeskCurrent + 1) % _heroDeskTotal), 4400);
+}
+
+function navHeroDesk(dir) {
+    goHeroDesktopSlide((_heroDeskCurrent + dir + _heroDeskTotal) % _heroDeskTotal);
+}
+
 // ─── RENDER CARD ──────────────────────────────────────
 function renderAppCard(app) {
     const badges = app.platforms.map(p =>
@@ -181,6 +441,8 @@ function initApps() {
 
     if (homeGrid) homeGrid.innerHTML = apps.map(renderAppCard).join('');
     if (allGrid)  allGrid.innerHTML  = apps.map(renderAppCard).join('');
+
+    if (document.getElementById('heroDesktopCarousel')) initHeroDesktop();
 
     if (heroBento) {
         const availableApps = apps.filter(a => a.available);
@@ -316,6 +578,7 @@ function openModal(appId) {
 }
 
 function closeModal() {
+    clearInterval(_deskTimer);
     document.getElementById('modalOverlay').classList.remove('active');
     document.body.style.overflow = '';
 }

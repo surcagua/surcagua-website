@@ -59,40 +59,103 @@
                 </div>
             </div>
             <div class="hero-stats">
-                <div id="heroBento" class="hero-bento"></div>
-                <div class="stat-item">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Apps publicadas</div>
+                <div class="desktop-dl-eyebrow">Proyector para Escritorio</div>
+                <h3 class="desktop-dl-title">Descarga Proyector<br>para Windows</h3>
+
+                <div class="desk-carousel hero-desk-carousel" id="heroDesktopCarousel">
+                    <div class="desk-slide active" data-desc="Panel de canciones con proyección en vivo — muestra letras y versos con fondos artísticos en tu pantalla o proyector">
+                        <img src="assets/soundforia/escritorio/1.png" alt="Soundforia escritorio 1" draggable="false">
+                    </div>
+                    <div class="desk-slide" data-desc="Módulo de Biblia integrado — proyecta versículos del Antiguo y Nuevo Testamento con fondos visuales impactantes">
+                        <img src="assets/soundforia/escritorio/2.png" alt="Soundforia escritorio 2" draggable="false" loading="lazy">
+                    </div>
+                    <div class="desk-slide" data-desc="Biblioteca de fondos en loop — elige entre paisajes cinematográficos y escenas para enriquecer cada momento del servicio">
+                        <img src="assets/soundforia/escritorio/3.png" alt="Soundforia escritorio 3" draggable="false" loading="lazy">
+                    </div>
+                    <div class="desk-slide" data-desc="Panel de anuncios y predicación — proyecta avisos de la iglesia y el tema del sermón con un solo clic">
+                        <img src="assets/soundforia/escritorio/4.png" alt="Soundforia escritorio 4" draggable="false" loading="lazy">
+                    </div>
+                    <div class="desk-slide" data-desc="Predicación en vivo — muestra el tema del sermón y el nombre del predicador en pantalla completa con fondo visual">
+                        <img src="assets/soundforia/escritorio/5.png" alt="Soundforia escritorio 5" draggable="false" loading="lazy">
+                    </div>
+                    <div class="desk-slide" data-desc="Proyecta el logo de tu iglesia o una pantalla de inicio mientras el servicio se prepara para comenzar">
+                        <img src="assets/soundforia/escritorio/6.png" alt="Soundforia escritorio 6" draggable="false" loading="lazy">
+                    </div>
+                    <div class="desk-slide" data-desc="Vista de salida en pantalla completa — así ve tu congregación los anuncios, letras y versículos en el proyector">
+                        <img src="assets/soundforia/escritorio/7.png" alt="Soundforia escritorio 7" draggable="false" loading="lazy">
+                    </div>
+                    <button class="desk-nav-btn desk-nav-prev" onclick="navHeroDesk(-1)" aria-label="Anterior">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="desk-nav-btn desk-nav-next" onclick="navHeroDesk(1)" aria-label="Siguiente">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                    <div class="desk-slide-counter" id="heroDesktopCounter">1 / 7</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">2025</div>
-                    <div class="stat-label">Año de fundación</div>
+
+                <p class="desk-carousel-desc" id="heroDesktopDesc">Panel de canciones con proyección en vivo — muestra letras y versos con fondos artísticos en tu pantalla o proyector</p>
+
+                <div class="desk-dots" id="heroDesktopDots" role="tablist" aria-label="Capturas de pantalla">
+                    <button class="desk-dot active" onclick="goHeroDesktopSlide(0)" aria-label="Vista 1"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(1)" aria-label="Vista 2"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(2)" aria-label="Vista 3"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(3)" aria-label="Vista 4"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(4)" aria-label="Vista 5"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(5)" aria-label="Vista 6"></button>
+                    <button class="desk-dot" onclick="goHeroDesktopSlide(6)" aria-label="Vista 7"></button>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">iOS</div>
-                    <div class="stat-label">Plataforma nativa</div>
-                </div>
+
+                <a href="assets/soundforia/app/Soundforia-Setup-1.0.0.exe"
+                   download="Soundforia-Setup-1.0.0.exe"
+                   class="btn-win-dl">
+                    <span class="win-shimmer"></span>
+                    <span class="win-icon">
+                        <svg width="22" height="22" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1h9.5v9.5H1z" fill="#f35325"/>
+                            <path d="M11.5 1H22v9.5H11.5z" fill="#81bc06"/>
+                            <path d="M1 11.5h9.5V22H1z" fill="#05a6f0"/>
+                            <path d="M11.5 11.5H22V22H11.5z" fill="#ffba08"/>
+                        </svg>
+                    </span>
+                    <span class="win-label">Descargar para Windows</span>
+                    <span class="win-dl-arrow">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><polyline points="5 12 12 19 19 12"/></svg>
+                    </span>
+                </a>
+                <p class="desk-dl-meta">Soundforia 1.0.0 &nbsp;·&nbsp; Windows 10 / 11 &nbsp;·&nbsp; 64-bit</p>
             </div>
         </section>
 
         <div class="marquee-strip" aria-hidden="true">
-            <div class="marquee-track">
-                <span>Budgely</span><span class="marquee-dot"></span>
-                <span>SilentVault</span><span class="marquee-dot"></span>
-                <span>Soundforia</span><span class="marquee-dot"></span>
-                <span>Tuyyo</span><span class="marquee-dot"></span>
-                <span>Budgely</span><span class="marquee-dot"></span>
-                <span>SilentVault</span><span class="marquee-dot"></span>
-                <span>Soundforia</span><span class="marquee-dot"></span>
-                <span>Tuyyo</span><span class="marquee-dot"></span>
-                <span>Budgely</span><span class="marquee-dot"></span>
-                <span>SilentVault</span><span class="marquee-dot"></span>
-                <span>Soundforia</span><span class="marquee-dot"></span>
-                <span>Tuyyo</span><span class="marquee-dot"></span>
-                <span>Budgely</span><span class="marquee-dot"></span>
-                <span>SilentVault</span><span class="marquee-dot"></span>
-                <span>Soundforia</span><span class="marquee-dot"></span>
-                <span>Tuyyo</span><span class="marquee-dot"></span>
+            <div class="marquee-inner">
+                <div class="marquee-track">
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                </div>
+                <div class="marquee-track">
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                    <span>Budgely</span><span class="marquee-dot"></span>
+                    <span>SilentVault</span><span class="marquee-dot"></span>
+                    <span>Soundforia</span><span class="marquee-dot"></span>
+                    <span>Tuyyo</span><span class="marquee-dot"></span>
+                </div>
             </div>
         </div>
 
