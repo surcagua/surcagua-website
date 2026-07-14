@@ -8,7 +8,7 @@ let _deskTimer   = null;
 
 // ─── HERO DESKTOP CAROUSEL STATE ─────────────────────────
 let _heroDeskCurrent = 0;
-const _heroDeskTotal = 7;
+let _heroDeskTotal   = 7;
 let _heroDeskTimer   = null;
 
 // ─── ICON SVGs ────────────────────────────────────────
@@ -101,15 +101,19 @@ const apps = [
             BASE + 'assets/soundforia/escritorio/5.png',
             BASE + 'assets/soundforia/escritorio/6.png',
             BASE + 'assets/soundforia/escritorio/7.png',
+            BASE + 'assets/soundforia/escritorio/8.png',
+            BASE + 'assets/soundforia/escritorio/9.png',
         ],
         desktopDescriptions: [
             'Panel de canciones con proyección en vivo — muestra letras y versos con fondos artísticos en tu pantalla o proyector',
+            'Anima cada verso en tiempo real — la vista de apoyo muestra la diapositiva actual mientras controlas el servicio',
             'Módulo de Biblia integrado — proyecta versículos del Antiguo y Nuevo Testamento con fondos visuales impactantes',
             'Biblioteca de fondos en loop — elige entre paisajes cinematográficos y escenas para enriquecer cada momento del servicio',
-            'Panel de anuncios y predicación — proyecta avisos de la iglesia y el tema del sermón con un solo clic',
-            'Predicación en vivo — muestra el tema del sermón y el nombre del predicador en pantalla completa con fondo visual',
-            'Proyecta el logo de tu iglesia o una pantalla de inicio mientras el servicio se prepara para comenzar',
-            'Vista de salida en pantalla completa — así ve tu congregación los anuncios, letras y versículos en el proyector',
+            'Arma el escenario del servicio — bienvenida, lectura bíblica, canciones y anuncios en una sola línea de tiempo',
+            'Pantalla de bienvenida — recibe a tu congregación con fondos cinematográficos antes de comenzar el servicio',
+            'Versículos en pantalla completa — así ve tu congregación cada lectura bíblica en el proyector',
+            'Monitor de apoyo para el escenario — el equipo ve el nombre de la canción y la hora sin distraerse con la letra completa',
+            'Elige entre más de diez animaciones de texto — desvanecer, deslizar, zoom, rotar y más para cada diapositiva',
         ],
         inAppPurchases: [
             'Plan Estándar — $4.99 / mes',
@@ -318,8 +322,11 @@ function initHeroDesktop() {
         BASE + 'assets/soundforia/escritorio/5.png',
         BASE + 'assets/soundforia/escritorio/6.png',
         BASE + 'assets/soundforia/escritorio/7.png',
+        BASE + 'assets/soundforia/escritorio/8.png',
+        BASE + 'assets/soundforia/escritorio/9.png',
     ];
 
+    _heroDeskTotal   = heroImgs.length;
     _heroDeskCurrent = 0;
     clearInterval(_heroDeskTimer);
     _heroDeskTimer = setInterval(() => goHeroDesktopSlide((_heroDeskCurrent + 1) % _heroDeskTotal), 4400);
