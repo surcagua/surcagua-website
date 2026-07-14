@@ -1476,24 +1476,31 @@ const Importador = {
    * Descarga el HTML de la canción.
    * 1) Intenta nuestra función serverless propia (/api/proxy) — descarga
    *    desde el servidor, sin depender de proxies públicos de terceros.
-   * 2) Si no está disponible, cae a los proxies públicos en paralelo.
+   * 2) Si no está disponible o falla, cae a los proxies públicos en paralelo.
+   * Si ambos caminos fallan, se lanza un único error claro y accionable
+   * (sin tecnicismos de red) en vez de filtrar el motivo interno.
    */
   async fetchHTML(url) {
     const propio = await this._fetchViaAPI(url);
-    if (propio) return propio;
-    return this._fetchViaProxiesPublicos(url);
+    if (propio.ok) return propio.html;
+
+    try {
+      return await this._fetchViaProxiesPublicos(url);
+    } catch (_) {
+      throw new Error('No pudimos descargar esa canción automáticamente. El sitio de origen puede estar bloqueando la descarga — intenta de nuevo en unos segundos o copia y pega el texto directamente.');
+    }
   },
 
-  /** Intenta descargar vía /api/proxy. Devuelve null si falla (para caer al respaldo). */
+  /** Intenta descargar vía /api/proxy. Devuelve { ok:false } si falla (para caer al respaldo). */
   async _fetchViaAPI(url) {
     try {
-      const res = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, { signal: AbortSignal.timeout(12000) });
-      if (!res.ok) return null;
+      const res = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, { signal: AbortSignal.timeout(9500) });
+      if (!res.ok) return { ok: false };
       const body = await res.text();
-      if (body.length < 100) return null;
-      return body;
+      if (body.length < 100) return { ok: false };
+      return { ok: true, html: body };
     } catch (_) {
-      return null;
+      return { ok: false };
     }
   },
 
@@ -1524,14 +1531,9 @@ const Importador = {
     /* Evita "unhandled rejection" de los intentos que pierdan la carrera. */
     intentos.forEach(p => p.catch(() => {}));
 
-    try {
-      const html = await Promise.any(intentos);
-      controllers.forEach(c => c.abort()); // cancela los que sigan en vuelo
-      return html;
-    } catch (err) {
-      const ultimoError = err.errors?.[err.errors.length - 1]?.message;
-      throw new Error(`No se pudo descargar la página${ultimoError ? ` (${ultimoError})` : ''}. Verifica que el enlace sea de lacuerda.net o Cifra Club`);
-    }
+    const html = await Promise.any(intentos);
+    controllers.forEach(c => c.abort()); // cancela los que sigan en vuelo
+    return html;
   },
 
   /**
