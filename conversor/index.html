@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soundforia — Conversor de Acordes</title>
+<meta name="description" content="Convierte canciones con acordes sobre la letra al formato en línea que usa Soundforia. Importa desde lacuerda.net o Cifra Club y exporta a TXT, HTML, PDF o Word.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   RESET & VARIABLES
+=================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #09090e;
+  --bg-2:       #14151e;
+  --bg-3:       #111218;
+  --bg-4:       #1a1b26;
+  --border:     rgba(255,255,255,.08);
+  --border-2:   rgba(255,255,255,.16);
+  --accent:     #f97316;
+  --accent-h:   #fb923c;
+  --accent-dim: rgba(249,115,22,.14);
+  --green:      #22c55e;
+  --yellow:     #f59e0b;
+  --red:        #ef4444;
+  --t1:         #eef0f8;
+  --t2:         #a6adc4;
+  --t3:         #767d96;
+  --t4:         #484e64;
+  --bg-hover:   #22232f;
+  --bg-active:  #2a2c3a;
+  --mono:       'SF Mono', 'Courier New', Consolas, monospace;
+  --ui:         'Plus Jakarta Sans', -apple-system, 'Segoe UI', sans-serif;
+  --r:          8px;
+  --r-sm:       6px;
+}
+
+body.light-mode {
+  --bg:         #f5f7fc;
+  --bg-2:       #ffffff;
+  --bg-3:       #eceef5;
+  --bg-4:       #eef0f6;
+  --border:     rgba(0,15,60,.08);
+  --border-2:   rgba(0,15,60,.14);
+  --accent:     #f97316;
+  --accent-h:   #ea6a0c;
+  --accent-dim: rgba(249,115,22,.08);
+  --green:      #16a34a;
+  --yellow:     #d97706;
+  --red:        #dc2626;
+  --t1:         #0d0f1a;
+  --t2:         #525c7a;
+  --t3:         #7b849f;
+  --t4:         #8a93ae;
+  --bg-hover:   #e4e4e4;
+  --bg-active:  #d8d8d8;
+}
+
+html { height: 100%; }
+body {
+  height: 100%; margin: 0;
+  background: var(--bg); color: var(--t1);
+  font-family: var(--ui); font-size: 13px; overflow: hidden;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+/* ===================================================================
+   APP SHELL
+=================================================================== */
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+/* --- HEADER -------------------------------------------------------- */
+.header {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 50px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--t1);
+  text-decoration: none;
+  white-space: nowrap;
+  padding-right: 14px;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  transition: opacity .15s ease;
+}
+.logo:hover { opacity: .8; }
+
+.logo-icon {
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: block;
+}
+.logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.logo-sub {
+  font-size: 10px; font-weight: 500;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* --- THEME TOGGLE ---------------------------------------------------- */
+.theme-toggle {
+  width: 30px; height: 30px;
+  padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.toolbar::-webkit-scrollbar { display: none; }
+
+.tb-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* --- BOTONES ------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-sm);
+  background: var(--bg-4);
+  color: var(--t2);
+  font-family: var(--ui);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .12s, color .12s, border-color .12s;
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:hover { background: var(--bg-hover); color: var(--t1); border-color: var(--border-2); }
+.btn:active { background: var(--bg-active); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+.btn-primary:hover { background: var(--accent-h); border-color: var(--accent-h); }
+
+.ico { font-size: 13px; line-height: 1; }
+
+/* --- URL BAR ------------------------------------------------------ */
+.url-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  min-width: 200px;
+  max-width: 380px;
+}
+
+.url-input {
+  flex: 1;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border-2);
+  border-right: none;
+  border-radius: var(--r-sm) 0 0 var(--r-sm);
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--ui);
+  font-size: 12px;
+  outline: none;
+  transition: border-color .15s;
+}
+.url-input:focus { border-color: var(--accent); }
+.url-input::placeholder { color: var(--t4); }
+
+.btn-import {
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  border-color: var(--accent);
+  color: var(--accent);
+  white-space: nowrap;
+  font-weight: 500;
+}
+.btn-import:hover { background: var(--accent); color: #fff; }
+
+/* --- PANELS -------------------------------------------------------- */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  flex: 1;
+  overflow: hidden;
+}
+
+.panel {
+  background: var(--bg-3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.panel-head {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.panel-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--t3);
+}
+
+.panel-acts { display: flex; gap: 5px; }
+
+.pact {
+  background: none;
+  border: none;
+  color: var(--t3);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  transition: color .12s, background .12s;
+}
+.pact:hover { color: var(--t1); background: rgba(255,255,255,.05); }
+
+.panel-body {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- TEXTAREA ------------------------------------------------------ */
+textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--t1);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  padding: 14px;
+  resize: none;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  overflow-y: auto;
+  tab-size: 4;
+}
+textarea::placeholder { color: var(--t4); font-style: italic; }
+textarea::selection { background: var(--accent-dim); }
+
+/* --- OUTPUT & PREVIEW --------------------------------------------- */
+.out-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: 14px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre;
+  color: var(--t1);
+  cursor: text;
+  user-select: text;
+  min-height: 0;
+}
+
+.prev-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: 14px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  color: var(--t1);
+  min-height: 0;
+}
+
+.ch { color: var(--accent); font-weight: 600; }
+
+/* --- DROP OVERLAY -------------------------------------------------- */
+.drop-ov {
+  position: absolute;
+  inset: 0;
+  background: rgba(37,99,235,.05);
+  border: 2px dashed var(--accent);
+  border-radius: var(--r);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 20;
+  pointer-events: none;
+}
+.drop-ov.show { display: flex; }
+.drop-ov-title { font-size: 15px; font-weight: 500; color: var(--accent); }
+.drop-ov-sub { font-size: 11px; color: var(--t2); }
+
+/* --- STATUS BAR ---------------------------------------------------- */
+.statusbar {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.stat { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--t3); }
+.stat-val { color: var(--t2); font-weight: 500; }
+
+.status-msg {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--t3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- PROGRESS BAR -------------------------------------------------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  transition: width .25s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* --- TOAST --------------------------------------------------------- */
+.toasts {
+  position: fixed;
+  bottom: 40px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  z-index: 500;
+}
+
+.toast {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 9px 13px;
+  font-size: 11.5px;
+  color: var(--t1);
+  max-width: 270px;
+  animation: tIn .18s ease;
+  border-left: 3px solid var(--t4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.16);
+}
+.toast.ok  { border-left-color: var(--green); }
+.toast.err { border-left-color: var(--red); }
+.toast.warn{ border-left-color: var(--yellow); }
+.toast.info{ border-left-color: var(--accent); }
+
+@keyframes tIn {
+  from { transform: translateX(16px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* --- SCROLLBARS ---------------------------------------------------- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--t4); }
+
+/* --- PLACEHOLDER (paneles vacíos) ---------------------------------- */
+.empty-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+.empty-hint-icon { font-size: 28px; opacity: .12; }
+.empty-hint-text { font-size: 11px; color: var(--t4); }
+
+/* --- RESPONSIVE ---------------------------------------------------- */
+@media (max-width: 860px) {
+  .main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  .logo-sub { display: none; }
+  .logo { padding-right: 10px; gap: 7px; }
+  .header { gap: 8px; padding: 0 10px; }
+  .theme-toggle { width: 28px; height: 28px; }
+}
+
+/* --- PRINT --------------------------------------------------------- */
+@media print {
+  .header, .statusbar, .progress, .toasts { display: none !important; }
+  .main { grid-template-columns: 1fr !important; background: #fff !important; }
+  .panel:not(.p-out) { display: none !important; }
+  .out-wrap { white-space: pre-wrap !important; color: #000 !important; }
+  .ch { color: #c2410c !important; }
+}
+</style>
+</head>
+<body class="light-mode">
+
+<!-- BARRA DE PROGRESO -->
+<div class="progress" id="prog"></div>
+
+<!-- TOASTS -->
+<div class="toasts" id="toasts"></div>
+
+<!-- APP -->
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="../index.html" class="logo" title="Volver a Surcagua Studio">
+      <span class="logo-icon"><img src="../assets/soundforia/logo.png" alt="Soundforia"></span>
+      <span class="logo-text">
+        Soundforia
+        <span class="logo-sub">Conversor de acordes</span>
+      </span>
+    </a>
+
+    <div class="toolbar">
+      <!-- URL Import -->
+      <div class="url-bar">
+        <input id="urlInput" class="url-input" type="url" placeholder="Pegar enlace de lacuerda.net o Cifra Club…" onkeydown="if(event.key==='Enter')App.importarURL()">
+        <button class="btn btn-import" onclick="App.importarURL()" title="Importar canción desde URL">Importar</button>
+      </div>
+
+      <div class="tb-sep"></div>
+
+      <!-- Archivo -->
+      <button class="btn" onclick="App.nuevo()" title="Ctrl+N"><span class="ico">＋</span> Nuevo</button>
+      <button class="btn" onclick="App.abrirArchivo()" title="Ctrl+O"><span class="ico">↑</span> Abrir</button>
+      <button class="btn" onclick="App.guardarTXT()" title="Ctrl+S"><span class="ico">↓</span> Guardar</button>
+
+      <div class="tb-sep"></div>
+
+      <!-- Acción principal -->
+      <button class="btn btn-primary" onclick="App.convertir()" title="Ctrl+Enter"><span class="ico">⟳</span> Convertir</button>
+      <button class="btn" onclick="App.limpiarTodo()"><span class="ico">✕</span> Limpiar</button>
+
+      <div class="tb-sep"></div>
+
+      <!-- Resultado -->
+      <button class="btn" onclick="App.copiarResultado()" title="Copiar resultado"><span class="ico">⎘</span> Copiar</button>
+
+      <div class="tb-sep"></div>
+
+      <!-- Exportar -->
+      <button class="btn" onclick="App.exportarTXT()" title="Exportar TXT">TXT</button>
+      <button class="btn" onclick="App.exportarHTML()" title="Exportar HTML">HTML</button>
+      <button class="btn" onclick="App.exportarDOCX()" title="Exportar DOC">DOCX</button>
+      <button class="btn" onclick="App.exportarPDF()" title="Exportar PDF"><span class="ico">⎙</span> PDF</button>
+      <button class="btn" onclick="App.imprimir()" title="Imprimir"><span class="ico">⎙</span> Imprimir</button>
+    </div>
+
+    <button class="btn theme-toggle" onclick="toggleTheme()" title="Cambiar tema" aria-label="Cambiar tema">
+      <span id="themeIcon"></span>
+    </button>
+  </header>
+
+  <!-- PANELES -->
+  <main class="main">
+
+    <!-- PANEL: ENTRADA -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Texto Original</span>
+        <div class="panel-acts">
+          <button class="pact" onclick="App.limpiarEntrada()">Limpiar</button>
+        </div>
+      </div>
+      <div class="panel-body" id="dropZone">
+        <div class="drop-ov" id="dropOv">
+          <span class="drop-ov-title">Suelta aquí</span>
+          <span class="drop-ov-sub">Archivos .txt</span>
+        </div>
+        <textarea
+          id="inputText"
+          spellcheck="false"
+          placeholder="Pega tu canción aquí, abre un archivo TXT
+o arrástralo sobre este panel.
+
+Ejemplo:
+Em
+Yo me alegre con los que me decian
+
+D                  Em
+a la casa de Jehová iremos"
+          oninput="App.onInput()"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- PANEL: RESULTADO -->
+    <div class="panel p-out">
+      <div class="panel-head">
+        <span class="panel-title">Resultado</span>
+        <div class="panel-acts">
+          <button class="pact" onclick="App.copiarResultado()">Copiar</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="empty-hint" id="outHint">
+          <span class="empty-hint-icon">♩</span>
+          <span class="empty-hint-text">Presiona Convertir para ver el resultado</span>
+        </div>
+        <div class="out-wrap" id="outWrap"></div>
+      </div>
+    </div>
+
+    <!-- PANEL: VISTA PREVIA -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Vista Previa</span>
+        <div class="panel-acts">
+          <button class="pact" onclick="App.imprimir()">Imprimir</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="empty-hint" id="prevHint">
+          <span class="empty-hint-icon">♪</span>
+          <span class="empty-hint-text">La vista previa aparece aquí</span>
+        </div>
+        <div class="prev-wrap" id="prevWrap"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STATUS BAR -->
+  <div class="statusbar">
+    <div class="stat">Líneas: <span class="stat-val" id="stLines">0</span></div>
+    <div class="stat">Acordes: <span class="stat-val" id="stChords">0</span></div>
+    <div class="stat">Versos: <span class="stat-val" id="stVerses">0</span></div>
+    <div class="stat">Chars: <span class="stat-val" id="stChars">0</span></div>
+    <div class="stat">Tiempo: <span class="stat-val" id="stTime">—</span></div>
+    <div class="status-msg" id="statusMsg">Listo</div>
+  </div>
+</div>
+
+<!-- INPUT ARCHIVO OCULTO -->
+<input type="file" id="fileInput" accept=".txt" style="display:none" onchange="App.onFileSelected(event)">
+
+<script>
+'use strict';
+/* ===================================================================
+   MÓDULO: Tema — claro / oscuro (persistido, compartido con el sitio)
+=================================================================== */
+const SUN_SVG  = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const MOON_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  body.classList.toggle('light-mode');
+  if (body.classList.contains('light-mode')) {
+    icon.innerHTML = SUN_SVG;
+    localStorage.setItem('theme', 'light');
+  } else {
+    icon.innerHTML = MOON_SVG;
+    localStorage.setItem('theme', 'dark');
+  }
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  const icon  = document.getElementById('themeIcon');
+  if (saved === 'dark') {
+    document.body.classList.remove('light-mode');
+    icon.innerHTML = MOON_SVG;
+  } else {
+    document.body.classList.add('light-mode');
+    icon.innerHTML = SUN_SVG;
+  }
+}
+
+/* ===================================================================
+   MÓDULO: Utils — utilidades generales
+=================================================================== */
+const Utils = {
+  /** Descarga un Blob como archivo. */
+  descargar(blob, nombre) {
+    const url = URL.createObjectURL(blob);
+    const a   = document.createElement('a');
+    a.href    = url;
+    a.download= nombre;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  },
+
+  /** Lee un File como texto UTF-8. */
+  leerArchivo(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload  = e => res(e.target.result);
+      r.onerror = () => rej(new Error('No se pudo leer el archivo'));
+      r.readAsText(file, 'UTF-8');
+    });
+  },
+
+  /** Escapa caracteres HTML especiales. */
+  esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  },
+
+  /** Obtiene el título de la canción (primera línea no vacía, ≤50 chars). */
+  titulo(texto) {
+    const linea = texto.trim().split('\n').find(l => l.trim()) || 'cancion';
+    return linea.trim().slice(0, 50).replace(/[\\/:*?"<>|]/g, '_');
+  }
+};
+
+/* ===================================================================
+   MÓDULO: DetectorAcorde — identifica si un token es un acorde
+=================================================================== */
+const DetectorAcorde = {
+  /**
+   * Expresión regular para un acorde válido.
+   * Cubre: nota raíz, alteración, calidad, extensión, bajo opcional.
+   * Ejemplos cubiertos: A, Am, A7, Am7, Bb, C#, F#m, E/G#, Gmaj7,
+   * Dsus4, Cadd9, Bm11, F#7, Ebmaj9, Bb/D, Cm7b5 (parcial)
+   */
+  PATRON: /^[A-G][b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add|M)?(\d+)?(b\d+|#\d+)?(\/[A-G][b#]?)?$/,
+
+  /** ¿Es este token un acorde? */
+  esAcorde(token) {
+    return token.length > 0 && this.PATRON.test(token);
+  },
+
+  /**
+   * ¿Es esta línea predominantemente una línea de acordes?
+   * Una línea es de acordes si:
+   *   - No está vacía
+   *   - No es una etiqueta de sección
+   *   - Al menos el 60% de sus tokens son acordes y hay ≥1 acorde
+   */
+  esLineaAcordes(linea) {
+    const s = linea.trim();
+    if (!s) return false;
+    if (DetectorSeccion.esSeccion(s)) return false;
+    const tokens = s.split(/\s+/).filter(Boolean);
+    if (!tokens.length) return false;
+    const nAcordes = tokens.filter(t => this.esAcorde(t)).length;
+    return nAcordes > 0 && nAcordes / tokens.length >= 0.6;
+  },
+
+  /**
+   * Extrae acordes con su posición de columna dentro de la línea.
+   * @param {string} linea
+   * @returns {{ acorde: string, col: number }[]}
+   */
+  extraerConPosicion(linea) {
+    const res = [];
+    let i = 0;
+    while (i < linea.length) {
+      // Saltar espacios
+      while (i < linea.length && linea[i] === ' ') i++;
+      if (i >= linea.length) break;
+      const inicio = i;
+      // Leer token (hasta espacio o fin)
+      while (i < linea.length && linea[i] !== ' ') i++;
+      const token = linea.slice(inicio, i);
+      if (this.esAcorde(token)) {
+        res.push({ acorde: token, col: inicio });
+      }
+    }
+    return res;
+  }
+};
+
+/* ===================================================================
+   MÓDULO: DetectorSeccion — identifica etiquetas de sección
+=================================================================== */
+const DetectorSeccion = {
+  PATRON: /^\[?(intro|verso\s*\d*|coro\s*\d*|puente|bridge|solo|final|repetici[oó]n|chorus|verse|pre-?coro|pre-?chorus|estrofa\s*\d*|interludio|tag|outro|hook)\]?\s*[:.]?\s*$/i,
+
+  esSeccion(linea) {
+    return this.PATRON.test(linea.trim());
+  }
+};
+
+/* ===================================================================
+   MÓDULO: Motor — algoritmo de conversión principal
+=================================================================== */
+class Motor {
+  /**
+   * Convierte texto con acordes sobre letra a formato inline.
+   * Utiliza posiciones de columna para insertar cada acorde exactamente
+   * donde corresponde en la línea de letra.
+   *
+   * @param {string} texto — Texto original con acordes sobre letras
+   * @returns {{ resultado: string, stats: object }}
+   */
+  convertir(texto) {
+    const lineas = texto.split('\n');
+    const salida = [];
+    let totalAcordes = 0;
+    let totalVersos  = 0;
+    let i = 0;
+
+    while (i < lineas.length) {
+      const linea = lineas[i];
+
+      /* Línea vacía → conservar */
+      if (linea.trim() === '') {
+        salida.push('');
+        i++;
+        continue;
+      }
+
+      /* Etiqueta de sección → conservar sin modificar */
+      if (DetectorSeccion.esSeccion(linea.trim())) {
+        salida.push(linea);
+        totalVersos++;
+        i++;
+        continue;
+      }
+
+      /* Línea de acordes */
+      if (DetectorAcorde.esLineaAcordes(linea)) {
+        const acordes = DetectorAcorde.extraerConPosicion(linea);
+
+        /* Buscar inmediatamente la siguiente línea de letra */
+        const j = i + 1;
+        const lineaSig = j < lineas.length ? lineas[j] : null;
+
+        const esLetra =
+          lineaSig !== null &&
+          lineaSig.trim() !== '' &&
+          !DetectorAcorde.esLineaAcordes(lineaSig) &&
+          !DetectorSeccion.esSeccion(lineaSig.trim());
+
+        if (esLetra) {
+          salida.push(this._insertarInline(acordes, lineaSig));
+          totalAcordes += acordes.length;
+          i = j + 1;
+        } else {
+          /* Sin letra correspondiente: mantener la línea de acordes */
+          salida.push(linea);
+          totalAcordes += acordes.length;
+          i++;
+        }
+        continue;
+      }
+
+      /* Línea de letra sin acordes previos → conservar */
+      salida.push(linea);
+      i++;
+    }
+
+    const resultado = salida.join('\n');
+    return {
+      resultado,
+      stats: {
+        lineas:  salida.length,
+        acordes: totalAcordes,
+        versos:  totalVersos,
+        chars:   resultado.length
+      }
+    };
+  }
+
+  /**
+   * Inserta acordes entre corchetes en la línea de letras
+   * respetando exactamente la posición de columna de cada acorde.
+   *
+   * El desplazamiento acumulado compensa el incremento de longitud
+   * causado por los corchetes ya insertados.
+   *
+   * @param {{ acorde: string, col: number }[]} acordes
+   * @param {string} letra
+   * @returns {string}
+   */
+  _insertarInline(acordes, letra) {
+    let s      = letra;
+    let offset = 0;
+
+    for (const { acorde, col } of acordes) {
+      const tag    = `[${acorde}]`;
+      const posReal = col + offset;
+
+      /* Si la posición excede la línea, rellenar con espacios */
+      if (posReal > s.length) {
+        s += ' '.repeat(posReal - s.length);
+      }
+
+      s       = s.slice(0, posReal) + tag + s.slice(posReal);
+      offset += tag.length;
+    }
+
+    return s;
+  }
+}
+
+/* ===================================================================
+   MÓDULO: Exportador — genera archivos descargables
+=================================================================== */
+const Exportador = {
+  /** Texto plano. */
+  txt(texto, nombre) {
+    Utils.descargar(new Blob([texto], { type: 'text/plain;charset=utf-8' }), `${nombre}.txt`);
+  },
+
+  /** Página HTML con acordes coloreados. */
+  html(texto, nombre) {
+    const body = Utils.esc(texto)
+      .replace(/\[([^\]]+)\]/g, '<span class="c">[$1]</span>');
+    const doc = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>${Utils.esc(nombre)}</title>
+<style>
+  body { background:#0a0a0a; color:#e2e2e2; font-family:'Courier New',monospace;
+         padding:40px 48px; line-height:1.8; }
+  .c { color:#f97316; font-weight:700; }
+  pre { white-space:pre-wrap; font-size:13px; margin:0; }
+  h1 { font-size:18px; font-weight:600; margin-bottom:24px; color:#fff; }
+</style>
+</head>
+<body>
+<h1>${Utils.esc(nombre)}</h1>
+<pre>${body}</pre>
+</body>
+</html>`;
+    Utils.descargar(new Blob([doc], { type: 'text/html;charset=utf-8' }), `${nombre}.html`);
+  },
+
+  /** Documento Word (HTML con cabecera Office). */
+  docx(texto, nombre) {
+    const body = Utils.esc(texto)
+      .replace(/\[([^\]]+)\]/g, '<b style="color:#c2410c">[$1]</b>');
+    const doc = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<title>${Utils.esc(nombre)}</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View>
+<w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+  body  { font-family:"Courier New"; font-size:11pt; margin:2cm; }
+  pre   { white-space:pre-wrap; font-size:11pt; line-height:1.7; }
+</style>
+</head>
+<body>
+<h1 style="font-size:14pt;font-family:'Calibri'">${Utils.esc(nombre)}</h1>
+<pre>${body}</pre>
+</body>
+</html>`;
+    Utils.descargar(
+      new Blob(['﻿' + doc], { type: 'application/msword' }),
+      `${nombre}.doc`
+    );
+  },
+
+  /**
+   * PDF — abre una ventana con el contenido y llama a window.print().
+   * El usuario usa "Guardar como PDF" del diálogo de impresión.
+   */
+  pdf(texto, nombre) {
+    const body = Utils.esc(texto)
+      .replace(/\[([^\]]+)\]/g, '<span style="color:#c2410c;font-weight:700">[$1]</span>');
+    const w = window.open('', '_blank');
+    if (!w) { Toast.show('Permite popups para exportar PDF', 'warn'); return; }
+    w.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>${Utils.esc(nombre)}</title>
+<style>
+  body { font-family:"Courier New"; font-size:11pt; padding:20mm; margin:0; }
+  pre  { white-space:pre-wrap; line-height:1.75; }
+  h1   { font-family:Calibri,sans-serif; font-size:14pt; margin-bottom:16pt; }
+  @page { margin:20mm; }
+</style>
+</head>
+<body>
+<h1>${Utils.esc(nombre)}</h1>
+<pre>${body}</pre>
+<script>
+  window.onload = function(){ window.focus(); window.print(); };
+<\/script>
+</body></html>`);
+    w.document.close();
+  }
+};
+
+/* ===================================================================
+   MÓDULO: Store — persistencia en LocalStorage
+=================================================================== */
+const Store = {
+  KEY: 'lacuerda_v1',
+
+  save(estado) {
+    try { localStorage.setItem(this.KEY, JSON.stringify(estado)); } catch(_) {}
+  },
+
+  load() {
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch(_) { return null; }
+  }
+};
+
+/* ===================================================================
+   MÓDULO: Progreso — barra de progreso superior
+=================================================================== */
+const Prog = {
+  el: null,
+  timer: null,
+
+  init() { this.el = document.getElementById('prog'); },
+
+  set(pct) {
+    this.el.style.width = pct + '%';
+  },
+
+  done() {
+    this.set(100);
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.set(0), 350);
+  }
+};
+
+/* ===================================================================
+   MÓDULO: Toast — notificaciones flotantes
+=================================================================== */
+const Toast = {
+  /**
+   * Muestra una notificación.
+   * @param {string} msg
+   * @param {'ok'|'err'|'warn'|'info'} tipo
+   * @param {number} ms — duración en milisegundos
+   */
+  show(msg, tipo = 'info', ms = 2800) {
+    const c = document.getElementById('toasts');
+    const t = document.createElement('div');
+    t.className = `toast ${tipo}`;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; }, ms - 300);
+    setTimeout(() => t.remove(), ms);
+  }
+};
+
+/* ===================================================================
+   APLICACIÓN PRINCIPAL
+=================================================================== */
+const App = {
+  motor:     new Motor(),
+  resultado: '',        // Última conversión
+  autoTimer: null,      // Timer de guardado automático
+
+  /* ------------------------------------------------------------------
+     Inicialización
+  ------------------------------------------------------------------ */
+  init() {
+    Prog.init();
+    /* Estado inicial: ocultar los wraps, mostrar hints */
+    document.getElementById('outWrap').style.display  = 'none';
+    document.getElementById('prevWrap').style.display = 'none';
+    this._configurarDragDrop();
+    this._configurarAtajos();
+    this._restaurar();
+  },
+
+  /* ------------------------------------------------------------------
+     Drag & Drop
+  ------------------------------------------------------------------ */
+  _configurarDragDrop() {
+    const zona = document.getElementById('dropZone');
+    const ov   = document.getElementById('dropOv');
+    let dragCnt = 0;
+
+    zona.addEventListener('dragenter', e => {
+      e.preventDefault();
+      dragCnt++;
+      ov.classList.add('show');
+    });
+
+    zona.addEventListener('dragleave', () => {
+      dragCnt--;
+      if (dragCnt <= 0) { dragCnt = 0; ov.classList.remove('show'); }
+    });
+
+    zona.addEventListener('dragover', e => e.preventDefault());
+
+    zona.addEventListener('drop', async e => {
+      e.preventDefault();
+      dragCnt = 0;
+      ov.classList.remove('show');
+      const f = e.dataTransfer.files[0];
+      if (f && f.name.toLowerCase().endsWith('.txt')) {
+        await this._cargar(f);
+      } else {
+        Toast.show('Solo se aceptan archivos .txt', 'err');
+      }
+    });
+  },
+
+  /* ------------------------------------------------------------------
+     Atajos de teclado
+  ------------------------------------------------------------------ */
+  _configurarAtajos() {
+    document.addEventListener('keydown', e => {
+      if (!e.ctrlKey) return;
+      switch (e.key) {
+        case 'n': case 'N': e.preventDefault(); this.nuevo(); break;
+        case 'o': case 'O': e.preventDefault(); this.abrirArchivo(); break;
+        case 's': case 'S':
+          e.preventDefault();
+          e.shiftKey ? this.exportarPDF() : this.guardarTXT();
+          break;
+        case 'Enter': e.preventDefault(); this.convertir(); break;
+      }
+    });
+  },
+
+  /* ------------------------------------------------------------------
+     Restaurar sesión anterior
+  ------------------------------------------------------------------ */
+  _restaurar() {
+    const e = Store.load();
+    if (e?.entrada) {
+      document.getElementById('inputText').value = e.entrada;
+      if (e.resultado) {
+        this.resultado = e.resultado;
+        this._renderizarResultado(e.resultado);
+      }
+      this._actualizarContadores(e.entrada);
+      this._setStatus('Sesión restaurada');
+    }
+  },
+
+  /* ------------------------------------------------------------------
+     Auto-guardado
+  ------------------------------------------------------------------ */
+  _autoguardar() {
+    clearTimeout(this.autoTimer);
+    this.autoTimer = setTimeout(() => {
+      Store.save({
+        entrada:   document.getElementById('inputText').value,
+        resultado: this.resultado
+      });
+    }, 1000);
+  },
+
+  /* ------------------------------------------------------------------
+     Eventos de la UI
+  ------------------------------------------------------------------ */
+  onInput() {
+    const txt = document.getElementById('inputText').value;
+    this._actualizarContadores(txt);
+    this._autoguardar();
+  },
+
+  onFileSelected(e) {
+    const f = e.target.files[0];
+    if (f) { this._cargar(f); e.target.value = ''; }
+  },
+
+  /* ------------------------------------------------------------------
+     Acciones de archivo
+  ------------------------------------------------------------------ */
+
+  /* ------------------------------------------------------------------
+     Importar desde URL (lacuerda.net o Cifra Club)
+  ------------------------------------------------------------------ */
+  async importarURL() {
+    const input = document.getElementById('urlInput');
+    const url   = input.value.trim();
+
+    if (!url) { Toast.show('Pega un enlace de lacuerda.net o Cifra Club', 'warn'); input.focus(); return; }
+    if (!url.startsWith('http')) { Toast.show('El enlace debe empezar con http...', 'warn'); return; }
+
+    Prog.set(15);
+    this._setStatus('Descargando… (puede tardar unos segundos)');
+    const btnImportar = document.querySelector('.btn-import');
+    btnImportar.textContent = 'Cargando…';
+    btnImportar.disabled = true;
+
+    try {
+      Prog.set(40);
+      const html  = await Importador.fetchHTML(url);
+      Prog.set(70);
+      const texto = Importador.parsear(html);
+
+      document.getElementById('inputText').value = texto;
+      this._actualizarContadores(texto);
+      this._autoguardar();
+      input.value = '';
+
+      Prog.set(90);
+      this.convertir();
+      Toast.show('Canción importada y convertida', 'ok');
+    } catch (err) {
+      Prog.set(0);
+      Toast.show(err.message, 'err', 5000);
+      this._setStatus('Error al importar');
+    } finally {
+      btnImportar.textContent = 'Importar';
+      btnImportar.disabled = false;
+    }
+  },
+
+  nuevo() {
+    const txt = document.getElementById('inputText').value.trim();
+    if (txt && !confirm('¿Descartar el trabajo actual?')) return;
+    document.getElementById('inputText').value = '';
+    this.resultado = '';
+    this._limpiarResultados();
+    this._actualizarStats({});
+    Store.save({});
+    this._setStatus('Nuevo documento');
+  },
+
+  _limpiarResultados() {
+    const outWrap  = document.getElementById('outWrap');
+    const prevWrap = document.getElementById('prevWrap');
+    outWrap.textContent  = '';
+    prevWrap.innerHTML   = '';
+    outWrap.style.display  = 'none';
+    prevWrap.style.display = 'none';
+    document.getElementById('outHint').style.display  = 'flex';
+    document.getElementById('prevHint').style.display = 'flex';
+  },
+
+  abrirArchivo() {
+    document.getElementById('fileInput').click();
+  },
+
+  async _cargar(file) {
+    try {
+      Prog.set(30);
+      const txt = await Utils.leerArchivo(file);
+      document.getElementById('inputText').value = txt;
+      this._actualizarContadores(txt);
+      this._autoguardar();
+      Prog.done();
+      Toast.show(`${file.name} cargado`, 'ok');
+    } catch (err) {
+      Prog.set(0);
+      Toast.show(`Error: ${err.message}`, 'err');
+    }
+  },
+
+  guardarTXT() {
+    const txt = document.getElementById('inputText').value;
+    if (!txt.trim()) { Toast.show('No hay texto', 'warn'); return; }
+    Exportador.txt(txt, Utils.titulo(txt));
+    Toast.show('Archivo guardado', 'ok');
+  },
+
+  /* ------------------------------------------------------------------
+     Conversión
+  ------------------------------------------------------------------ */
+  convertir() {
+    const txt = document.getElementById('inputText').value;
+    if (!txt.trim()) { Toast.show('No hay texto para convertir', 'warn'); return; }
+
+    Prog.set(20);
+    const t0 = performance.now();
+
+    try {
+      Prog.set(55);
+      const { resultado, stats } = this.motor.convertir(txt);
+      this.resultado = resultado;
+
+      Prog.set(85);
+      this._renderizarResultado(resultado);
+
+      const ms = (performance.now() - t0).toFixed(1);
+      this._actualizarStats({ ...stats, tiempo: ms });
+      this._autoguardar();
+      Prog.done();
+      Toast.show(`Convertido en ${ms} ms`, 'ok');
+      this._setStatus(`Listo · ${ms} ms`);
+    } catch (err) {
+      Prog.set(0);
+      Toast.show(`Error: ${err.message}`, 'err');
+    }
+  },
+
+  /* ------------------------------------------------------------------
+     Renderizado de resultado
+  ------------------------------------------------------------------ */
+  _renderizarResultado(texto) {
+    /* Panel resultado: texto seleccionable */
+    const outWrap  = document.getElementById('outWrap');
+    const outHint  = document.getElementById('outHint');
+    outWrap.textContent = texto;
+    outHint.style.display  = 'none';
+    outWrap.style.display  = 'block';
+
+    /* Panel vista previa: acordes coloreados */
+    const prevWrap = document.getElementById('prevWrap');
+    const prevHint = document.getElementById('prevHint');
+    const html = Utils.esc(texto)
+      .replace(/\[([^\]]+)\]/g, '<span class="ch">[$1]</span>');
+    prevWrap.innerHTML = html;
+    prevHint.style.display = 'none';
+    prevWrap.style.display = 'block';
+  },
+
+  /* ------------------------------------------------------------------
+     Estadísticas
+  ------------------------------------------------------------------ */
+  _actualizarContadores(txt) {
+    document.getElementById('stLines').textContent = txt ? txt.split('\n').length : 0;
+    document.getElementById('stChars').textContent = txt.length;
+  },
+
+  _actualizarStats({ lineas = 0, acordes = 0, versos = 0, chars = 0, tiempo } = {}) {
+    document.getElementById('stLines').textContent  = lineas;
+    document.getElementById('stChords').textContent = acordes;
+    document.getElementById('stVerses').textContent = versos;
+    document.getElementById('stChars').textContent  = chars;
+    document.getElementById('stTime').textContent   = tiempo ? `${tiempo} ms` : '—';
+  },
+
+  _setStatus(msg) {
+    document.getElementById('statusMsg').textContent = msg;
+  },
+
+  /* ------------------------------------------------------------------
+     Copiar resultado
+  ------------------------------------------------------------------ */
+  async copiarResultado() {
+    if (!this.resultado) { Toast.show('Convierte primero', 'warn'); return; }
+    try {
+      await navigator.clipboard.writeText(this.resultado);
+      Toast.show('Copiado al portapapeles', 'ok');
+    } catch (_) {
+      /* Fallback: seleccionar el texto en el panel */
+      const el = document.getElementById('outWrap');
+      const sel = window.getSelection();
+      const rng = document.createRange();
+      rng.selectNodeContents(el);
+      sel.removeAllRanges();
+      sel.addRange(rng);
+      Toast.show('Selecciona y copia con Ctrl+C', 'info');
+    }
+  },
+
+  /* ------------------------------------------------------------------
+     Limpiar
+  ------------------------------------------------------------------ */
+  limpiarEntrada() {
+    document.getElementById('inputText').value = '';
+    this._actualizarContadores('');
+  },
+
+  limpiarTodo() {
+    this.limpiarEntrada();
+    this.resultado = '';
+    this._limpiarResultados();
+    this._actualizarStats({});
+    Store.save({});
+    Toast.show('Limpiado', 'info');
+  },
+
+  /* ------------------------------------------------------------------
+     Exportaciones
+  ------------------------------------------------------------------ */
+  _checkResultado() {
+    if (!this.resultado) { Toast.show('Convierte primero', 'warn'); return false; }
+    return true;
+  },
+
+  exportarTXT()  {
+    if (!this._checkResultado()) return;
+    Exportador.txt(this.resultado, Utils.titulo(this.resultado));
+    Toast.show('TXT exportado', 'ok');
+  },
+
+  exportarHTML() {
+    if (!this._checkResultado()) return;
+    Exportador.html(this.resultado, Utils.titulo(this.resultado));
+    Toast.show('HTML exportado', 'ok');
+  },
+
+  exportarDOCX() {
+    if (!this._checkResultado()) return;
+    Exportador.docx(this.resultado, Utils.titulo(this.resultado));
+    Toast.show('DOC exportado', 'ok');
+  },
+
+  exportarPDF() {
+    if (!this._checkResultado()) return;
+    Exportador.pdf(this.resultado, Utils.titulo(this.resultado));
+  },
+
+  imprimir() {
+    if (!this._checkResultado()) return;
+    Exportador.pdf(this.resultado, Utils.titulo(this.resultado));
+  }
+};
+
+/* ===================================================================
+   MÓDULO: Importador — descarga y parsea canciones desde lacuerda.net o Cifra Club
+=================================================================== */
+const Importador = {
+  /**
+   * Proxies CORS públicos — solo se usan como RESPALDO si nuestra propia
+   * función serverless (/api/proxy) no está disponible (p. ej. en
+   * desarrollo local sin Vercel). Se consultan todos EN PARALELO y se usa
+   * el primero que responda con contenido válido, para no pagar el peor
+   * caso de latencia acumulada.
+   */
+  PROXIES: [
+    url => ({ url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, json: false }),
+    url => ({ url: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,  json: false }),
+    url => ({ url: `https://thingproxy.freeboard.io/fetch/${url}`,                   json: false }),
+    url => ({ url: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,  json: true  }),
+  ],
+
+  /**
+   * Descarga el HTML de la canción.
+   * 1) Intenta nuestra función serverless propia (/api/proxy) — descarga
+   *    desde el servidor, sin depender de proxies públicos de terceros.
+   * 2) Si no está disponible, cae a los proxies públicos en paralelo.
+   */
+  async fetchHTML(url) {
+    const propio = await this._fetchViaAPI(url);
+    if (propio) return propio;
+    return this._fetchViaProxiesPublicos(url);
+  },
+
+  /** Intenta descargar vía /api/proxy. Devuelve null si falla (para caer al respaldo). */
+  async _fetchViaAPI(url) {
+    try {
+      const res = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, { signal: AbortSignal.timeout(12000) });
+      if (!res.ok) return null;
+      const body = await res.text();
+      if (body.length < 100) return null;
+      return body;
+    } catch (_) {
+      return null;
+    }
+  },
+
+  /** Respaldo: prueba todos los proxies públicos en paralelo (timeout 14s c/u). */
+  async _fetchViaProxiesPublicos(url) {
+    const controllers = this.PROXIES.map(() => new AbortController());
+
+    const intentos = this.PROXIES.map((proxyFn, i) => {
+      const { url: proxyUrl, json } = proxyFn(url);
+      const controller = controllers[i];
+      const timer = setTimeout(() => controller.abort(), 14000);
+
+      return fetch(proxyUrl, { signal: controller.signal })
+        .then(async res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const body = await res.text();
+          if (json) {
+            const data = JSON.parse(body);
+            if (data.contents) return data.contents;
+            throw new Error('Respuesta JSON vacía');
+          }
+          if (body.length < 100) throw new Error('Respuesta vacía');
+          return body;
+        })
+        .finally(() => clearTimeout(timer));
+    });
+
+    /* Evita "unhandled rejection" de los intentos que pierdan la carrera. */
+    intentos.forEach(p => p.catch(() => {}));
+
+    try {
+      const html = await Promise.any(intentos);
+      controllers.forEach(c => c.abort()); // cancela los que sigan en vuelo
+      return html;
+    } catch (err) {
+      const ultimoError = err.errors?.[err.errors.length - 1]?.message;
+      throw new Error(`No se pudo descargar la página${ultimoError ? ` (${ultimoError})` : ''}. Verifica que el enlace sea de lacuerda.net o Cifra Club`);
+    }
+  },
+
+  /**
+   * Extrae el texto de acordes+letra del HTML.
+   * Prioridad: Cifra Club → #t_body PRE (lacuerda.net) → cualquier PRE → divs → fallback.
+   */
+  parsear(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    /* 1. Cifra Club — <PRE data-chord-content="true"> con acordes en <b data-chord-name> */
+    const cc = doc.querySelector('pre[data-chord-content="true"]');
+    if (cc) return this._parsearCifraClub(cc);
+
+    /* 2. lacuerda.net — el contenido está en <div id=t_body><PRE> */
+    const lc = doc.querySelector('#t_body PRE, #t_body pre');
+    if (lc) return this._parsearLaCuerda(lc);
+
+    /* 3. Cualquier <PRE> que contenga acordes */
+    const pres = [...doc.querySelectorAll('PRE, pre')];
+    const preOk = pres.find(el => this._tieneAcordes(el.textContent));
+    if (preOk) return this._limpiar(preOk.textContent);
+
+    /* 4. Div / section con id o clase conocidos */
+    for (const sel of ['#cancion','#song','#letra','.cancion','.song-content','.tab-content','article']) {
+      try {
+        const el = doc.querySelector(sel);
+        if (el && this._tieneAcordes(el.textContent)) return this._limpiar(el.textContent);
+      } catch (_) {}
+    }
+
+    /* 5. El bloque más largo con acordes */
+    const candidato = [...doc.querySelectorAll('div,section,article')]
+      .filter(el => this._tieneAcordes(el.textContent) && el.textContent.trim().length > 80)
+      .sort((a, b) => b.textContent.length - a.textContent.length)[0];
+    if (candidato) return this._limpiar(candidato.textContent);
+
+    throw new Error('No se encontró contenido de acordes. ¿Es un enlace válido de lacuerda.net o Cifra Club?');
+  },
+
+  /**
+   * Parser específico para lacuerda.net.
+   * Los <A>Am</A> dentro del PRE se convierten en texto plano preservando
+   * las posiciones de columna (el PRE no modifica el espaciado).
+   * Los marcadores // delimitan secciones cantadas y se eliminan.
+   */
+  _parsearLaCuerda(preEl) {
+    const texto = preEl.textContent;
+    return this._limpiar(texto)
+      .replace(/^\/\//gm,    '')   // // al inicio de línea (inicio de frase)
+      .replace(/\s*\/\/\s*$/gm, '') // // al final de línea
+      .replace(/\s*\/\/\s*/g, ' ') // // en medio (separadores de sección inline)
+      .replace(/[ \t]+$/gm,  '');  // espacios sobrantes al final
+  },
+
+  /**
+   * Parser específico para Cifra Club.
+   * Los acordes viven en <b data-chord-name> dentro de <div> de línea; el
+   * espaciado entre acordes ya viene como texto plano (columnas preservadas).
+   * Se eliminan los bloques publicitarios intercalados (data-variant / anuncios)
+   * antes de leer el textContent, para no arrastrar "Continúa después del anuncio", etc.
+   */
+  _parsearCifraClub(preEl) {
+    const clone = preEl.cloneNode(true);
+    clone.querySelectorAll('[data-variant], [data-ad-slot], [id^="pub-"], [class*="Ad"]')
+      .forEach(el => el.remove());
+    return this._limpiar(clone.textContent);
+  },
+
+  _tieneAcordes(texto) {
+    const m = texto.match(/\b[A-G][b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add)?(\d+)?(\/[A-G][b#]?)?\b/g);
+    return m && m.length >= 2;
+  },
+
+  _limpiar(texto) {
+    return texto
+      .replace(/\t/g,     '    ')
+      .replace(/\r\n/g,   '\n')
+      .replace(/\r/g,     '\n')
+      .replace(/[ \t]+$/gm, '')
+      .replace(/\n{4,}/g, '\n\n\n')
+      .trim();
+  }
+};
+
+/* Arrancar al cargar el DOM */
+document.addEventListener('DOMContentLoaded', () => { loadTheme(); App.init(); });
+</script>
+</body>
+</html>

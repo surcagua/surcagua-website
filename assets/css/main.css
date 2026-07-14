@@ -161,7 +161,7 @@ body.light-mode .navbar {
 body.light-mode .navbar.scrolled { background: rgba(245,247,252,0.98); box-shadow: 0 1px 28px rgba(0,10,50,0.08); }
 
 .navbar-inner {
-    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    max-width: 2200px; margin: 0 auto; padding: 0 40px;
     display: flex; align-items: center; justify-content: space-between; height: 60px;
 }
 
@@ -252,7 +252,7 @@ body.light-mode .mobile-menu-btn { border-color: rgba(0,15,60,0.09); }
    HERO
 ═══════════════════════════════════════════ */
 .hero {
-    padding: 160px 24px 80px;
+    padding: 128px 24px 32px;
     text-align: center;
     max-width: 900px;
     margin: 0 auto;
@@ -317,7 +317,7 @@ body.light-mode .mobile-menu-btn { border-color: rgba(0,15,60,0.09); }
 }
 .hero p {
     font-size: 17px; color: var(--text-secondary);
-    max-width: 600px; margin: 0 auto 40px;
+    max-width: 600px; margin: 0 auto 28px;
     line-height: 1.75; font-weight: 400;
     animation: fadeInUp 0.7s ease 0.25s both;
 }
@@ -1316,6 +1316,66 @@ body.light-mode .btn-win-dl {
 
 /* Hero carousel aspect ratio (wider for hero column) */
 .hero-desk-carousel { aspect-ratio: 16 / 9 !important; }
+
+/* ═══════════════════════════════════════════
+   DESKTOP PROMO (Proyector download, centered)
+═══════════════════════════════════════════ */
+.desktop-promo {
+    padding: 32px 24px 80px;
+    border-top: 1px solid var(--border-color);
+}
+.desktop-promo-inner {
+    max-width: 560px; margin: 0 auto;
+    text-align: center;
+    animation: fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+}
+.desktop-promo .desktop-dl-eyebrow { justify-content: center; }
+.desktop-promo .desktop-dl-title { margin-bottom: 24px; }
+.desktop-promo .btn-win-dl { max-width: 420px; margin: 0 auto; }
+
+@media (max-width: 640px) {
+    .desktop-promo { padding: 48px 20px 90px; }
+}
+
+/* ═══════════════════════════════════════════
+   TOOL PROMO (Conversor de Acordes, centered)
+═══════════════════════════════════════════ */
+.tool-promo {
+    padding: 64px 24px 100px;
+    border-top: 1px solid var(--border-color);
+}
+.tool-promo-inner {
+    max-width: 620px; margin: 0 auto;
+    text-align: center;
+    animation: fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+}
+.tool-promo .desktop-dl-eyebrow { justify-content: center; }
+.tool-promo .desktop-dl-title { margin-bottom: 16px; }
+.tool-promo-desc {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.75; max-width: 520px;
+    margin: 0 auto 32px;
+}
+.tool-feature-list {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px; margin-bottom: 32px;
+}
+.tool-feature {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+.tool-feature:hover { border-color: var(--border-glow); color: var(--text-primary); }
+.tool-feature svg { color: var(--accent-primary); flex-shrink: 0; }
+
+@media (max-width: 640px) {
+    .tool-promo { padding: 48px 20px 90px; }
+    .tool-feature-list { gap: 8px; }
+    .tool-feature { font-size: 12.5px; padding: 9px 14px; }
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
