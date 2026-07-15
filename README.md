@@ -2,7 +2,7 @@
 
 Sitio web oficial de Surcagua Studio, desarrolladores de aplicaciones móviles innovadoras para iOS.
 
-🌐 **Website:** [www.surcaguastudio.com](https://www.surcaguastudio.com)  
+🌐 **Website:** [surcaguastudio.com](https://surcaguastudio.com)  
 📧 **Soporte:** support@surcaguastudio.com
 
 ---
