@@ -752,14 +752,18 @@ const Utils = {
 /* ===================================================================
    MÓDULO: DetectorAcorde — identifica si un token es un acorde
 =================================================================== */
+/** Nota raíz: notación inglesa (A-G) o solfeo español (Do-Si), mayúscula completa o solo inicial. */
+const RAIZ_NOTA = '(?:[A-G]|Do|Re|Mi|Fa|Sol|La|Si|DO|RE|MI|FA|SOL|LA|SI)';
+
 const DetectorAcorde = {
   /**
    * Expresión regular para un acorde válido.
    * Cubre: nota raíz, alteración, calidad, extensión, bajo opcional.
    * Ejemplos cubiertos: A, Am, A7, Am7, Bb, C#, F#m, E/G#, Gmaj7,
-   * Dsus4, Cadd9, Bm11, F#7, Ebmaj9, Bb/D, Cm7b5 (parcial)
+   * Dsus4, Cadd9, Bm11, F#7, Ebmaj9, Bb/D, Cm7b5 (parcial),
+   * MIm, SOLm7, SI7, RE/FA#, Lam, Sol7 (frecuentes en lacuerda.net).
    */
-  PATRON: /^[A-G][b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add|M)?(\d+)?(b\d+|#\d+)?(\/[A-G][b#]?)?$/,
+  PATRON: new RegExp(`^${RAIZ_NOTA}[b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add|M)?(\\d+)?(b\\d+|#\\d+)?(\\/${RAIZ_NOTA}[b#]?)?$`),
 
   /** ¿Es este token un acorde? */
   esAcorde(token) {
@@ -1538,7 +1542,15 @@ const Importador = {
 
   /**
    * Extrae el texto de acordes+letra del HTML.
-   * Prioridad: Cifra Club → #t_body PRE (lacuerda.net) → cualquier PRE → divs → fallback.
+   * Prioridad: Cifra Club → mejor <PRE> de la página → divs → fallback.
+   *
+   * lacuerda.net no envuelve el contenido en un contenedor fijo (su
+   * plantilla cambió con los años) y con frecuencia publica varias
+   * versiones de la misma canción en una sola página — transcripciones
+   * con acordes, tablaturas de guitarra e incluso patrones de batería,
+   * todos dentro de sus propios <pre>. En vez de tomar el primero que
+   * "parezca" tener acordes, se puntúan TODOS los <pre> y se elige el
+   * que realmente es una transcripción de acordes sobre letra.
    */
   parsear(html) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -1547,16 +1559,12 @@ const Importador = {
     const cc = doc.querySelector('pre[data-chord-content="true"]');
     if (cc) return this._parsearCifraClub(cc);
 
-    /* 2. lacuerda.net — el contenido está en <div id=t_body><PRE> */
-    const lc = doc.querySelector('#t_body PRE, #t_body pre');
-    if (lc) return this._parsearLaCuerda(lc);
-
-    /* 3. Cualquier <PRE> que contenga acordes */
+    /* 2. Mejor <PRE> de la página (lacuerda.net y sitios con estructura similar) */
     const pres = [...doc.querySelectorAll('PRE, pre')];
-    const preOk = pres.find(el => this._tieneAcordes(el.textContent));
-    if (preOk) return this._limpiar(preOk.textContent);
+    const mejor = this._elegirMejorBloque(pres.map(el => el.textContent));
+    if (mejor) return this._parsearLaCuerda(mejor);
 
-    /* 4. Div / section con id o clase conocidos */
+    /* 3. Div / section con id o clase conocidos */
     for (const sel of ['#cancion','#song','#letra','.cancion','.song-content','.tab-content','article']) {
       try {
         const el = doc.querySelector(sel);
@@ -1564,7 +1572,7 @@ const Importador = {
       } catch (_) {}
     }
 
-    /* 5. El bloque más largo con acordes */
+    /* 4. El bloque más largo con acordes */
     const candidato = [...doc.querySelectorAll('div,section,article')]
       .filter(el => this._tieneAcordes(el.textContent) && el.textContent.trim().length > 80)
       .sort((a, b) => b.textContent.length - a.textContent.length)[0];
@@ -1574,13 +1582,54 @@ const Importador = {
   },
 
   /**
+   * ¿Este bloque de texto es una tablatura de guitarra/bajo (diagrama de
+   * trastes), no una transcripción de acordes sobre letra? Las tablaturas
+   * usan líneas por cuerda con barras "|" y guiones/números de traste,
+   * p. ej. "E|--0---3---2--|". No se pueden convertir al formato de
+   * Soundforia (no hay letra que acompañe cada acorde), así que se
+   * descartan como candidato.
+   */
+  _esTablatura(texto) {
+    const lineas = texto.split('\n').map(l => l.trim()).filter(Boolean);
+    if (!lineas.length) return false;
+    const lineasTab = lineas.filter(l =>
+      /^[a-gA-G]?\|?[-0-9xXhHpPbBsSvV~/\\]{6,}\|?$/.test(l) || (l.match(/\|/g) || []).length >= 2
+    ).length;
+    return lineasTab / lineas.length >= 0.3;
+  },
+
+  /**
+   * Puntúa un bloque de texto según qué tan bien encaja con "acordes sobre
+   * letra": proporción de líneas no vacías que son líneas de acordes
+   * válidas (según DetectorAcorde, con soporte de notación inglesa y
+   * española). Las tablaturas puntúan 0 y quedan descartadas.
+   */
+  _puntuarBloque(texto) {
+    if (this._esTablatura(texto)) return 0;
+    const lineas = texto.split('\n').map(l => l.trim()).filter(Boolean);
+    if (lineas.length < 4) return 0;
+    const lineasAcordes = lineas.filter(l => DetectorAcorde.esLineaAcordes(l)).length;
+    if (lineasAcordes < 2) return 0;
+    return lineasAcordes / lineas.length;
+  },
+
+  /** Elige, de una lista de bloques de texto candidatos, el de mejor puntaje. */
+  _elegirMejorBloque(textos) {
+    let mejor = null, mejorPuntaje = 0;
+    for (const texto of textos) {
+      const puntaje = this._puntuarBloque(texto);
+      if (puntaje > mejorPuntaje) { mejorPuntaje = puntaje; mejor = texto; }
+    }
+    return mejor;
+  },
+
+  /**
    * Parser específico para lacuerda.net.
-   * Los <A>Am</A> dentro del PRE se convierten en texto plano preservando
+   * Los <A>Am</A> dentro del PRE ya llegan como texto plano preservando
    * las posiciones de columna (el PRE no modifica el espaciado).
    * Los marcadores // delimitan secciones cantadas y se eliminan.
    */
-  _parsearLaCuerda(preEl) {
-    const texto = preEl.textContent;
+  _parsearLaCuerda(texto) {
     return this._limpiar(texto)
       .replace(/^\/\//gm,    '')   // // al inicio de línea (inicio de frase)
       .replace(/\s*\/\/\s*$/gm, '') // // al final de línea
@@ -1603,7 +1652,7 @@ const Importador = {
   },
 
   _tieneAcordes(texto) {
-    const m = texto.match(/\b[A-G][b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add)?(\d+)?(\/[A-G][b#]?)?\b/g);
+    const m = texto.match(new RegExp(`\\b${RAIZ_NOTA}[b#]?(m(?:aj)?|min|aug|dim|sus[24]?|add)?(\\d+)?(\\/${RAIZ_NOTA}[b#]?)?\\b`, 'g'));
     return m && m.length >= 2;
   },
 
