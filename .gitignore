@@ -9,3 +9,10 @@ skills-lock.json
 
 # App installers (too large for GitHub — host externally)
 assets/soundforia/app/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
