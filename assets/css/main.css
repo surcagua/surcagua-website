@@ -795,7 +795,7 @@ body.light-mode .app-card-soon { background: rgba(245, 247, 252, 0.6); }
     .hero-split .hero-stats .desk-carousel-desc { font-size: 12px; min-height: 36px; }
     .hero-split .hero-stats .desk-dots { margin-bottom: 14px; }
     .hero-split .hero-stats .desk-dl-meta { font-size: 11px; }
-    .btn-win-dl { padding: 16px 22px; font-size: 14px; gap: 10px; border-radius: 14px; }
+    .btn-win-dl, .btn-mac-dl { padding: 16px 22px; font-size: 14px; gap: 10px; border-radius: 14px; }
 
     /* Apps */
     .apps-grid { grid-template-columns: repeat(2,1fr); gap: 18px; }
@@ -870,9 +870,9 @@ body.light-mode .app-card-soon { background: rgba(245, 247, 252, 0.6); }
     .hero-desk-carousel .desk-slide img { border-radius: 14px; }
     .hero-desk-carousel .desk-nav-btn { opacity: 0.9; }
 
-    /* Windows button full width on mobile */
-    .btn-win-dl { padding: 16px 20px; font-size: 15px; border-radius: 14px; gap: 10px; }
-    .win-dl-arrow { display: none; }
+    /* Download buttons full width on mobile */
+    .btn-win-dl, .btn-mac-dl { padding: 16px 20px; font-size: 15px; border-radius: 14px; gap: 10px; }
+    .win-dl-arrow, .mac-dl-arrow { display: none; }
 
     /* ── Stats bar ── */
     .stats-bar { grid-template-columns: 1fr; gap: 12px; margin-bottom: 56px; padding: 0 20px; }
@@ -993,8 +993,8 @@ body.light-mode .app-card-soon { background: rgba(245, 247, 252, 0.6); }
     /* Carousel */
     .hero-split .hero-stats .desktop-dl-title { font-size: 20px; }
     .hero-split .hero-stats .desk-carousel-desc { font-size: 12px; min-height: 38px; }
-    .btn-win-dl { padding: 15px 18px; font-size: 14px; gap: 8px; border-radius: 12px; }
-    .win-icon svg { width: 18px; height: 18px; }
+    .btn-win-dl, .btn-mac-dl { padding: 15px 18px; font-size: 14px; gap: 8px; border-radius: 12px; }
+    .win-icon svg, .mac-icon svg { width: 18px; height: 18px; }
     .desk-dl-meta { font-size: 11px; }
 
     /* Apps */
@@ -1040,9 +1040,9 @@ body.light-mode .app-card-soon { background: rgba(245, 247, 252, 0.6); }
     .hero p { font-size: 14px; }
     .hero-split .hero-stats .desktop-dl-title { font-size: 18px; }
     .hero-split .hero-stats .desk-carousel-desc { font-size: 11px; }
-    .btn-win-dl { font-size: 13px; padding: 14px 14px; border-radius: 10px; gap: 8px; }
-    .win-icon svg { width: 16px; height: 16px; }
-    .win-label { font-size: 13px; }
+    .btn-win-dl, .btn-mac-dl { font-size: 13px; padding: 14px 14px; border-radius: 10px; gap: 8px; }
+    .win-icon svg, .mac-icon svg { width: 16px; height: 16px; }
+    .win-label, .mac-label { font-size: 13px; }
     .modal-hero { padding: 18px 14px 14px; }
     .modal-body { padding: 14px 14px 24px; }
     .about-stats { grid-template-columns: 1fr; }
@@ -1067,7 +1067,7 @@ body.light-mode .app-card-soon { background: rgba(245, 247, 252, 0.6); }
     .hero-split .hero-stats .desk-carousel-desc { display: none; }
     .hero-split .hero-stats .desk-dots { margin-bottom: 10px; }
     .hero-split .hero-stats .desktop-dl-eyebrow { display: none; }
-    .btn-win-dl { padding: 13px 18px; font-size: 14px; }
+    .btn-win-dl, .btn-mac-dl { padding: 13px 18px; font-size: 14px; }
     .modal { max-height: 96dvh; }
 }
 
@@ -1301,6 +1301,81 @@ body.light-mode .btn-win-dl {
 .win-dl-arrow { display: flex; align-items: center; margin-left: auto; opacity: 0.8; transition: opacity 0.25s ease; }
 .btn-win-dl:hover .win-dl-arrow { opacity: 1; }
 
+/* ── Mac download button ── */
+.btn-mac-dl {
+    display: flex; align-items: center; justify-content: center;
+    gap: 13px; width: 100%;
+    padding: 20px 30px;
+    margin-top: 14px;
+    border-radius: 18px;
+    background: #0f172a;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.07);
+    font-family: var(--font-family);
+    font-size: 16px; font-weight: 700; letter-spacing: -0.15px;
+    text-decoration: none; cursor: pointer;
+    position: relative; overflow: hidden;
+    min-height: unset;
+    transition:
+        transform 0.42s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.42s cubic-bezier(0.16,1,0.3,1),
+        border-color 0.42s ease;
+    box-shadow:
+        0 4px 24px rgba(0,0,0,0.38),
+        0 1px 0 rgba(255,255,255,0.05) inset;
+}
+body.light-mode .btn-mac-dl {
+    background: #1e293b;
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 24px rgba(0,10,40,0.22), 0 1px 0 rgba(255,255,255,0.08) inset;
+}
+
+.mac-shimmer {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 35%,
+        rgba(255,255,255,0.06) 45%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0.06) 55%,
+        transparent 65%
+    );
+    background-size: 200% 100%;
+    background-position: -100% 0;
+    transition: background-position 0s;
+}
+.btn-mac-dl:hover .mac-shimmer {
+    background-position: 200% 0;
+    transition: background-position 0.65s ease;
+}
+
+.btn-mac-dl::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(130deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 100%);
+    opacity: 0;
+    transition: opacity 0.42s ease;
+}
+.btn-mac-dl:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
+.btn-mac-dl:hover::before { opacity: 1; }
+.btn-mac-dl:hover {
+    box-shadow:
+        0 14px 44px rgba(255,255,255,0.1),
+        0 4px 16px rgba(0,0,0,0.4),
+        0 1px 0 rgba(255,255,255,0.1) inset;
+}
+.btn-mac-dl:active { transform: translateY(-1px) scale(0.995); }
+
+.mac-icon, .mac-label, .mac-dl-arrow { position: relative; z-index: 2; }
+.mac-icon { display: flex; align-items: center; flex-shrink: 0; }
+
+.btn-mac-dl:hover .mac-dl-arrow {
+    animation: arrowBounce 0.75s ease infinite;
+}
+.mac-dl-arrow { display: flex; align-items: center; margin-left: auto; opacity: 0.8; transition: opacity 0.25s ease; }
+.btn-mac-dl:hover .mac-dl-arrow { opacity: 1; }
+
 .desk-dl-meta {
     text-align: center; font-size: 12px;
     color: var(--text-muted); margin-top: 10px;
@@ -1333,6 +1408,7 @@ body.light-mode .btn-win-dl {
 .desktop-promo .desktop-dl-eyebrow { justify-content: center; }
 .desktop-promo .desktop-dl-title { margin-bottom: 24px; }
 .desktop-promo .btn-win-dl { max-width: 420px; margin: 0 auto; }
+.desktop-promo .btn-mac-dl { max-width: 420px; margin: 14px auto 0; }
 
 @media (max-width: 640px) {
     .desktop-promo { padding: 48px 20px 90px; }
@@ -1384,7 +1460,7 @@ body.light-mode .btn-win-dl {
     .desk-carousel { border-radius: 14px; aspect-ratio: 4/3; }
     .desk-slide img { border-radius: 14px; }
     .desk-nav-btn { width: 36px; height: 36px; opacity: 0.85; }
-    .btn-win-dl { padding: 17px 22px; font-size: 15px; border-radius: 14px; gap: 11px; }
+    .btn-win-dl, .btn-mac-dl { padding: 17px 22px; font-size: 15px; border-radius: 14px; gap: 11px; }
     .desk-carousel-desc { font-size: 13px; }
     .hero-split .hero-stats .desk-carousel-desc { text-align: center; }
     .hero-split .hero-stats .desk-dots { justify-content: center; }
