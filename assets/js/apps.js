@@ -87,11 +87,11 @@ const apps = [
             BASE + 'assets/soundforia/capturas/9.png',
             BASE + 'assets/soundforia/capturas/10.png'
         ],
-        rating: 0, version: '1.0.0', size: '120.7 MB', ageRating: '4+',
-        developer: 'Jean Carlo Flores',
+        rating: 5.0, version: '1.0.9', size: '87.6 MB', ageRating: '4+',
+        developer: 'Jean Carlo Emi Flores Cerrato',
         releaseDate: 'Mayo 2026',
         compatibility: 'iPhone · iPad · Mac (M1+) · Apple Vision',
-        minOS: 'iOS 13.0+',
+        minOS: 'iOS 15.0+',
         platforms: ['iOS'],
         desktopScreenshots: [
             BASE + 'assets/soundforia/escritorio/1.png',
@@ -132,31 +132,32 @@ const apps = [
             'Compartir repertorio con la banda (hasta 5 miembros gratis)',
             'Modo presentación pantalla completa'
         ],
-        techInfo: 'Desarrollada con Flutter. Compatible con iOS 13+, iPadOS 13+, macOS 11+ (chip M1) y visionOS 1.0+. Requiere conexión a internet para sincronización en la nube.'
+        techInfo: 'Desarrollada con Flutter. Compatible con iOS 15+, iPadOS 15+, macOS 12+ (chip M1) y visionOS 1.0+. Requiere conexión a internet para sincronización en la nube.'
     },
     {
-        id: 'tuyyo',
-        available: false,
-        name: 'Tuyyo',
+        id: 'lovelyn',
+        available: true,
+        storeUrl: 'https://apps.apple.com/hn/app/lovelyn/id6756596999',
+        name: 'Lovelyn',
         category: 'Relaciones y Parejas',
-        logo: BASE + 'assets/tuyyo/tuyyo.png',
+        logo: BASE + 'assets/lovelyn/lovelyn.png',
         iconBg: 'linear-gradient(135deg, #f43f5e, #e11d48)',
         screenshots: [
-            BASE + 'assets/tuyyo/capturas/1.png',
-            BASE + 'assets/tuyyo/capturas/2.png',
-            BASE + 'assets/tuyyo/capturas/3.png',
-            BASE + 'assets/tuyyo/capturas/4.png',
-            BASE + 'assets/tuyyo/capturas/5.png',
-            BASE + 'assets/tuyyo/capturas/6.png',
-            BASE + 'assets/tuyyo/capturas/7.png',
-            BASE + 'assets/tuyyo/capturas/8.png',
-            BASE + 'assets/tuyyo/capturas/9.png',
-            BASE + 'assets/tuyyo/capturas/10.png'
+            BASE + 'assets/lovelyn/capturas/1.png',
+            BASE + 'assets/lovelyn/capturas/2.png',
+            BASE + 'assets/lovelyn/capturas/3.png',
+            BASE + 'assets/lovelyn/capturas/4.png',
+            BASE + 'assets/lovelyn/capturas/5.png',
+            BASE + 'assets/lovelyn/capturas/6.png',
+            BASE + 'assets/lovelyn/capturas/7.png',
+            BASE + 'assets/lovelyn/capturas/8.png',
+            BASE + 'assets/lovelyn/capturas/9.png',
+            BASE + 'assets/lovelyn/capturas/10.png'
         ],
         rating: 0.0, downloads: '∞+', version: '2.5.1', size: '∞ MB',
         platforms: ['iOS'],
         shortDesc: 'La app definitiva para parejas: chat privado, álbum compartido, aniversario, mapas, juegos y más.',
-        description: 'Tuyyo es el espacio digital perfecto para fortalecer tu relación. Comparte momentos especiales en tu álbum privado, mantén conversaciones íntimas en el chat cifrado y más.',
+        description: 'Lovelyn es el espacio digital perfecto para fortalecer tu relación. Comparte momentos especiales en tu álbum privado, mantén conversaciones íntimas en el chat cifrado y más.',
         features: [
             'Chat privado',
             'Álbum de fotos compartido',
@@ -429,7 +430,7 @@ function renderAppCard(app) {
     const badges = app.platforms.map(p =>
         `<span class="platform-badge ${p === 'Android' ? 'android' : ''}">${p}</span>`
     ).join('');
-    const ratingDisplay = app.rating > 0 ? `${STAR_SVG}${app.rating}` : `${STAR_SVG}Nuevo`;
+    const ratingDisplay = app.rating > 0 ? `${STAR_SVG}${app.rating.toFixed(1)}` : `${STAR_SVG}Nuevo`;
     const clickAttr = app.available ? `onclick="openModal('${app.id}')"` : '';
     const cardClass = app.available ? 'app-card' : 'app-card coming-soon';
     const soonOverlay = !app.available
