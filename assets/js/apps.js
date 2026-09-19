@@ -154,8 +154,17 @@ const apps = [
             BASE + 'assets/lovelyn/capturas/9.png',
             BASE + 'assets/lovelyn/capturas/10.png'
         ],
-        rating: 0.0, downloads: '∞+', version: '2.5.1', size: '∞ MB',
+        rating: 5.0, version: '1.0.4', size: '201.5 MB', ageRating: '12+',
+        developer: 'Jean Carlo Emi Flores Cerrato',
+        releaseDate: 'Agosto 2026',
+        compatibility: 'iPhone · iPad',
+        minOS: 'iOS 16.0+',
         platforms: ['iOS'],
+        inAppPurchases: [
+            'Plan Mensual Premium — $4.99 / mes',
+            'Plan Trimestral Premium — $14.99 / trimestre',
+            'Plan Anual Premium — $49.99 / año'
+        ],
         shortDesc: 'La app definitiva para parejas: chat privado, álbum compartido, aniversario, mapas, juegos y más.',
         description: 'Lovelyn es el espacio digital perfecto para fortalecer tu relación. Comparte momentos especiales en tu álbum privado, mantén conversaciones íntimas en el chat cifrado y más.',
         features: [
@@ -170,7 +179,7 @@ const apps = [
             'Recordatorios de fechas especiales',
             'Tema personalizable con fotos de pareja'
         ],
-        techInfo: 'Desarrollada con Flutter y Firebase. Compatible con iOS 13+. Sincronización en tiempo real entre dispositivos con encriptación de datos.'
+        techInfo: 'Desarrollada con Flutter y Firebase. Compatible con iOS 16+. Sincronización en tiempo real entre dispositivos con encriptación de datos.'
     }
 ];
 
@@ -425,6 +434,172 @@ function navHeroDesk(dir) {
     goHeroDesktopSlide((_heroDeskCurrent + dir + _heroDeskTotal) % _heroDeskTotal);
 }
 
+// ─── RESEÑAS DE APP STORE ──────────────────────────────
+// Trae reseñas reales desde /api/reviews (feed de Apple, cacheado en el
+// servidor) y las renderiza tanto en el modal de cada app como en la
+// sección agregada de la home. Todo el texto viene de terceros (usuarios
+// de App Store), así que se escapa siempre antes de insertarlo como HTML.
+const REVIEWS_TTL_MS = 30 * 60 * 1000; // 30 min — igual al caché del backend
+const _reviewsMemCache = new Map();
+const STAR_FULL_SVG = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+const STAR_LINE_SVG = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+
+function escHTML(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function appleIdFromStoreUrl(storeUrl) {
+    const m = /\/id(\d+)/.exec(storeUrl || '');
+    return m ? m[1] : null;
+}
+
+function starsSVG(rating) {
+    const r = Math.max(0, Math.min(5, Math.round(rating)));
+    let out = '';
+    for (let i = 0; i < 5; i++) out += i < r ? STAR_FULL_SVG : STAR_LINE_SVG;
+    return out;
+}
+
+function relativeDate(iso) {
+    const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (!isFinite(days) || days < 0) return '';
+    if (days === 0) return 'Hoy';
+    if (days === 1) return 'Ayer';
+    if (days < 30)  return `Hace ${days} días`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `Hace ${months} ${months === 1 ? 'mes' : 'meses'}`;
+    const years = Math.floor(months / 12);
+    return `Hace ${years} ${years === 1 ? 'año' : 'años'}`;
+}
+
+function readReviewsCache(appleId) {
+    const mem = _reviewsMemCache.get(appleId);
+    if (mem && Date.now() - mem.ts < REVIEWS_TTL_MS) return mem.data;
+    try {
+        const raw = sessionStorage.getItem(`reviews_${appleId}`);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (Date.now() - parsed.ts >= REVIEWS_TTL_MS) return null;
+        _reviewsMemCache.set(appleId, parsed);
+        return parsed.data;
+    } catch (_) { return null; }
+}
+
+function writeReviewsCache(appleId, data) {
+    const entry = { ts: Date.now(), data };
+    _reviewsMemCache.set(appleId, entry);
+    try { sessionStorage.setItem(`reviews_${appleId}`, JSON.stringify(entry)); } catch (_) {}
+}
+
+/** Trae reseñas reales de App Store para una app (cache de sesión → API propia → []). */
+async function fetchAppReviews(app) {
+    const appleId = appleIdFromStoreUrl(app.storeUrl);
+    if (!appleId) return [];
+
+    const cached = readReviewsCache(appleId);
+    if (cached) return cached;
+
+    try {
+        const res = await fetch(`/api/reviews?id=${appleId}`, { signal: AbortSignal.timeout(9000) });
+        if (!res.ok) return [];
+        const json = await res.json();
+        const reviews = Array.isArray(json.reviews) ? json.reviews : [];
+        writeReviewsCache(appleId, reviews);
+        return reviews;
+    } catch (_) {
+        return [];
+    }
+}
+
+function renderReviewCard(review) {
+    return `
+        <article class="review-card">
+            <div class="review-card-top">
+                <div class="review-avatar" aria-hidden="true">${escHTML((review.author || '?').trim().charAt(0).toUpperCase())}</div>
+                <div class="review-meta">
+                    <span class="review-author">${escHTML(review.author)}</span>
+                    <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${starsSVG(review.rating)}</div>
+                </div>
+                <span class="review-date">${escHTML(relativeDate(review.updated))}</span>
+            </div>
+            ${review.title ? `<h4 class="review-title">${escHTML(review.title)}</h4>` : ''}
+            <p class="review-body">${escHTML(review.content)}</p>
+            ${review.version ? `<span class="review-version">v${escHTML(review.version)}</span>` : ''}
+        </article>`;
+}
+
+/** Rellena la sección de reseñas dentro del modal de una app. */
+function renderModalReviews(app) {
+    const el = document.getElementById('modalReviews');
+    if (!el) return;
+
+    const appleId = appleIdFromStoreUrl(app.storeUrl);
+    if (!appleId) { el.innerHTML = ''; return; }
+
+    el.innerHTML = `
+        <h3>Reseñas de usuarios</h3>
+        <div class="reviews-loading">
+            <span class="reviews-spinner"></span> Cargando reseñas de App Store…
+        </div>`;
+
+    fetchAppReviews(app).then(reviews => {
+        if (window._activeModalAppId !== app.id) return; // el usuario ya cambió de app
+        if (!reviews.length) {
+            el.innerHTML = `
+                <h3>Reseñas de usuarios</h3>
+                <div class="reviews-empty">
+                    <p>Aún no hay reseñas con comentarios en App Store.</p>
+                    <a href="${app.storeUrl}?action=write-review" target="_blank" rel="noopener noreferrer" class="reviews-empty-cta">Sé el primero en escribir una →</a>
+                </div>`;
+            return;
+        }
+        el.innerHTML = `
+            <h3>Reseñas de usuarios</h3>
+            <div class="reviews-container">${reviews.map(renderReviewCard).join('')}</div>
+            <a href="${app.storeUrl}" target="_blank" rel="noopener noreferrer" class="reviews-view-all">Ver todas las reseñas en App Store →</a>`;
+    });
+}
+
+/** Sección agregada de reseñas destacadas de todas las apps, para la home. */
+async function initHomeReviews() {
+    const section = document.getElementById('homeReviews');
+    const track   = document.getElementById('homeReviewsTrack');
+    if (!section || !track) return;
+
+    const candidates = apps.filter(a => a.available && a.storeUrl);
+    const perApp = await Promise.all(candidates.map(async app => {
+        const reviews = await fetchAppReviews(app);
+        return reviews.map(r => ({ ...r, app }));
+    }));
+
+    const best = perApp.flat()
+        .filter(r => r.rating >= 4 && r.content)
+        .sort((a, b) => (b.rating - a.rating) || (b.content.length - a.content.length))
+        .slice(0, 8);
+
+    // Sin reseñas con texto todavía: el track se queda vacío y la sección
+    // se oculta sola vía CSS (.reviews-home:has(#homeReviewsTrack:empty)).
+    if (!best.length) return;
+
+    track.innerHTML = best.map(r => `
+        <a class="review-home-card" href="${r.app.storeUrl}" target="_blank" rel="noopener noreferrer">
+            <div class="review-card-top">
+                <div class="review-avatar" aria-hidden="true">${escHTML((r.author || '?').trim().charAt(0).toUpperCase())}</div>
+                <div class="review-meta">
+                    <span class="review-author">${escHTML(r.author)}</span>
+                    <div class="review-stars" aria-label="${r.rating} de 5 estrellas">${starsSVG(r.rating)}</div>
+                </div>
+            </div>
+            ${r.title ? `<h4 class="review-title">${escHTML(r.title)}</h4>` : ''}
+            <p class="review-body">${escHTML(r.content)}</p>
+            <div class="review-home-app">
+                <img src="${r.app.logo}" alt="" class="review-home-app-icon">
+                <span>${escHTML(r.app.name)}</span>
+            </div>
+        </a>`).join('');
+}
+
 // ─── RENDER CARD ──────────────────────────────────────
 function renderAppCard(app) {
     const badges = app.platforms.map(p =>
@@ -509,12 +684,15 @@ function initApps() {
     }
 
     initSpotlightCards();
+    initHomeReviews();
 }
 
 // ─── MODAL ────────────────────────────────────────────
 function openModal(appId) {
     const app = apps.find(a => a.id === appId);
     if (!app) return;
+
+    window._activeModalAppId = app.id; // guarda de carrera para el fetch de reseñas
 
     document.getElementById('modalIcon').style.background = app.iconBg;
     document.getElementById('modalIcon').innerHTML =
@@ -581,6 +759,8 @@ function openModal(appId) {
             inAppEl.style.display = 'none';
         }
     }
+
+    renderModalReviews(app);
 
     const headerActionEl = document.getElementById('modalHeaderAction');
     if (headerActionEl) {
