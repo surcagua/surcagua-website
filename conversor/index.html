@@ -16,24 +16,24 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:         #09090e;
-  --bg-2:       #14151e;
-  --bg-3:       #111218;
-  --bg-4:       #1a1b26;
-  --border:     rgba(255,255,255,.08);
-  --border-2:   rgba(255,255,255,.16);
+  --bg:         #0a0c10;
+  --bg-2:       #15171f;
+  --bg-3:       #0d0f14;
+  --bg-4:       #1d2028;
+  --border:     #262a34;
+  --border-2:   #383e4c;
   --accent:     #f97316;
   --accent-h:   #fb923c;
-  --accent-dim: rgba(249,115,22,.14);
-  --green:      #22c55e;
-  --yellow:     #f59e0b;
-  --red:        #ef4444;
-  --t1:         #eef0f8;
-  --t2:         #a6adc4;
-  --t3:         #767d96;
-  --t4:         #484e64;
-  --bg-hover:   #22232f;
-  --bg-active:  #2a2c3a;
+  --accent-dim: rgba(249,115,22,.18);
+  --green:      #34d399;
+  --yellow:     #fbbf24;
+  --red:        #f87171;
+  --t1:         #f3f4f9;
+  --t2:         #aab0c7;
+  --t3:         #848bab;
+  --t4:         #565d78;
+  --bg-hover:   #282c37;
+  --bg-active:  #323744;
   --mono:       'SF Mono', 'Courier New', Consolas, monospace;
   --ui:         'Plus Jakarta Sans', -apple-system, 'Segoe UI', sans-serif;
   --r:          8px;
@@ -264,7 +264,7 @@ body {
   border-radius: var(--r-sm);
   transition: color .12s, background .12s;
 }
-.pact:hover { color: var(--t1); background: rgba(255,255,255,.05); }
+.pact:hover { color: var(--t1); background: var(--bg-hover); }
 
 .panel-body {
   flex: 1;
@@ -328,7 +328,7 @@ textarea::selection { background: var(--accent-dim); }
 .drop-ov {
   position: absolute;
   inset: 0;
-  background: rgba(37,99,235,.05);
+  background: var(--accent-dim);
   border: 2px dashed var(--accent);
   border-radius: var(--r);
   display: none;
@@ -1030,24 +1030,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 };
 
 /* ===================================================================
-   MÓDULO: Store — persistencia en LocalStorage
-=================================================================== */
-const Store = {
-  KEY: 'lacuerda_v1',
-
-  save(estado) {
-    try { localStorage.setItem(this.KEY, JSON.stringify(estado)); } catch(_) {}
-  },
-
-  load() {
-    try {
-      const raw = localStorage.getItem(this.KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch(_) { return null; }
-  }
-};
-
-/* ===================================================================
    MÓDULO: Progreso — barra de progreso superior
 =================================================================== */
 const Prog = {
@@ -1109,7 +1091,6 @@ const Toast = {
 const App = {
   motor:     new Motor(),
   resultado: '',        // Última conversión
-  autoTimer: null,      // Timer de guardado automático
 
   /* ------------------------------------------------------------------
      Inicialización
@@ -1121,7 +1102,6 @@ const App = {
     document.getElementById('prevWrap').style.display = 'none';
     this._configurarDragDrop();
     this._configurarAtajos();
-    this._restaurar();
   },
 
   /* ------------------------------------------------------------------
@@ -1177,41 +1157,11 @@ const App = {
   },
 
   /* ------------------------------------------------------------------
-     Restaurar sesión anterior
-  ------------------------------------------------------------------ */
-  _restaurar() {
-    const e = Store.load();
-    if (e?.entrada) {
-      document.getElementById('inputText').value = e.entrada;
-      if (e.resultado) {
-        this.resultado = e.resultado;
-        this._renderizarResultado(e.resultado);
-      }
-      this._actualizarContadores(e.entrada);
-      this._setStatus('Sesión restaurada');
-    }
-  },
-
-  /* ------------------------------------------------------------------
-     Auto-guardado
-  ------------------------------------------------------------------ */
-  _autoguardar() {
-    clearTimeout(this.autoTimer);
-    this.autoTimer = setTimeout(() => {
-      Store.save({
-        entrada:   document.getElementById('inputText').value,
-        resultado: this.resultado
-      });
-    }, 1000);
-  },
-
-  /* ------------------------------------------------------------------
      Eventos de la UI
   ------------------------------------------------------------------ */
   onInput() {
     const txt = document.getElementById('inputText').value;
     this._actualizarContadores(txt);
-    this._autoguardar();
   },
 
   onFileSelected(e) {
@@ -1248,7 +1198,6 @@ const App = {
 
       document.getElementById('inputText').value = texto;
       this._actualizarContadores(texto);
-      this._autoguardar();
       input.value = '';
 
       Prog.set(90);
@@ -1272,7 +1221,6 @@ const App = {
     this.resultado = '';
     this._limpiarResultados();
     this._actualizarStats({});
-    Store.save({});
     this._setStatus('Nuevo documento');
   },
 
@@ -1297,7 +1245,6 @@ const App = {
       const txt = await Utils.leerArchivo(file);
       document.getElementById('inputText').value = txt;
       this._actualizarContadores(txt);
-      this._autoguardar();
       Prog.done();
       Toast.show(`${file.name} cargado`, 'ok');
     } catch (err) {
@@ -1333,7 +1280,6 @@ const App = {
 
       const ms = (performance.now() - t0).toFixed(1);
       this._actualizarStats({ ...stats, tiempo: ms });
-      this._autoguardar();
       Prog.done();
       Toast.show(`Convertido en ${ms} ms`, 'ok');
       this._setStatus(`Listo · ${ms} ms`);
@@ -1417,7 +1363,6 @@ const App = {
     this.resultado = '';
     this._limpiarResultados();
     this._actualizarStats({});
-    Store.save({});
     Toast.show('Limpiado', 'info');
   },
 
