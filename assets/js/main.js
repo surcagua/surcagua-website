@@ -19,12 +19,12 @@ function toggleTheme() {
 function loadTheme() {
     const saved = localStorage.getItem('theme');
     const icon  = document.getElementById('themeIcon');
-    if (saved === 'dark') {
-        document.body.classList.remove('light-mode');
-        icon.innerHTML = MOON_SVG;
-    } else {
+    if (saved === 'light') {
         document.body.classList.add('light-mode');
         icon.innerHTML = SUN_SVG;
+    } else {
+        document.body.classList.remove('light-mode');
+        icon.innerHTML = MOON_SVG;
     }
 }
 
