@@ -340,25 +340,14 @@ function _setupDeskTouch(el) {
 
 // ─── HERO DESKTOP CAROUSEL ────────────────────────────
 function initHeroDesktop() {
-    const heroImgs = [
-        BASE + 'assets/soundforia/escritorio/1.png',
-        BASE + 'assets/soundforia/escritorio/2.png',
-        BASE + 'assets/soundforia/escritorio/3.png',
-        BASE + 'assets/soundforia/escritorio/4.png',
-        BASE + 'assets/soundforia/escritorio/5.png',
-        BASE + 'assets/soundforia/escritorio/6.png',
-        BASE + 'assets/soundforia/escritorio/7.png',
-        BASE + 'assets/soundforia/escritorio/8.png',
-        BASE + 'assets/soundforia/escritorio/9.png',
-    ];
+    const c = document.getElementById('heroDesktopCarousel');
+    if (!c) return;
+    const heroImgs = [...c.querySelectorAll('.desk-slide img')].map(img => img.src);
 
     _heroDeskTotal   = heroImgs.length;
     _heroDeskCurrent = 0;
     clearInterval(_heroDeskTimer);
     _heroDeskTimer = setInterval(() => goHeroDesktopSlide((_heroDeskCurrent + 1) % _heroDeskTotal), 4400);
-
-    const c = document.getElementById('heroDesktopCarousel');
-    if (!c) return;
 
     let sx = 0, sy = 0, mx = 0, dragging = false, _dragged = false;
 
@@ -382,7 +371,7 @@ function initHeroDesktop() {
         if (_dragged || e.target.closest('.desk-nav-btn')) { _dragged = false; return; }
         _dragged = false;
         window.currentAppScreenshots = heroImgs;
-        window.currentAppName        = 'Soundforia Proyector';
+        window.currentAppName        = c.dataset.name;
         openLightbox(_heroDeskCurrent);
     });
 }

@@ -1533,6 +1533,7 @@ body.light-mode .hx-hero::after {
 }
 body.light-mode .hx-hero p { color: rgba(13,15,26,.72); }
 body.light-mode .hx-stat span { color: rgba(13,15,26,.6); }
+body.light-mode .hx-stat b { color: var(--accent-primary); }
 body.light-mode .hx-stats i { background: rgba(13,15,26,.2); }
 body.light-mode .hx-cue { color: var(--text-primary); }
 .hx-hero::before {
@@ -1626,10 +1627,10 @@ body.light-mode .hx-cue { color: var(--text-primary); }
 .sf-launch {
     max-width: 480px; margin: 0 auto; padding: 56px 40px; text-align: center;
     border-radius: 20px; border: 1px solid var(--border-color);
-    background: linear-gradient(160deg, #e40000 0%, #b91c1c 45%, var(--bg-card) 100%);
+    background: linear-gradient(160deg, #e40000 0%, #b91c1c 45%, #1a0605 100%);
     box-shadow: var(--shadow-lg);
 }
-.sf-launch.sf-launch--teal { background: linear-gradient(160deg, #14b8a6 0%, #0d9488 45%, var(--bg-card) 100%); }
+.sf-launch.sf-launch--teal { background: linear-gradient(160deg, #14b8a6 0%, #0d9488 45%, #042220 100%); }
 .sf-launch-icon {
     width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
@@ -1651,4 +1652,137 @@ body.light-mode .hx-cue { color: var(--text-primary); }
     .sf { padding: 0 14px 90px; }
     .sf-tabs { top: 62px; margin-bottom: 40px; }
     .sf-tab { font-size: 12px; padding: 11px 4px; }
+}
+
+/* ═══════════════════════════════════════════
+   STARFOX LAUNCHER — verde bosque / crema
+═══════════════════════════════════════════ */
+body.sfx-page {
+    --bg-primary: #0f1c13; --bg-secondary: #13241a; --bg-card: #17291d; --bg-card-hover: #1d3324;
+    --bg-glass: rgba(15,28,19,.88);
+    --border-color: rgba(190,255,160,.1);
+    --accent-primary: #9bd35a;
+}
+body.sfx-page.light-mode {
+    --bg-primary: #f1ede3; --bg-secondary: #e9e4d6; --bg-card: #fbf9f4; --bg-card-hover: #f5f1e7;
+    --bg-glass: rgba(241,237,227,.92);
+    --border-color: rgba(20,40,25,.1);
+    --accent-primary: #3f8f2f;
+}
+body.sfx-page .navbar { background: rgba(13,24,16,.97); }
+body.sfx-page.light-mode .navbar { background: rgba(241,237,227,.98); }
+
+.sfx-hero::before {
+    background:
+        radial-gradient(40% 50% at 18% 30%, #2f6b34 0%, transparent 70%),
+        radial-gradient(38% 46% at 52% 16%, #4e8a2e 0%, transparent 70%),
+        radial-gradient(30% 40% at 82% 22%, #c98a2c 0%, transparent 70%),
+        radial-gradient(34% 52% at 100% 50%, #1f5a45 0%, transparent 72%);
+}
+.sfx-hero::after {
+    background: linear-gradient(180deg, rgba(15,28,19,0) 0%, rgba(15,28,19,.3) 40%, rgba(15,28,19,.85) 70%, #0f1c13 88%);
+}
+body.light-mode .sfx-hero::after {
+    background: linear-gradient(180deg, rgba(241,237,227,0) 0%, rgba(241,237,227,.35) 40%, rgba(241,237,227,.9) 70%, #f1ede3 92%);
+}
+.sfx-logo {
+    width: min(300px, 68vw); height: auto; margin-bottom: 26px;
+    filter: drop-shadow(0 14px 30px rgba(0,0,0,.45));
+    animation: fadeInUp .9s cubic-bezier(.16,1,.3,1) both, sfxFloat 5s ease-in-out 1s infinite;
+}
+@keyframes sfxFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.sfx-eyebrow {
+    display: block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent-primary); margin-bottom: 16px;
+}
+.sfx-hero .sfx-eyebrow { animation: fadeInUp .9s cubic-bezier(.16,1,.3,1) .05s both; }
+
+.sfx-download .desktop-promo-inner { max-width: 880px; }
+.sfx-download .hero-desk-carousel { aspect-ratio: 2880 / 1710 !important; }
+
+.sfx-features { padding-top: 40px; }
+.sfx-title {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(28px, 4vw, 44px); line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 36px;
+}
+.sfx-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.sfx-card {
+    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+    padding: 26px; transition: var(--transition-smooth);
+}
+.sfx-card:hover { transform: translateY(-4px); border-color: var(--accent-primary); box-shadow: var(--shadow-md); }
+.sfx-card-num { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--accent-primary); margin-bottom: 14px; }
+.sfx-card h3 { font-family: var(--font-display); font-size: 19px; font-weight: 600; margin-bottom: 8px; }
+.sfx-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+@media (max-width: 860px) { .sfx-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .sfx-grid { grid-template-columns: 1fr; } }
+.sfx-page .btn-win-dl, .sfx-page .btn-mac-dl { background: #13321d; border-color: rgba(155,211,90,.18); }
+
+@media (min-width: 769px) and (max-width: 900px) {
+    .nav-link { padding: 8px 6px; font-size: 12.5px; }
+    .logo-text { font-size: 15px; }
+}
+@media (min-width: 769px) and (max-width: 810px) {
+    .navbar .logo-text { display: none; }
+}
+
+/* StarFox — "Lo que viene" (naranja) y cierre "¿Jugamos?" */
+.sfx-next {
+    position: relative; overflow: hidden;
+    min-height: 88vh; padding: 110px 8vw 0;
+    background: linear-gradient(150deg, #f6c453 0%, #f0a845 45%, #e8853a 100%);
+    color: #15130f;
+}
+.sfx-next-copy { position: relative; z-index: 1; max-width: 640px; }
+.sfx-next-eyebrow { display: block; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #3b2a12; margin-bottom: 22px; }
+.sfx-next h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(56px, 9vw, 132px); line-height: .95; letter-spacing: -3px; margin-bottom: 28px;
+}
+.sfx-next p { font-size: 18px; line-height: 1.6; color: #3b2a12; max-width: 520px; }
+.sfx-next-crew {
+    position: absolute; right: 2vw; bottom: 0; z-index: 0;
+    width: min(50%, 720px); height: auto;
+    animation: sfxFloat 6s ease-in-out infinite;
+}
+
+.sfx-cta {
+    position: relative; overflow: hidden; text-align: center;
+    padding: 110px 24px 0;
+    background: radial-gradient(70% 55% at 25% 0%, #2f5e38 0%, transparent 70%), #0d1a11;
+    color: #fff;
+}
+.sfx-cta-logo { width: min(240px, 60vw); height: auto; margin: 0 auto 30px; filter: drop-shadow(0 12px 28px rgba(0,0,0,.45)); }
+.sfx-cta h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(54px, 9vw, 120px); line-height: 1; letter-spacing: -2px; margin-bottom: 18px;
+}
+.sfx-cta p { font-size: 18px; color: rgba(255,255,255,.75); margin-bottom: 34px; }
+.sfx-cta-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 16px 44px; border-radius: 999px;
+    background: #fff; color: #13321d; font-family: var(--font-display); font-size: 18px; font-weight: 600;
+    text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+}
+.sfx-cta-pill:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+.sfx-cta-crew {
+    display: block; width: min(900px, 100%); height: auto; margin: 56px auto 0;
+    filter: brightness(.82);
+    -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+            mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+}
+body.light-mode .sfx-cta {
+    background: radial-gradient(70% 55% at 25% 0%, #cfe3bf 0%, transparent 70%), #f1ede3;
+    color: var(--text-primary);
+}
+body.light-mode .sfx-cta p { color: var(--text-secondary); }
+body.light-mode .sfx-cta-pill { background: #13321d; color: #fff; }
+body.light-mode .sfx-cta-crew { filter: none; }
+
+@media (max-width: 980px) {
+    .sfx-next { min-height: 0; padding: 80px 24px 0; }
+    .sfx-next-crew { position: static; display: block; width: 100%; margin-top: 36px; }
+    .sfx-cta { padding-top: 80px; }
 }
