@@ -88,6 +88,8 @@ function initScrollReveal() {
 function initVisitCounter() {
     const box = document.getElementById('visitCounter');
     if (!box) return;
+    const cached = localStorage.getItem('visitText');
+    if (cached) document.getElementById('visitCount').textContent = cached;
     const counted = sessionStorage.getItem('visitCounted');
     const url = `https://abacus.jasoncameron.dev/${counted ? 'get' : 'hit'}/surcaguastudio-com/visits`;
     fetch(url, { signal: AbortSignal.timeout(6000) })
@@ -95,8 +97,9 @@ function initVisitCounter() {
         .then(({ value }) => {
             if (typeof value !== 'number') return;
             sessionStorage.setItem('visitCounted', '1');
-            document.getElementById('visitCount').textContent =
-                new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+            const text = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+            document.getElementById('visitCount').textContent = text;
+            localStorage.setItem('visitText', text);
             box.title = `${value.toLocaleString('es')} visitas`;
         })
         .catch(() => {});
