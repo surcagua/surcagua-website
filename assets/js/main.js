@@ -82,10 +82,31 @@ function initScrollReveal() {
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 }
 
+// ─── VISIT COUNTER ────────────────────────────────────
+// Sitio estático (Cloudflare Pages, sin backend): el total vive en Abacus,
+// un contador público. Suma una vez por sesión del navegador, no por recarga.
+function initVisitCounter() {
+    const box = document.getElementById('visitCounter');
+    if (!box) return;
+    const counted = sessionStorage.getItem('visitCounted');
+    const url = `https://abacus.jasoncameron.dev/${counted ? 'get' : 'hit'}/surcaguastudio-com/visits`;
+    fetch(url, { signal: AbortSignal.timeout(6000) })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(({ value }) => {
+            if (typeof value !== 'number') return;
+            sessionStorage.setItem('visitCounted', '1');
+            document.getElementById('visitCount').textContent =
+                new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+            box.title = `${value.toLocaleString('es')} visitas`;
+        })
+        .catch(() => {});
+}
+
 // ─── INIT ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     loadTheme();
     initScrollReveal();
+    initVisitCounter();
 
     window.addEventListener('scroll', () => {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);

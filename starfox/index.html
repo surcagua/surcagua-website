@@ -36,6 +36,10 @@
                 <a href="../soporte/index.html" class="nav-link">Soporte</a>
             </div>
             <div class="nav-actions">
+                <span class="visit-counter" id="visitCounter" title="Visitas">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span id="visitCount">—</span>
+                </span>
                 <button class="mobile-menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menú">
                     <div class="hamburger"><span></span><span></span><span></span></div>
                 </button>
@@ -223,6 +227,34 @@
 
     <script src="../assets/js/main.js"></script>
     <script data-base="../" src="../assets/js/apps.js"></script>
+    <script>
+        document.querySelectorAll('.btn-win-dl, .btn-mac-dl').forEach(btn => {
+            const label = btn.querySelector('.win-label, .mac-label');
+            const original = label.textContent;
+            const target = 'Próximamente';
+            const glyphs = '█▓▒░#%&@$?';
+            const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let raf, timer;
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                cancelAnimationFrame(raf);
+                clearTimeout(timer);
+                btn.classList.remove('is-soon');
+                void btn.offsetWidth;
+                btn.classList.add('is-soon');
+                label.setAttribute('aria-live', 'polite');
+                const start = performance.now();
+                const step = now => {
+                    const t = (now - start) / 800;
+                    const solved = reduce ? target.length : Math.floor(t * target.length * 1.15);
+                    label.textContent = [...target].map((c, i) => i < solved ? c : glyphs[Math.floor(Math.random() * glyphs.length)]).join('');
+                    if (solved < target.length) raf = requestAnimationFrame(step);
+                };
+                raf = requestAnimationFrame(step);
+                timer = setTimeout(() => { btn.classList.remove('is-soon'); label.textContent = original; }, 2600);
+            });
+        });
+    </script>
 
 </body>
 </html>

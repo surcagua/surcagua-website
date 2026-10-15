@@ -1786,3 +1786,27 @@ body.light-mode .sfx-cta-crew { filter: none; }
     .sfx-next-crew { position: static; display: block; width: 100%; margin-top: 36px; }
     .sfx-cta { padding-top: 80px; }
 }
+
+/* StarFox — efecto "Próximamente" al pulsar descargar */
+.sfx-page .is-soon { border-color: var(--accent-primary); animation: soonPulse .5s ease; }
+.sfx-page .is-soon .win-label, .sfx-page .is-soon .mac-label {
+    color: var(--accent-primary); letter-spacing: .06em; font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 14px rgba(155,211,90,.55);
+}
+.sfx-page .is-soon .win-dl-arrow, .sfx-page .is-soon .mac-dl-arrow { opacity: .25; }
+@keyframes soonPulse { 0% { transform: scale(1); } 30% { transform: scale(.975); } 100% { transform: scale(1); } }
+body.sfx-page.light-mode .btn-win-dl, body.sfx-page.light-mode .btn-mac-dl { background: #13321d; border-color: rgba(155,211,90,.25); }
+body.sfx-page.light-mode .is-soon .win-label, body.sfx-page.light-mode .is-soon .mac-label { color: #9bd35a; }
+body.sfx-page.light-mode .is-soon { border-color: #9bd35a; }
+
+/* Contador de visitas (navbar) */
+.visit-counter {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 34px; padding: 0 11px; border-radius: 7px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+    color: var(--text-secondary); font-size: 12.5px; font-weight: 600;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+    animation: fadeInUp .5s cubic-bezier(.16,1,.3,1) both;
+}
+.visit-counter svg { flex-shrink: 0; opacity: .8; }
+body.light-mode .visit-counter { background: rgba(0,15,60,0.04); border-color: rgba(0,15,60,0.09); }
