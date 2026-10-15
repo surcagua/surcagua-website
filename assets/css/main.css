@@ -1799,13 +1799,13 @@ body.sfx-page.light-mode .btn-win-dl, body.sfx-page.light-mode .btn-mac-dl { bac
 body.sfx-page.light-mode .is-soon .win-label, body.sfx-page.light-mode .is-soon .mac-label { color: #9bd35a; }
 body.sfx-page.light-mode .is-soon { border-color: #9bd35a; }
 
-/* Contador de visitas (navbar) */
+/* Contador de visitas (navbar) — cuadrado como el botón de tema */
 .visit-counter {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    height: 34px; width: 96px; padding: 0; flex-shrink: 0; border-radius: 7px;
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+    width: 34px; height: 34px; padding: 0; flex-shrink: 0; border-radius: 7px;
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
-    color: var(--text-secondary); font-size: 12.5px; font-weight: 600;
-    font-variant-numeric: tabular-nums; white-space: nowrap;
+    color: var(--text-secondary); font-size: 10px; font-weight: 700; line-height: 1;
+    font-variant-numeric: tabular-nums; white-space: nowrap; cursor: default;
 }
-.visit-counter svg { flex-shrink: 0; opacity: .8; }
+.visit-counter svg { width: 11px; height: 11px; opacity: .8; }
 body.light-mode .visit-counter { background: rgba(0,15,60,0.04); border-color: rgba(0,15,60,0.09); }

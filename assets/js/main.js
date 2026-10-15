@@ -88,7 +88,7 @@ function initScrollReveal() {
 function initVisitCounter() {
     const box = document.getElementById('visitCounter');
     if (!box) return;
-    const cached = localStorage.getItem('visitText');
+    const cached = localStorage.getItem('visitText2');
     if (cached) document.getElementById('visitCount').textContent = cached;
     const counted = sessionStorage.getItem('visitCounted');
     const url = `https://abacus.jasoncameron.dev/${counted ? 'get' : 'hit'}/surcaguastudio-com/visits`;
@@ -97,9 +97,9 @@ function initVisitCounter() {
         .then(({ value }) => {
             if (typeof value !== 'number') return;
             sessionStorage.setItem('visitCounted', '1');
-            const text = new Intl.NumberFormat('es', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
+            const text = value >= 1e6 ? (value / 1e6).toFixed(1).replace('.0', '') + 'M' : value >= 1e3 ? (value / 1e3).toFixed(1).replace('.0', '') + 'K' : String(value);
             document.getElementById('visitCount').textContent = text;
-            localStorage.setItem('visitText', text);
+            localStorage.setItem('visitText2', text);
             box.title = `${value.toLocaleString('es')} visitas`;
         })
         .catch(() => {});
